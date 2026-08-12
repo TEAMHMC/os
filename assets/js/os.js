@@ -88,7 +88,6 @@
       .from('.hero-sub', { y: 24, opacity: 0, duration: 0.8 }, '-=0.55')
       .from('.hero-lede', { y: 20, opacity: 0, duration: 0.8 }, '-=0.6')
       .from('.hero-cta .hmc-btn', { y: 16, opacity: 0, duration: 0.6, stagger: 0.09 }, '-=0.55')
-      .from('.hero-stats div', { y: 16, opacity: 0, duration: 0.6, stagger: 0.07 }, '-=0.4')
       .from('.scroll-cue', { opacity: 0, duration: 0.6 }, '-=0.3');
 
     // The hero lifts away rather than cutting, so the first pinned section
