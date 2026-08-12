@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HMC OS | The operating system for community health work</title>
+<meta name="description" content="HMC OS is the system Health Matters Clinic runs on. Nine tools, live today, carrying a person from the first question to a recorded result. Screenings, events, referrals, volunteers, training and outcomes in one place.">
+<link rel="canonical" href="https://os.healthmatters.clinic/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="HMC OS | The operating system for community health work">
+<meta property="og:description" content="Nine tools, live today. Find an event, check in on your own head, find a resource, run a volunteer shift, take a referral and close it with an outcome. All on one record.">
+<meta property="og:url" content="https://os.healthmatters.clinic/">
+<meta property="og:image" content="https://os.healthmatters.clinic/screens/eventfinder.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#070707">
+
+<link rel="icon" href="./assets/site/hmc-icon-512.png" type="image/png">
+<link rel="apple-touch-icon" href="./assets/site/hmc-icon-512.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Questrial&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./assets/css/hmc-parallax.css">
+<link rel="stylesheet" href="./assets/site/hmc-buttons-1.0.4.css">
+<link rel="stylesheet" href="./assets/css/os.css">
+</head>
+<body>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar" id="topbar">
+  <a class="brand" href="https://www.healthmatters.clinic">
+    <img src="./assets/site/hmc-icon-512.png" alt="Health Matters Clinic">
+    <span class="brand-text"><b>Health Matters Clinic</b><i>HMC OS</i></span>
+  </a>
+  <a class="hmc-btn hmc-btn-secondary" data-hmc-label="Start The Tour" href="#tour">Start the tour</a>
+</header>
+
+<!-- =============== HERO =============== -->
+<section class="hero" id="top">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="shell hero-inner">
+    <p class="eyebrow eyebrow-light" style="justify-content:center">Introducing</p>
+    <h1 class="hero-mark hmc-mask hmc-mask-light" id="heroMark">HMC OS<sup>&trade;</sup></h1>
+    <p class="hero-sub">The operating system for community health work.</p>
+    <p class="hero-lede">Nine tools, live right now, carrying one person from the first question to a result somebody can point at. Health Matters Clinic built it because the work outgrew spreadsheets, group texts and a shared inbox.</p>
+    <div class="hero-cta">
+      <a class="hmc-btn hmc-btn-primary" data-hmc-label="Start The Tour" href="#tour">Start the tour</a>
+      <a class="hmc-btn hmc-btn-secondary" data-hmc-label="Partner With Us" href="https://www.healthmatters.clinic/partners">Partner with us</a>
+    </div>
+    <div class="hero-stats">
+      <div><b class="count" data-count="9">9</b><span>Tools live today</span></div>
+      <div><b class="count" data-count="25000" data-suffix="+" data-format="comma">25,000+</b><span>Angelenos served</span></div>
+      <div><b class="count" data-count="1000" data-suffix="+" data-format="comma">1,000+</b><span>Volunteers registered</span></div>
+      <div><b>2020</b><span>Serving Los Angeles since</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+</section>
+
+<!-- =============== PREMISE =============== -->
+<section class="premise" id="premise">
+  <div class="premise-sticky">
+    <div class="premise-stack">
+      <p class="beat b1" data-beat="1">Someone asks for help at a folding table in a park.</p>
+      <p class="beat b2" data-beat="2">A volunteer runs the visit. A partner takes the referral.</p>
+      <p class="beat b3" data-beat="3">A funder asks, months later, what came of it.</p>
+      <p class="beat b4" data-beat="4">HMC OS keeps all three on the same record.</p>
+    </div>
+    <span class="premise-rule" aria-hidden="true"></span>
+  </div>
+</section>
+
+<!-- =============== THE TOUR =============== -->
+<section class="seq" id="tour">
+  <div class="shell seq-intro">
+    <p class="eyebrow eyebrow-light" style="justify-content:center">The tour</p>
+    <h2 data-reveal>Nine tools. One at a time.</h2>
+    <p data-reveal>Six of them are open to anyone who lands on them. Three run the work behind the scenes. Keep scrolling and each one takes the screen.</p>
+  </div>
+
+  <div class="hud" id="hud" aria-hidden="true">
+    <span class="hud-idx" id="hudIdx">01</span>
+    <span class="hud-name" id="hudName">Event Finder</span>
+    <ol class="hud-bars">
+      <li data-rail="1" class="is-active"></li>
+      <li data-rail="2"></li>
+      <li data-rail="3"></li>
+      <li data-rail="4"></li>
+      <li data-rail="5"></li>
+      <li data-rail="6"></li>
+      <li data-rail="7"></li>
+      <li data-rail="8"></li>
+      <li data-rail="9"></li>
+    </ol>
+  </div>
+
+  <!-- 01 Event Finder -->
+  <article class="tool" data-tool="1" data-name="Event Finder">
+    <div class="stage">
+      <div class="stage-grid">
+        <div class="tool-copy">
+          <p class="idx"><span>01 / 09</span><i></i></p>
+          <h3>Event Finder<sup>&trade;</sup></h3>
+          <p class="line">Type a zip code and see what is happening near you. Wellness events, workshops, classes and professional training, from HMC and from partner organizations, with registration in about a minute.</p>
+          <ul class="chips">
+            <li>Search by zip code</li>
+            <li>No account needed</li>
+            <li>Partners list at no cost</li>
+          </ul>
+          <div class="btn-row"><a class="hmc-btn-ghost" href="https://eventfinder.healthmatters.clinic">Open Event Finder</a></div>
+        </div>
+        <div class="stage-media">
+          <div class="frame">
+            <div class="frame-bar"><em></em><em></em><em></em><b>eventfinder.healthmatters.clinic</b></div>
+            <img class="frame-shot" src="./screens/eventfinder.png" alt="The Event Finder map view with filters for month, type and location beside a list of upcoming events." loading="lazy" width="1600" height="1125">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 02 Check Yourself -->
+  <article class="tool" data-tool="2" data-name="Check Yourself">
+    <div class="stage">
+      <div class="stage-grid">
+        <div class="tool-copy">
+          <p class="idx"><span>02 / 09</span><i></i></p>
+          <h3>Check Yourself<sup>&trade;</sup></h3>
+          <p class="line">Three minutes, in private, to see where your head is at. The questions are PHQ-9 and GAD-7. What comes back is plain language and a plan you can act on the same day.</p>
+          <ul class="chips">
+            <li>PHQ-9 and GAD-7</li>
+            <li>English and Spanish</li>
+            <li>No account, no cost</li>
+          </ul>
+          <p class="tool-note">Screening, not diagnosis. Anyone in danger is pointed to 911 or 988 before anything else.</p>
+          <div class="btn-row"><a class="hmc-btn-ghost" href="https://checkyourself.healthmatters.clinic">Take the check-in</a></div>
+        </div>
+        <div class="stage-media">
+          <div class="frame">
+            <div class="frame-bar"><em></em><em></em><em></em><b>checkyourself.healthmatters.clinic</b></div>
+            <img class="frame-shot" src="./screens/checkyourself.png" alt="The Check Yourself opening screen offering a three minute private check-in in English or Spanish." loading="lazy" width="1600" height="1125">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 03 Resource Directory -->
+  <article class="tool" data-tool="3" data-name="Resource Directory">
+    <div class="stage">
+      <div class="stage-grid">
+        <div class="tool-copy">
+          <p class="idx"><span>03 / 09</span><i></i></p>
+          <h3>Resource Directory</h3>
+          <p class="line">Healthcare, mental health, food, housing, legal aid and basic needs across LA County, narrowed to the Service Planning Area you actually live in, so what you get back is close enough to use.</p>
+          <ul class="chips">
+            <li>Filter by SPA</li>
+            <li>Open to everyone</li>
+            <li>Kept current by the team</li>
+          </ul>
+          <div class="btn-row"><a class="hmc-btn-ghost" href="https://directory.healthmatters.clinic">Open the Directory</a></div>
+        </div>
+        <div class="stage-media">
+          <div class="frame">
+            <div class="frame-bar"><em></em><em></em><em></em><b>directory.healthmatters.clinic</b></div>
+            <img class="frame-shot" src="./screens/directory.png" alt="The Resource Directory with keyword search, category filter and a Service Planning Area filter above listings." loading="lazy" width="1600" height="1125">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 04 Your CalmKit -->
+  <article class="tool" data-tool="4" data-name="Your CalmKit">
+    <div class="stage">
+      <div class="stage-grid">
+        <div class="tool-copy">
+          <p class="idx"><span>04 / 09</span><i></i></p>
+          <h3>Your CalmKit<sup>&trade;</sup></h3>
+          <p class="line">Breathing, grounding, movement and journaling, sized for the hours between appointments. What you write stays on your device.</p>
+          <ul class="chips">
+            <li>Entries stay on the device</li>
+            <li>Built for a phone</li>
+            <li>English and Spanish</li>
+          </ul>
+          <div class="btn-row"><a class="hmc-btn-ghost" href="https://calmkit.healthmatters.clinic">Open CalmKit</a></div>
+        </div>
+        <div class="stage-media">
+          <div class="phone">
+            <img src="./screens/calmkit.png" alt="Your CalmKit home screen with Move, Breathe, Calm and Reflect tiles and a quick centering exercise." loading="lazy" width="900" height="1952">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 05 Sunny -->
+  <article class="tool" data-tool="5" data-name="Sunny">
+    <div class="stage">
+      <div class="stage-grid">
+        <div class="tool-copy">
+          <p class="idx"><span>05 / 09</span><i></i></p>
+          <h3>Sunny<sup>&trade;</sup></h3>
+          <p class="line">Ask a question in English or Spanish and get an answer wherever you already are, because Sunny sits on every HMC surface rather than in one app.</p>
+          <ul class="chips">
+            <li>English and Spanish</li>
+            <li>On every HMC surface</li>
+            <li>Crisis routing by rule</li>
+          </ul>
+          <p class="tool-note">When a message signals distress, Sunny surfaces 988, Crisis Text Line and the HMC team. That path is a rule in the system, not a judgement call the model gets to make.</p>
+          <div class="btn-row"><a class="hmc-btn-ghost" href="https://directory.healthmatters.clinic">Ask Sunny in the Directory</a></div>
+        </div>
+        <div class="stage-media">
+          <div class="phone">
+            <img src="./screens/sunny.png" alt="The Resource Directory on a phone with the crisis line banner at the top and the Ask Sunny panel below it." loading="lazy" width="900" height="1952">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 06 HMC VMS -->
+  <article class="tool" data-tool="6" data-name="HMC VMS">
+    <div class="stage">
+      <div class="stage-grid">
+        <div class="tool-copy">
+          <p class="idx"><span>06 / 09</span><i></i></p>
+          <h3>HMC VMS<sup>&trade;</sup></h3>
+          <p class="line">The HMC Volunteer Management System. It is AI powered and it runs end to end, which means recruitment, registration, core training, credentialing, scheduling, deployment and the service record all live on one file that follows the volunteer.</p>
+          <ul class="chips">
+            <li>One record per volunteer</li>
+            <li>Training and credentials</li>
+            <li>Shifts, hours and history</li>
+          </ul>
+          <p class="tool-note">More than 1,000 people registered to date, counted cumulatively since 2020.</p>
+          <div class="btn-row"><a class="hmc-btn-ghost" href="https://volunteer.healthmatters.clinic/tour">Take the VMS tour</a></div>
+        </div>
+        <div class="stage-media">
+          <div class="frame">
+            <div class="frame-bar"><em></em><em></em><em></em><b>volunteer.healthmatters.clinic</b></div>
+            <img class="frame-shot mid" src="./screens/vms.png" alt="A volunteer dashboard showing hours contributed, level, events attended, upcoming events and training progress." loading="lazy" width="1600" height="1125">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 07 HMC Academy -->
+  <article class="tool" data-tool="7" data-name="HMC Academy">
+    <div class="stage">
+      <div class="stage-grid">
+        <div class="tool-copy">
+          <p class="idx"><span>07 / 09</span><i></i></p>
+          <h3>HMC Academy</h3>
+          <p class="line">Self paced training that decides what a volunteer is cleared to do. Orientation and core modules come first, then the specialist tracks, then Unstoppable<sup>&trade;</sup>, our mental health workshop for practitioners.</p>
+          <ul class="chips">
+            <li>Progress saved as you go</li>
+            <li>Completion unlocks roles</li>
+            <li>1.0 CE and CEU</li>
+          </ul>
+          <p class="tool-note">LACDMH approved Unstoppable on February 27 2026 for 1.0 CE and CEU across BBS, BRN, CCAPP and psychology.</p>
+          <div class="btn-row"><a class="hmc-btn-ghost" href="https://unstoppable.healthmatters.clinic">See Unstoppable</a></div>
+        </div>
+        <div class="stage-media">
+          <div class="frame">
+            <div class="frame-bar"><em></em><em></em><em></em><b>volunteer.healthmatters.clinic</b></div>
+            <img class="frame-shot mid" src="./screens/academy.png" alt="The training academy view listing orientation and tier modules with completion states and a progress bar." loading="lazy" width="1600" height="1125">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 08 Partner Portal -->
+  <article class="tool" data-tool="8" data-name="Partner Portal">
+    <div class="stage">
+      <div class="stage-grid">
+        <div class="tool-copy">
+          <p class="idx"><span>08 / 09</span><i></i></p>
+          <h3>Partner Portal</h3>
+          <p class="line">Referrals arrive matched to the services your organization actually declared, and each one ends in a known state. Accept it, serve the person, record what happened. You post your events to the whole county from the same screen.</p>
+          <ul class="chips">
+            <li>Referrals that close</li>
+            <li>Event publishing</li>
+            <li>Outcomes you can report</li>
+          </ul>
+          <div class="btn-row"><a class="hmc-btn-ghost" href="https://partner.healthmatters.clinic/partner-demo">Open the partner demo</a></div>
+        </div>
+        <div class="stage-media">
+          <div class="frame">
+            <div class="frame-bar"><em></em><em></em><em></em><b>partner.healthmatters.clinic/partner-demo</b></div>
+            <img class="frame-shot" src="./screens/partner.png" alt="The partner referrals queue showing housing, behavioral health and enrollment referrals with accept and record outcome controls." loading="lazy" width="1600" height="1125">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 09 Member Hub -->
+  <article class="tool" data-tool="9" data-name="Member Hub">
+    <div class="stage">
+      <div class="stage-grid">
+        <div class="tool-copy">
+          <p class="idx"><span>09 / 09</span><i></i></p>
+          <h3>Member Hub</h3>
+          <p class="line">One door to everything above. Screenings, community events, help with food, housing and care, and self paced courses that open into health careers. An email address gets you in. There is no application and no cost.</p>
+          <ul class="chips">
+            <li>No application</li>
+            <li>No cost</li>
+            <li>Everything in one place</li>
+          </ul>
+          <div class="btn-row"><a class="hmc-btn-ghost" href="https://hub.healthmatters.clinic">Enter the Member Hub</a></div>
+        </div>
+        <div class="stage-media">
+          <div class="frame">
+            <div class="frame-bar"><em></em><em></em><em></em><b>hub.healthmatters.clinic</b></div>
+            <img class="frame-shot" src="./screens/hub.png" alt="The Member Hub entry screen offering free screenings, community events and courses after entering an email address." loading="lazy" width="1600" height="1125">
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</section>
+
+<!-- =============== THE LOOP =============== -->
+<section class="loop" id="loop">
+  <div class="loop-sticky">
+    <div class="loop-head">
+      <p class="eyebrow eyebrow-dark">The loop</p>
+      <h2 data-reveal>Follow one person all the way through.</h2>
+      <p data-reveal>Nine tools only matter if they hand off to each other. Here is the handoff, in the order it happens.</p>
+    </div>
+    <div class="track" id="track">
+      <article class="panel">
+        <span class="step">Step one</span>
+        <h3>Someone shows up.</h3>
+        <p>A screening at a park, an event found by zip code, or a private check-in at eleven at night. All three start the same record.</p>
+        <span class="tag">Event Finder, Check Yourself</span>
+      </article>
+      <article class="panel">
+        <span class="step">Step two</span>
+        <h3>A trained volunteer takes the visit.</h3>
+        <p>Their orientation, their credential, their shift and their hours are already on file, so who ran the visit is never a question afterwards.</p>
+        <span class="tag">HMC VMS, HMC Academy</span>
+      </article>
+      <article class="panel pop">
+        <span class="step">Step three</span>
+        <h3>A referral goes out.</h3>
+        <p>Routed to a partner by the services that partner declared. Housing to housing. Behavioral health to behavioral health. Not a flyer and a hope.</p>
+        <span class="tag">Resource Directory, Partner Portal</span>
+      </article>
+      <article class="panel deep">
+        <span class="step">Step four</span>
+        <h3>The partner closes it.</h3>
+        <p>Accept or decline, serve the person, then record the outcome and how many people it covered. Nothing sits open with nobody watching.</p>
+        <span class="tag">Partner Portal</span>
+      </article>
+      <article class="panel">
+        <span class="step">Step five</span>
+        <h3>The result comes back.</h3>
+        <p>Outcomes, hours and completions land in one place, so a report is pulled from the work rather than rebuilt from memory a quarter later.</p>
+        <span class="tag">HMC OS</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =============== NUMBERS =============== -->
+<section class="numbers" id="proof">
+  <div class="shell">
+    <p class="eyebrow eyebrow-dark">Where it stands</p>
+    <div class="num-grid">
+      <div class="num" data-reveal><b class="count" data-count="9">9</b><span>Tools running in production, not in a roadmap</span></div>
+      <div class="num pop" data-reveal><b class="count" data-count="25000" data-suffix="+" data-format="comma">25,000+</b><span>Angelenos served since 2020</span></div>
+      <div class="num deep" data-reveal><b class="count" data-count="1000" data-suffix="+" data-format="comma">1,000+</b><span>Volunteers registered to date, counted cumulatively since 2020</span></div>
+      <div class="num" data-reveal><b>1.0</b><span>CE and CEU approved by LACDMH for Unstoppable on February 27 2026</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- =============== PROOF =============== -->
+<section class="proof">
+  <div class="shell">
+    <div class="proof-head">
+      <h2 data-reveal>The work under the software.</h2>
+      <p data-reveal>Every tool on this page was built for a program that was already running. Here is what those programs are answerable to.</p>
+    </div>
+    <div class="proof-grid">
+      <article class="pcard" data-reveal>
+        <h3>County funding</h3>
+        <p>Named in the CalMHSA Intent to Award for LACDMH Community Grants, through a competitive RFP.</p>
+      </article>
+      <article class="pcard" data-reveal>
+        <h3>Continuing education</h3>
+        <p>Unstoppable<sup>&trade;</sup> approved by LACDMH on February 27 2026 for 1.0 CE and CEU across BBS, BRN, CCAPP and psychology.</p>
+      </article>
+      <article class="pcard" data-reveal>
+        <h3>Field research</h3>
+        <p>A February 2025 Skid Row study of 75 respondents, certified exempt by the UCLA Institutional Review Board.</p>
+      </article>
+      <article class="pcard" data-reveal>
+        <h3>Community design</h3>
+        <p>Mobile Health Outreach was built from a community needs assessment of 169 respondents, who named cost, time and transportation as what stops them.</p>
+      </article>
+      <article class="pcard" data-reveal>
+        <h3>Standing</h3>
+        <p>California 501(c)(3), EIN 85-3784250, founded 2020, certified as an LA County Social Enterprise.</p>
+      </article>
+      <article class="pcard" data-reveal>
+        <h3>Federal registration</h3>
+        <p>Active in SAM.gov, Grants.gov and eRA Commons, so a federal award has nothing to wait on.</p>
+      </article>
+    </div>
+    <div class="secure" data-reveal>
+      <h3>How the data is held</h3>
+      <p>Access is controlled and logged, and data is encrypted in transit and at rest. HMC OS<sup>&trade;</sup> is built to HIPAA and SOC 2 standards.</p>
+    </div>
+  </div>
+</section>
+
+<!-- =============== WHAT HAPPENS NEXT =============== -->
+<section class="next" id="next">
+  <div class="shell">
+    <div class="next-head">
+      <p class="eyebrow eyebrow-light" style="justify-content:center">What happens next</p>
+      <h2 data-reveal>Two ways in.</h2>
+      <p data-reveal>Both start with a conversation, and both end with you on the system rather than next to it.</p>
+    </div>
+    <div class="next-grid">
+      <article class="ncard" data-reveal>
+        <h3>For partner organizations</h3>
+        <p>Reach the whole county with your events, receive referrals matched to what you actually do, and close each one on the record.</p>
+        <ol>
+          <li>Tell us the services your organization provides.</li>
+          <li>Get an account on the Partner Portal.</li>
+          <li>Start taking referrals and posting your events.</li>
+        </ol>
+        <div class="btn-row"><a class="hmc-btn hmc-btn-primary" data-hmc-label="Partner With Us" href="https://www.healthmatters.clinic/partners">Partner with us</a></div>
+      </article>
+      <article class="ncard" data-reveal>
+        <h3>For funders</h3>
+        <p>Fund a system that already runs. Events, referrals, volunteer hours and training completions are captured where they happen, so reporting comes out of the work instead of being rebuilt after it.</p>
+        <ol>
+          <li>Walk the tools with us, live and with real data.</li>
+          <li>Ask for the numbers behind any program on this page.</li>
+          <li>Fund a named piece of the system and watch it report.</li>
+        </ol>
+        <div class="btn-row"><a class="hmc-btn hmc-btn-primary" data-hmc-label="Fund The System" href="https://www.healthmatters.clinic/funders">Fund the system</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- =============== FOOTER =============== -->
+<footer class="foot">
+  <div class="shell">
+    <div class="foot-top">
+      <div>
+        <p class="foot-mark">Health Matters Clinic</p>
+        <h4>HMC OS<sup>&trade;</sup></h4>
+        <p>A California 501(c)(3) nonprofit building and running the tools that carry community health work in Los Angeles.</p>
+        <p>EIN 85-3784250</p>
+      </div>
+      <div>
+        <p class="foot-mark">Open to anyone</p>
+        <ul>
+          <li><a href="https://eventfinder.healthmatters.clinic">Event Finder</a></li>
+          <li><a href="https://checkyourself.healthmatters.clinic">Check Yourself</a></li>
+          <li><a href="https://directory.healthmatters.clinic">Resource Directory</a></li>
+          <li><a href="https://calmkit.healthmatters.clinic">Your CalmKit</a></li>
+          <li><a href="https://hub.healthmatters.clinic">Member Hub</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="foot-mark">Work with us</p>
+        <ul>
+          <li><a href="https://volunteer.healthmatters.clinic/tour">HMC VMS tour</a></li>
+          <li><a href="https://partner.healthmatters.clinic/partner-demo">Partner Portal demo</a></li>
+          <li><a href="https://unstoppable.healthmatters.clinic">Unstoppable</a></li>
+          <li><a href="https://www.healthmatters.clinic/partners">Become a partner</a></li>
+          <li><a href="https://www.healthmatters.clinic">healthmatters.clinic</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>HMC OS, HMC VMS, Event Finder, Check Yourself, Your CalmKit, Sunny and Unstoppable are trademarks of Health Matters Clinic.</span>
+      <span>Los Angeles, California</span>
+    </div>
+  </div>
+</footer>
+
+<script src="./assets/js/vendor/gsap.min.js"></script>
+<script src="./assets/js/vendor/ScrollTrigger.min.js"></script>
+<script src="./assets/js/vendor/lenis.min.js"></script>
+<script src="./assets/site/hmc-buttons-1.0.4.js"></script>
+<script src="./assets/js/os.js"></script>
+</body>
+</html>

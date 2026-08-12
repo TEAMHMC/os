@@ -1,0 +1,251 @@
+/* ============================================================
+   HMC OS motion layer
+   ------------------------------------------------------------
+   Rules this file follows:
+   1. Nothing is hidden by CSS alone. The .motion class is added to <html>
+      only when GSAP is present and the visitor has not asked for reduced
+      motion, so a failed script or a reduced-motion setting leaves a
+      complete, readable page rather than a blank one.
+   2. Every animation here is doing a job: naming the product, pacing the
+      four opening lines, handing one tool off to the next, carrying the
+      referral across the screen, or putting weight on a number. There is
+      no drift for the sake of drift.
+   3. Pinning is desktop only. Below 900px the CSS lays the same content
+      out statically and this file only fades things in.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGsap = !!(window.gsap && window.ScrollTrigger);
+  var desktop = window.matchMedia('(min-width: 901px)').matches;
+  var doc = document.documentElement;
+
+  /* ---------- always on, motion or not ---------- */
+
+  // Scroll progress. A long guided page needs a sense of how far in you are.
+  var bar = document.getElementById('progress');
+  var topbar = document.getElementById('topbar');
+  function chrome() {
+    var y = window.scrollY || window.pageYOffset;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    if (bar) bar.style.width = (max > 0 ? Math.min(1, Math.max(0, y / max)) * 100 : 0) + '%';
+    if (topbar) topbar.classList.toggle('is-solid', y > 80);
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { chrome(); ticking = false; });
+  }, { passive: true });
+  window.addEventListener('resize', chrome);
+  chrome();
+
+  // Anchor links ease on their own, per call, so no global smooth scrolling is
+  // left switched on for ScrollTrigger to trip over.
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var target = document.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      var top = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+      window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  });
+
+  if (reduce || !hasGsap) return;
+
+  doc.classList.add('motion');
+  var gsap = window.gsap;
+  var ScrollTrigger = window.ScrollTrigger;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------- smooth scroll ----------
+     Lenis smooths the wheel input on desktop. It changes how scrolling feels,
+     never where anything sits. Touch keeps the native scroller. */
+  if (window.Lenis && desktop) {
+    var lenis = new window.Lenis({
+      duration: 1.05,
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      smoothTouch: false
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+    gsap.ticker.lagSmoothing(0);
+    window.__osLenis = lenis;
+  }
+
+  /* ---------- 1. the opening ----------
+     The product name arrives first and by itself, then the sentence that
+     explains it, then the way in. That order is the whole point of the hero. */
+  (function hero() {
+    var mark = document.getElementById('heroMark');
+    if (!mark) return;
+    var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.from(mark, { yPercent: 18, opacity: 0, scale: 1.04, duration: 1.1 })
+      .from('.hero .eyebrow', { y: 14, opacity: 0, duration: 0.6 }, 0.15)
+      .from('.hero-sub', { y: 24, opacity: 0, duration: 0.8 }, '-=0.55')
+      .from('.hero-lede', { y: 20, opacity: 0, duration: 0.8 }, '-=0.6')
+      .from('.hero-cta .hmc-btn', { y: 16, opacity: 0, duration: 0.6, stagger: 0.09 }, '-=0.55')
+      .from('.hero-stats div', { y: 16, opacity: 0, duration: 0.6, stagger: 0.07 }, '-=0.4')
+      .from('.scroll-cue', { opacity: 0, duration: 0.6 }, '-=0.3');
+
+    // The hero lifts away rather than cutting, so the first pinned section
+    // feels like the same shot continuing.
+    gsap.to('.hero-inner', {
+      y: -70, opacity: 0.15, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 25%', scrub: true }
+    });
+    gsap.to('.scroll-cue', {
+      opacity: 0, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: '30% top', scrub: true }
+    });
+  })();
+
+  /* ---------- 2. the four opening lines ----------
+     Four short statements, one at a time, held on a pinned black screen.
+     Scroll is the cut between them. This is the only place on the page where
+     motion replaces layout, and it is doing the job a voiceover would. */
+  if (desktop) {
+    var beats = gsap.utils.toArray('.beat');
+    if (beats.length) {
+      gsap.set(beats, { opacity: 0, y: 26 });
+      gsap.set(beats[0], { opacity: 1, y: 0 });
+      // The sticky hold is CSS. ScrollTrigger only reads progress across it,
+      // so there is no second pinning mechanism fighting the first.
+      var tlBeats = gsap.timeline({
+        scrollTrigger: { trigger: '.premise', start: 'top top', end: 'bottom bottom', scrub: 0.6 }
+      });
+      beats.forEach(function (b, i) {
+        if (i === 0) return;
+        tlBeats.to(beats[i - 1], { opacity: 0, y: -26, duration: 0.4 }, i - 1)
+               .fromTo(b, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5 }, i - 0.75);
+      });
+      tlBeats.to({}, { duration: 0.6 });
+    }
+  } else {
+    gsap.set('.beat', { clearProps: 'all' });
+  }
+
+  /* ---------- 3. the nine tools ----------
+     Each tool holds the viewport for one screen of scrolling. Its interface
+     settles into place, the copy follows a beat later, and both leave as the
+     next tool arrives. That arrival and departure is what makes the section
+     read as a sequence instead of a list. */
+  var railItems = document.querySelectorAll('[data-rail]');
+  var hud = document.getElementById('hud');
+  var hudIdx = document.getElementById('hudIdx');
+  var hudName = document.getElementById('hudName');
+
+  gsap.utils.toArray('.tool').forEach(function (tool) {
+    var media = tool.querySelector('.stage-media');
+    var copy = tool.querySelector('.tool-copy');
+    var index = tool.getAttribute('data-tool');
+
+    if (desktop) {
+      // Arrive. Finishes before the stage locks, so the settled state is what
+      // the reader spends most of the section looking at.
+      gsap.timeline({
+        scrollTrigger: { trigger: tool, start: 'top 95%', end: 'top 45%', scrub: 0.45 }
+      })
+        .fromTo(media, { y: 80, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, ease: 'power2.out' }, 0)
+        .fromTo(copy, { y: 44, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out' }, 0.1);
+
+      // Hand off. The stage releases upward just before it unsticks, so one
+      // tool is always giving the screen to the next rather than cutting.
+      gsap.timeline({
+        scrollTrigger: { trigger: tool, start: 'bottom 118%', end: 'bottom bottom', scrub: 0.45 }
+      })
+        .to([media, copy], { y: -55, opacity: 0, ease: 'power1.in' }, 0);
+
+      ScrollTrigger.create({
+        trigger: tool, start: 'top 60%', end: 'bottom 40%',
+        onToggle: function (self) {
+          if (!self.isActive) return;
+          railItems.forEach(function (li) {
+            li.classList.toggle('is-active', li.getAttribute('data-rail') === index);
+          });
+          if (hudIdx) hudIdx.textContent = ('0' + index).slice(-2);
+          if (hudName) hudName.textContent = tool.getAttribute('data-name') || '';
+        }
+      });
+    } else {
+      gsap.fromTo([media, copy], { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out', stagger: 0.08,
+          scrollTrigger: { trigger: tool, start: 'top 82%', once: true } });
+    }
+  });
+
+  // The position marker only exists while the sequence does.
+  if (hud && desktop) {
+    ScrollTrigger.create({
+      trigger: '.seq', start: 'top 20%', end: 'bottom 80%',
+      onToggle: function (self) { hud.classList.toggle('is-on', self.isActive); }
+    });
+  }
+
+  /* ---------- 4. the loop ----------
+     Five steps that hand a single person from one tool to the next. They move
+     sideways because the point is the handoff, and sideways is what a handoff
+     looks like. Vertical stacking loses that on desktop; on phones the CSS
+     stacks them and this never runs. */
+  if (desktop) {
+    var track = document.getElementById('track');
+    if (track) {
+      // CSS sticky holds the panel; this only converts scroll progress into
+      // sideways distance across the five steps.
+      ScrollTrigger.create({
+        trigger: '.loop', start: 'top top', end: 'bottom bottom', scrub: true,
+        onUpdate: function (self) {
+          var distance = track.scrollWidth - window.innerWidth + 40;
+          if (distance < 0) distance = 0;
+          gsap.set(track, { x: -distance * self.progress });
+        }
+      });
+    }
+  }
+
+  /* ---------- 5. numbers ----------
+     A number that counts up is read. A number that is simply printed is
+     skimmed. Only used on the four figures that carry the argument. */
+  document.querySelectorAll('.count').forEach(function (el) {
+    var end = parseFloat(el.getAttribute('data-count'));
+    if (isNaN(end)) return;
+    var suffix = el.getAttribute('data-suffix') || '';
+    var comma = el.getAttribute('data-format') === 'comma';
+    var obj = { v: 0 };
+    ScrollTrigger.create({
+      trigger: el, start: 'top 88%', once: true,
+      onEnter: function () {
+        gsap.to(obj, {
+          v: end, duration: 1.5, ease: 'power2.out',
+          onUpdate: function () {
+            var n = Math.round(obj.v);
+            el.textContent = (comma ? n.toLocaleString('en-US') : String(n)) + suffix;
+          }
+        });
+      }
+    });
+  });
+
+  /* ---------- 6. reveals ---------- */
+  gsap.utils.toArray('[data-reveal]').forEach(function (el) { gsap.set(el, { y: 34, opacity: 0 }); });
+  ScrollTrigger.batch('[data-reveal]', {
+    start: 'top 88%',
+    once: true,
+    onEnter: function (batch) {
+      gsap.to(batch, { y: 0, opacity: 1, duration: 0.85, ease: 'power3.out', stagger: 0.08, overwrite: true });
+    }
+  });
+
+  /* ---------- 7. keep measurements honest ---------- */
+  window.addEventListener('load', function () { ScrollTrigger.refresh(); });
+  var t;
+  document.querySelectorAll('img[loading="lazy"]').forEach(function (img) {
+    img.addEventListener('load', function () {
+      clearTimeout(t);
+      t = setTimeout(function () { ScrollTrigger.refresh(); }, 220);
+    });
+  });
+})();

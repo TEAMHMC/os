@@ -1,0 +1,52 @@
+# HMC OS
+
+The guided unveiling of HMC OS, the operating system Health Matters Clinic runs on.
+One page, nine tools, built as a standalone site so the animation is under our
+control rather than a page builder's.
+
+Live at `os.healthmatters.clinic` once the repo and DNS below exist.
+
+## What is here
+
+```
+index.html            the whole page
+assets/css/os.css     page styles
+assets/css/hmc-parallax.css   shared HMC layer (text mask, reveal helpers)
+assets/site/hmc-buttons-1.0.4.css|js   shared HMC button system (pill + 6px dot)
+assets/js/os.js       the motion layer
+assets/js/vendor/     GSAP, ScrollTrigger, Lenis (vendored, no CDN)
+screens/              screenshots captured from the live tools
+CNAME                 os.healthmatters.clinic
+.github/workflows/deploy.yml   GitHub Pages deploy on push to main
+```
+
+## To put it live
+
+1. Create a GitHub repo under TEAMHMC named `os`.
+2. `git remote add origin git@github.com:TEAMHMC/os.git` then push `main`.
+3. Repo settings, Pages, set Source to GitHub Actions.
+4. Cloudflare DNS, add a CNAME record `os` pointing at `teamhmc.github.io`, proxy off.
+5. Repo settings, Pages, custom domain `os.healthmatters.clinic`, then enforce HTTPS.
+
+## Notes for whoever edits this next
+
+- No `scroll-behavior: smooth` anywhere. ScrollTrigger jumps the scroller to zero
+  while it measures, and a smooth scroller turns that jump into an animation, so
+  every measurement comes back offset by however far down the page the reader is.
+  Anchor easing is done per click in `os.js` instead.
+- Nothing is hidden by CSS alone. `os.js` adds `.motion` to `<html>` only when
+  GSAP loaded and the visitor has not asked for reduced motion, so a broken
+  script leaves a readable page instead of a blank one.
+- `prefers-reduced-motion` gets a full flattened layout, not just paused
+  animation. The four opening lines, the nine stages and the five loop steps sit
+  on top of each other by design and only motion separates them.
+- Screens in `screens/` were captured with headless Chrome at 1280x900 (phones at
+  430x932). Recapture them when a tool's interface changes.
+- Trademark rule. Symbol on HMC OS, HMC VMS, Event Finder, Check Yourself,
+  Your CalmKit, Sunny and Unstoppable. No symbol on Resource Directory, Partner
+  Portal, Member Hub or HMC Academy. All marks are pending, so the trademark
+  symbol only, never the registered symbol.
+- Never state a count of resources, listings or organizations anywhere on this
+  page. Those numbers are not accurate.
+- Never link a tool to a login screen. Every outbound link here lands on
+  something a stranger can use or watch.

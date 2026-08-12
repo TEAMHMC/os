@@ -1,0 +1,378 @@
+/* ============================================================
+   HMC OS, os.healthmatters.clinic
+   A guided unveiling of the HMC operating system.
+
+   Structure of this file
+     1  tokens + base
+     2  chrome (top bar, progress, rail)
+     3  hero
+     4  premise (pinned beats)
+     5  the tour (nine pinned tool stages)
+     6  the loop (pinned horizontal track)
+     7  numbers + proof
+     8  what happens next
+     9  footer
+    10  motion states + reduced motion + responsive
+
+   Contrast rule followed throughout: light text only on #070707 / #0a0a0a /
+   #2333df, dark text only on #f5f3ef / #fff / #f9c74f. No blue on blue.
+   ============================================================ */
+
+/* ---------- 1. tokens + base ---------- */
+:root{
+  --primary:#2333df;
+  --primary-lift:#3a49ea;
+  --accent:#f9c74f;
+  --ink:#0a0a0a;
+  --paper:#f5f3ef;
+  --hero:#070707;
+  --muted:#2a2540;
+  --line:#e0dcd3;
+  --on-dark:rgba(255,255,255,.74);
+  --shell:min(1240px,92vw);
+}
+*{box-sizing:border-box}
+/* No scroll-behavior:smooth here. ScrollTrigger jumps the scroller to zero
+   while it measures, and a smooth scroller turns that jump into an animation,
+   so every measurement comes back offset by however far down the page the
+   reader happens to be. Anchor links get their easing in JS instead. */
+html{background:var(--hero)}
+body{
+  margin:0;
+  background:var(--hero);
+  color:var(--ink);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3,.display{font-family:'Questrial','Inter',sans-serif;font-weight:400;letter-spacing:-.02em}
+p{margin:0 0 18px}
+.shell{width:var(--shell);margin:0 auto}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:9px;margin:0 0 20px;
+  font-size:11.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+}
+.eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.eyebrow-dark{color:var(--primary)}
+.eyebrow-light{color:var(--accent)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* ---------- 2. chrome ---------- */
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60;pointer-events:none}
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:16px clamp(16px,4vw,40px);
+  background:linear-gradient(180deg,rgba(7,7,7,.86),rgba(7,7,7,0));
+  transition:background .3s ease;
+}
+.topbar.is-solid{background:rgba(7,7,7,.94);backdrop-filter:blur(10px)}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:#fff}
+.brand img{width:30px;height:30px;border-radius:8px}
+.brand-text{display:block}
+.brand-text b{display:block;font-weight:600;font-size:14px;letter-spacing:.01em}
+.brand-text i{display:block;font-style:normal;font-size:10px;letter-spacing:.19em;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:700}
+.topbar .hmc-btn{padding:9px 18px;font-size:14px}
+
+/* Sequence HUD. A guided run of nine screens needs a position marker, and the
+   bottom of the frame is the one place on a full-bleed stage that never
+   collides with the copy column or the device frame. */
+.hud{
+  position:fixed;left:50%;bottom:20px;transform:translate(-50%,14px);z-index:45;
+  display:flex;align-items:center;gap:14px;padding:9px 18px;border-radius:100px;
+  background:rgba(7,7,7,.86);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(10px);
+  opacity:0;pointer-events:none;transition:opacity .35s ease,transform .35s ease;max-width:92vw;
+}
+.hud.is-on{opacity:1;transform:translate(-50%,0)}
+.hud-idx{font-family:'Questrial',sans-serif;font-size:12.5px;letter-spacing:.14em;color:var(--accent);font-variant-numeric:tabular-nums}
+.hud-name{font-size:11.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#fff;white-space:nowrap}
+.hud-bars{list-style:none;display:flex;gap:5px;margin:0;padding:0}
+.hud-bars li{width:12px;height:2px;border-radius:2px;background:rgba(255,255,255,.28);transition:width .35s ease,background .35s ease}
+.hud-bars li.is-active{width:26px;background:var(--accent)}
+
+/* ---------- 3. hero ---------- */
+.hero{
+  position:relative;min-height:100vh;min-height:100svh;
+  display:flex;align-items:center;
+  background:var(--hero);overflow:hidden;
+  padding:118px 0 116px;
+}
+.hero-glow{
+  position:absolute;left:50%;top:38%;width:min(1100px,120vw);height:min(1100px,120vw);
+  transform:translate(-50%,-50%);pointer-events:none;
+  background:radial-gradient(closest-side,rgba(35,51,223,.42),rgba(35,51,223,0) 70%);
+}
+.hero-grid{
+  position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:74px 74px;
+  mask-image:radial-gradient(closest-side at 50% 42%,#000,transparent 78%);
+  -webkit-mask-image:radial-gradient(closest-side at 50% 42%,#000,transparent 78%);
+}
+.hero-inner{position:relative;z-index:2;text-align:center}
+.hero-mark{
+  font-size:clamp(64px,15.5vw,232px);line-height:.82;margin:0 0 6px;
+  letter-spacing:-.04em;color:#fff;
+}
+.hero-mark sup{font-size:.2em;vertical-align:super;letter-spacing:0;-webkit-text-fill-color:rgba(255,255,255,.8);color:rgba(255,255,255,.8)}
+.hero-sub{
+  color:#fff;font-family:'Questrial',sans-serif;font-size:clamp(19px,2.5vw,32px);
+  line-height:1.18;margin:0 auto 20px;max-width:19ch;letter-spacing:-.01em;
+}
+.hero-lede{color:var(--on-dark);font-size:clamp(15.5px,1.5vw,18px);max-width:60ch;margin:0 auto 34px}
+.hero-cta{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
+.hero-stats{
+  display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(22px,5vw,58px);
+  margin:clamp(30px,4.4vw,50px) auto 0;padding-top:26px;border-top:1px solid rgba(255,255,255,.16);max-width:820px;
+}
+.hero-stats div{text-align:center}
+.hero-stats b{
+  display:block;font-family:'Questrial',sans-serif;font-size:clamp(24px,3vw,38px);
+  color:#fff;line-height:1;font-variant-numeric:tabular-nums;
+}
+.hero-stats span{display:block;margin-top:8px;font-size:10.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.56)}
+.scroll-cue{
+  position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;
+  font-size:10.5px;font-weight:700;letter-spacing:.19em;text-transform:uppercase;color:rgba(255,255,255,.5);
+  display:flex;flex-direction:column;align-items:center;gap:9px;
+}
+.scroll-cue i{width:1px;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.55),transparent);display:block}
+
+/* ---------- 4. premise ---------- */
+.premise{position:relative;background:var(--hero);height:300vh}
+.premise-sticky{position:sticky;top:0;height:100vh;height:100svh;display:grid;place-items:center;overflow:hidden}
+.premise-stack{position:relative;width:var(--shell);text-align:center}
+.beat{
+  position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
+  font-family:'Questrial',sans-serif;color:#fff;
+  font-size:clamp(27px,5vw,68px);line-height:1.06;letter-spacing:-.02em;
+  margin:0 auto;max-width:20ch;
+}
+.beat.b4{color:var(--accent)}
+.premise-rule{position:absolute;left:50%;bottom:12vh;transform:translateX(-50%);width:1px;height:9vh;background:rgba(255,255,255,.22)}
+
+/* ---------- 5. the tour ---------- */
+.seq{position:relative;background:var(--hero)}
+.seq-intro{padding:clamp(90px,13vw,170px) 0 clamp(30px,5vw,60px);text-align:center}
+.seq-intro h2{color:#fff;font-size:clamp(32px,5.4vw,70px);line-height:.98;margin:0 auto 18px;max-width:16ch}
+.seq-intro p{color:var(--on-dark);max-width:52ch;margin:0 auto;font-size:clamp(15.5px,1.5vw,18px)}
+
+.tool{position:relative;height:180vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;display:grid;place-items:center;overflow:hidden}
+.stage-grid{
+  width:var(--shell);display:grid;grid-template-columns:minmax(0,0.82fr) minmax(0,1.18fr);
+  gap:clamp(28px,4.4vw,66px);align-items:center;
+}
+.tool-copy .idx{
+  display:flex;align-items:center;gap:12px;margin:0 0 18px;
+  font-family:'Questrial',sans-serif;font-size:13px;letter-spacing:.16em;color:var(--accent);
+  font-variant-numeric:tabular-nums;
+}
+.tool-copy .idx i{flex:1;height:1px;background:rgba(255,255,255,.18);display:block;max-width:70px}
+.tool-copy h3{color:#fff;font-size:clamp(30px,4.4vw,58px);line-height:1;margin:0 0 16px}
+.tool-copy h3 sup{font-size:.26em;vertical-align:super;letter-spacing:0;color:rgba(255,255,255,.75)}
+.tool-copy .line{color:var(--on-dark);font-size:clamp(15.5px,1.45vw,18px);margin:0 0 22px;max-width:44ch}
+.chips{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px;padding:0}
+.chips li{
+  border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:7px 14px;
+  font-size:11.5px;font-weight:600;letter-spacing:.05em;color:rgba(255,255,255,.86);
+}
+.tool-note{
+  border-left:2px solid var(--accent);padding:2px 0 2px 14px;margin:0 0 24px;
+  font-size:13.5px;color:rgba(255,255,255,.66);max-width:42ch;
+}
+
+/* device frames */
+.frame{
+  border-radius:16px;overflow:hidden;background:#fff;
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:0 50px 120px rgba(0,0,0,.62),0 0 0 1px rgba(255,255,255,.05);
+}
+.frame-bar{
+  display:flex;align-items:center;gap:7px;height:36px;padding:0 14px;
+  background:#f0eee9;border-bottom:1px solid #e2dfd8;
+}
+.frame-bar em{width:9px;height:9px;border-radius:50%;background:#d6d2ca;display:block}
+.frame-bar b{
+  margin-left:10px;font-size:11px;font-weight:500;color:#7a746a;letter-spacing:.02em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.frame-shot{display:block;width:100%;height:clamp(250px,50vh,540px);object-fit:cover;object-position:top center}
+.frame-shot.mid{object-position:center 30%}
+.phone{
+  width:min(292px,72vw);margin:0 auto;border-radius:38px;padding:9px;
+  background:#141418;border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 50px 110px rgba(0,0,0,.62);
+}
+.phone img{border-radius:30px;width:100%;height:clamp(300px,54vh,560px);object-fit:cover;object-position:top center}
+.stage-media{position:relative}
+.stage-media::after{
+  content:'';position:absolute;inset:-14% -8%;z-index:-1;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(35,51,223,.5),rgba(35,51,223,0) 72%);
+}
+
+/* ---------- 6. the loop ---------- */
+.loop{position:relative;background:var(--paper);height:240vh}
+.loop-sticky{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.loop-head{width:var(--shell);margin:0 auto clamp(24px,4vw,48px)}
+.loop-head h2{font-size:clamp(30px,5vw,64px);line-height:.98;margin:0 0 14px;max-width:16ch}
+.loop-head p{color:var(--muted);max-width:56ch;margin:0}
+.track{display:flex;gap:clamp(14px,1.8vw,24px);padding:0 max(4vw,calc((100vw - var(--shell))/2));will-change:transform}
+.panel{
+  flex:0 0 min(420px,80vw);background:#fff;border:1px solid var(--ink);border-radius:24px;
+  padding:clamp(22px,2.6vw,32px);display:flex;flex-direction:column;gap:12px;
+}
+.panel .step{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--primary)}
+.panel h3{font-size:clamp(20px,2.2vw,27px);line-height:1.06;margin:0}
+.panel p{margin:0;font-size:15px;color:var(--muted);line-height:1.55}
+.panel .tag{margin-top:auto;font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);opacity:.55}
+.panel.pop{background:var(--accent);border-color:var(--ink)}
+.panel.pop .step{color:var(--ink)}
+.panel.deep{background:var(--primary);border-color:var(--primary);color:#fff}
+.panel.deep .step{color:var(--accent)}
+.panel.deep p{color:rgba(255,255,255,.9)}
+.panel.deep .tag{color:#fff;opacity:.75}
+
+/* ---------- 7. numbers + proof ---------- */
+.numbers{background:var(--paper);padding:clamp(70px,10vw,130px) 0 clamp(30px,5vw,50px)}
+.num-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(14px,1.8vw,22px)}
+.num{background:#fff;border:1px solid var(--ink);border-radius:22px;padding:26px 24px}
+.num b{display:block;font-family:'Questrial',sans-serif;font-size:clamp(40px,5vw,62px);line-height:1;font-variant-numeric:tabular-nums}
+.num span{display:block;margin-top:12px;font-size:13.5px;color:var(--muted);line-height:1.45}
+.num.pop{background:var(--accent)}
+.num.deep{background:var(--primary);border-color:var(--primary);color:#fff}
+.num.deep span{color:rgba(255,255,255,.88)}
+
+.proof{background:var(--paper);padding:clamp(30px,5vw,60px) 0 clamp(80px,11vw,140px)}
+.proof-head{max-width:640px;margin:0 0 clamp(28px,4vw,46px)}
+.proof-head h2{font-size:clamp(28px,4.4vw,54px);line-height:1;margin:0 0 14px}
+.proof-head p{color:var(--muted);margin:0}
+.proof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(14px,1.8vw,22px)}
+.pcard{background:#fff;border:1px solid var(--ink);border-radius:22px;padding:24px 22px}
+.pcard h3{font-size:15px;font-family:'Inter',sans-serif;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--primary);margin:0 0 10px}
+.pcard p{margin:0;font-size:15px;color:var(--muted);line-height:1.55}
+.secure{
+  margin-top:clamp(18px,2.6vw,28px);background:var(--ink);color:#fff;border-radius:22px;
+  padding:clamp(22px,3vw,34px);display:grid;gap:10px;
+}
+.secure h3{color:var(--accent);font-size:15px;font-family:'Inter',sans-serif;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin:0}
+.secure p{margin:0;color:rgba(255,255,255,.86);max-width:78ch}
+
+/* ---------- 8. what happens next ---------- */
+.next{background:var(--hero);padding:clamp(80px,11vw,150px) 0}
+.next-head{text-align:center;margin:0 auto clamp(34px,5vw,60px);max-width:720px}
+.next-head h2{color:#fff;font-size:clamp(30px,5vw,64px);line-height:.98;margin:0 0 16px}
+.next-head p{color:var(--on-dark);margin:0}
+.next-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(16px,2.2vw,28px)}
+.ncard{
+  background:#fff;border-radius:26px;padding:clamp(26px,3.2vw,40px);
+  display:flex;flex-direction:column;gap:16px;
+}
+.ncard h3{font-size:clamp(23px,2.6vw,32px);line-height:1.04;margin:0}
+.ncard>p{margin:0;color:var(--muted);font-size:15.5px}
+.ncard ol{margin:0;padding:0;list-style:none;display:grid;gap:11px;counter-reset:s}
+.ncard ol li{
+  counter-increment:s;display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;
+  font-size:15px;color:var(--ink);
+}
+.ncard ol li::before{
+  content:counter(s,decimal-leading-zero);
+  font-family:'Questrial',sans-serif;font-size:12px;letter-spacing:.08em;color:var(--primary);
+  border:1px solid var(--line);border-radius:50%;width:26px;height:26px;
+  display:flex;align-items:center;justify-content:center;
+}
+.ncard .btn-row{margin-top:auto;padding-top:6px}
+
+/* ---------- 9. footer ---------- */
+.foot{background:var(--ink);color:rgba(255,255,255,.66);padding:clamp(56px,8vw,90px) 0 34px}
+.foot-top{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(24px,4vw,48px);align-items:start}
+.foot h4{color:#fff;font-family:'Questrial',sans-serif;font-size:22px;margin:0 0 12px}
+.foot p{margin:0 0 12px;font-size:14.5px;line-height:1.6}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.foot a{color:rgba(255,255,255,.8);text-decoration:none;font-size:14.5px}
+.foot a:hover{color:#fff;text-decoration:underline}
+.foot-mark{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+.foot-base{
+  margin-top:clamp(34px,5vw,56px);padding-top:22px;border-top:1px solid rgba(255,255,255,.14);
+  display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;font-size:12.5px;color:rgba(255,255,255,.5);
+}
+
+/* ---------- 10. motion states ---------- */
+html.motion [data-reveal]{opacity:0}
+html.motion .beat{opacity:0}
+html.motion .beat.b1{opacity:1}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap}
+
+/* Buttons on dark stages: the shared secondary pill is white on #1a1a1a text,
+   which is the highest contrast option against #070707. Nothing is restyled
+   beyond the ghost variant used for in-page navigation. */
+.hmc-btn-ghost{
+  display:inline-flex;align-items:center;gap:11px;padding:12px 20px;border-radius:100px;
+  border:1px solid rgba(255,255,255,.32);color:#fff;text-decoration:none;font-size:15px;
+  transition:border-color .25s ease,background .25s ease;
+}
+.hmc-btn-ghost::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.hmc-btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+
+/* Reduced motion is not just "hold the animation still". The four opening
+   lines, the nine stages and the five loop steps are stacked on top of each
+   other by design, and only scroll motion separates them. With motion off they
+   have to become an ordinary stacked page, or they render as one pile of
+   overlapping text. This block is the same flattening the phone layout uses. */
+@media (prefers-reduced-motion:reduce){
+  html.motion [data-reveal],html.motion .beat{opacity:1!important;transform:none!important}
+
+  .premise{height:auto}
+  .premise-sticky{position:static;height:auto;display:block;padding:clamp(70px,12vw,120px) 0}
+  .premise-stack{position:static;display:grid;gap:clamp(20px,3vw,34px);text-align:center}
+  .beat{position:static;transform:none;margin:0 auto;max-width:24ch;font-size:clamp(26px,4vw,44px)}
+  .premise-rule{display:none}
+
+  .tool{height:auto}
+  .stage{position:static;height:auto;padding:clamp(54px,8vw,90px) 0}
+  .hud{display:none}
+
+  .loop{height:auto}
+  .loop-sticky{position:static;height:auto;display:block;padding:clamp(70px,12vw,120px) 0;overflow:visible}
+  .track{flex-wrap:wrap;transform:none!important;padding:0;width:var(--shell);margin:0 auto}
+  .panel{flex:1 1 min(390px,100%)}
+}
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){ .hud-name{display:none} }
+
+@media (max-width:900px){
+  body{font-size:16px}
+  /* The hero is taller than the viewport on a phone, so the cue would sit on
+     top of the stat row rather than below it. */
+  .scroll-cue{display:none}
+  .premise{height:auto}
+  .premise-sticky{position:static;height:auto;padding:clamp(70px,14vw,110px) 0;display:block}
+  .premise-stack{position:static;display:grid;gap:26px;text-align:left}
+  .beat{position:static;transform:none;opacity:1!important;max-width:26ch;font-size:clamp(24px,6.4vw,34px)}
+  .premise-rule{display:none}
+
+  .tool{height:auto}
+  .stage{position:static;height:auto;padding:clamp(52px,11vw,80px) 0}
+  .stage-grid{grid-template-columns:1fr;gap:26px}
+  .stage-media{order:-1}
+  .frame-shot{height:clamp(210px,52vw,330px)}
+  .phone img{height:auto;max-height:520px}
+
+  .loop{height:auto}
+  .loop-sticky{position:static;height:auto;padding:clamp(70px,13vw,110px) 0;overflow:visible}
+  .track{flex-direction:column;padding:0;width:var(--shell);margin:0 auto;transform:none!important}
+  .panel{flex:1 1 auto}
+  .loop-head{margin-bottom:26px}
+}
+
+@media (max-width:560px){
+  .topbar .hmc-btn{display:none}
+  .hero{padding:104px 0 70px}
+  .hero-stats{gap:20px 30px}
+  .hero-cta .hmc-btn{width:100%;justify-content:center}
+}
