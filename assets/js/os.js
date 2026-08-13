@@ -59,6 +59,109 @@
     });
   });
 
+  /* ---------- persona switcher ----------
+     The same nine tools mean different things to a resident, a volunteer, a
+     partner organization and a funder. Rather than write one line and hope it
+     lands for all four, each stage carries a line per persona and this swaps
+     them. Choosing a persona also reorders the tour so the tools that matter
+     to that reader come first.
+
+     A funder is the exception and keeps all nine in the default order. They
+     are judging whether HMC can execute at the scale they would fund, so
+     completeness is the argument; a shortened cut would read as a smaller
+     operation than it is.
+
+     Nothing is removed from the DOM. Out-of-path stages are marked and pushed
+     to the end, so every tool stays reachable and the page stays crawlable. */
+  var PERSONA_PATHS = {
+    all:       [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    member:    [1, 2, 3, 4, 9],
+    volunteer: [6, 7, 1, 9],
+    partner:   [8, 1, 3, 6],
+    funder:    [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  };
+  var PERSONA_NOTES = {
+    all:       '',
+    member:    'Showing the tools you can use yourself. The rest follow underneath.',
+    volunteer: 'Showing what you will use as a volunteer. The rest follow underneath.',
+    partner:   'Showing what your organization works with. The rest follow underneath.',
+    funder:    'Showing the full system. Every tool below is running today.'
+  };
+
+  var whoBtns = [].slice.call(document.querySelectorAll('.who-btn'));
+  var whoNote = document.getElementById('whoNote');
+  var seq = document.getElementById('tour');
+  var stages = [].slice.call(document.querySelectorAll('article.tool'));
+
+  if (whoBtns.length && stages.length) {
+    // Remember where each stage started so "show me everything" can put the
+    // tour back exactly as it was rather than approximately.
+    stages.forEach(function (el, i) { el.style.order = String(i); });
+
+    function applyPersona(key, announce) {
+      var path = PERSONA_PATHS[key] || PERSONA_PATHS.all;
+      var inPath = {};
+      path.forEach(function (n, i) { inPath[n] = i; });
+
+      stages.forEach(function (el) {
+        var n = parseInt(el.getAttribute('data-tool'), 10);
+        var lines = {};
+        try { lines = JSON.parse(el.getAttribute('data-lines') || '{}'); } catch (e) {}
+        var line = el.querySelector('.line');
+
+        if (line) {
+          if (!line.getAttribute('data-default')) line.setAttribute('data-default', line.textContent);
+          line.textContent = (key !== 'all' && lines[key]) ? lines[key] : line.getAttribute('data-default');
+        }
+
+        var idx = el.querySelector('.idx span');
+        if (idx) {
+          if (!idx.getAttribute('data-default')) idx.setAttribute('data-default', idx.textContent);
+          if (key === 'all' || key === 'funder' || !(n in inPath)) {
+            idx.textContent = idx.getAttribute('data-default');
+          } else {
+            var pos = inPath[n] + 1;
+            idx.textContent = ('0' + pos).slice(-2) + ' / ' + ('0' + path.length).slice(-2);
+          }
+        }
+
+        if (n in inPath) {
+          el.classList.remove('is-aside');
+          el.style.order = String(inPath[n]);
+        } else {
+          el.classList.add('is-aside');
+          el.style.order = String(100 + n);
+        }
+      });
+
+      if (seq) seq.classList.toggle('is-cut', key !== 'all' && key !== 'funder');
+      whoBtns.forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-persona') === key));
+      });
+      if (whoNote && announce) whoNote.textContent = PERSONA_NOTES[key] || '';
+
+      // The stages just changed order and height, so every pinned trigger built
+      // against the old layout is now measuring the wrong thing.
+      if (window.ScrollTrigger) window.ScrollTrigger.refresh();
+    }
+
+    whoBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var key = b.getAttribute('data-persona');
+        applyPersona(key, true);
+        var url = new URL(window.location.href);
+        if (key === 'all') url.searchParams.delete('for');
+        else url.searchParams.set('for', key);
+        history.replaceState(null, '', url);
+      });
+    });
+
+    // Deep link, so a funder or a partner can be sent straight to their cut.
+    var initial = new URL(window.location.href).searchParams.get('for');
+    if (initial && PERSONA_PATHS[initial]) applyPersona(initial, true);
+  }
+
+
   if (reduce || !hasGsap) return;
 
   doc.classList.add('motion');

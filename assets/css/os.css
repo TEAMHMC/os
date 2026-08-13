@@ -397,3 +397,38 @@ html.motion .beat.b1{opacity:1}
   .hero{padding:104px 0 70px}
   .hero-cta .hmc-btn{width:100%;justify-content:center}
 }
+
+
+/* ---------- persona switcher ----------
+   Sits at the top of the tour so the reader chooses a lens before the nine
+   stages start, rather than discovering at the end that three of them were
+   aimed at somebody else. */
+.who{margin-top:clamp(30px,4vw,46px);text-align:center}
+.who-q{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.55);margin:0 0 14px}
+.who-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.who-btn{
+  appearance:none;cursor:pointer;
+  padding:11px 20px;border-radius:100px;
+  border:1px solid rgba(255,255,255,.28);
+  background:transparent;color:rgba(255,255,255,.82);
+  font:500 14px/1 'Inter',sans-serif;letter-spacing:.01em;
+  transition:background .18s ease,border-color .18s ease,color .18s ease;
+}
+.who-btn:hover{border-color:rgba(255,255,255,.6);color:#fff}
+.who-btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.who-btn[aria-pressed="true"]{background:#fff;border-color:#fff;color:#0a0a0a;font-weight:600}
+.who-note{min-height:1.2em;margin:14px 0 0;font-size:14px;color:rgba(255,255,255,.6)}
+
+/* Stages outside the chosen path keep their place in the document and move to
+   the end of the run, dimmed rather than hidden, so nothing becomes
+   unreachable and the page still reads whole to a crawler. */
+.seq .tool.is-aside{opacity:.4}
+.seq .tool.is-aside:hover,
+.seq .tool.is-aside:focus-within{opacity:1}
+.seq.is-cut .tool.is-aside .stage{border-top:1px solid rgba(255,255,255,.08)}
+@media (prefers-reduced-motion:reduce){.seq .tool.is-aside{opacity:1}}
+
+@media (max-width:600px){
+  .who-row{gap:8px}
+  .who-btn{padding:10px 15px;font-size:13px}
+}
