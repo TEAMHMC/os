@@ -474,7 +474,32 @@ html.motion .beat.b1{opacity:1}
   padding:clamp(8px,1vw,14px);
   box-shadow:0 30px 60px rgba(0,0,0,.55), 0 4px 14px rgba(0,0,0,.4);
 }
-.deck-shell img{display:block;width:100%;height:auto;border-radius:6px}
+/* Seven of the nine screens are 1600x1125 browser captures and two are 415x900
+   phone captures. Left to their intrinsic ratios the phone cards ran more than
+   twice the height of the rest, which broke the row they were in and pushed
+   their own labels out of the card. Every card now opens onto the same window.
+   The ratio is the capture ratio, so the browser shots are not cropped at all,
+   and the phone shots sit in a phone standing inside that window rather than
+   being stretched into a shape they were never taken in. */
+/* height:auto is load bearing. The width and height attributes on an img are
+   presentational hints, and an element with both dimensions resolved ignores
+   aspect-ratio entirely, so without this the cards size themselves from the
+   markup's height attribute instead of from the ratio below. */
+.deck-shell img{display:block;width:100%;height:auto;aspect-ratio:1600/1125;object-fit:cover;object-position:top center;border-radius:6px;background:#fff}
+.deck-stand{
+  display:grid;place-items:center;width:100%;aspect-ratio:1600/1125;
+  border-radius:6px;overflow:hidden;
+  background:radial-gradient(circle at 50% 30%,#1b1b22,#0c0c10 70%);
+}
+/* Sized from the stand's width, not its height. A percentage height against a
+   box whose own height comes from aspect-ratio resolves to auto once the image
+   loads, which let the phone snap back to its natural size and blow the card
+   open again. The stand is 1600/1125, so 28% of its width lands the phone at
+   about 86% of its height, and that arithmetic holds at every breakpoint. */
+.deck-shell .deck-stand img{
+  width:28%;height:auto;aspect-ratio:415/900;border-radius:11px;background:#000;
+  border:1px solid rgba(255,255,255,.16);box-shadow:0 12px 28px rgba(0,0,0,.55);
+}
 .deck-name{
   display:block;margin-top:14px;text-align:center;
   font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
@@ -562,6 +587,17 @@ html.motion .beat.b1{opacity:1}
   aspect-ratio:16/10;
 }
 .laptop-screen img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+
+/* The phone build of the same stage. The width is capped against the viewport
+   height because a 415/900 screen is 2.17 times as tall as it is wide, so a
+   width that is fine on a desktop runs off the bottom of a short window. */
+.lb-stage[data-shape="phone"] .laptop-lid{
+  width:min(320px,36vh);margin:0 auto;
+  border-radius:34px;padding:10px;
+  border-color:rgba(255,255,255,.14);
+}
+.lb-stage[data-shape="phone"] .laptop-screen{aspect-ratio:415/900;border-radius:25px}
+.lb-stage[data-shape="phone"] .laptop-base{display:none}
 .laptop-base{
   position:relative;height:clamp(11px,1.3vw,17px);
   margin:0 auto;width:104%;transform:translateX(-2%);

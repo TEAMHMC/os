@@ -181,6 +181,7 @@
     var btnClose = document.getElementById('lbClose');
     var btnPrev = document.getElementById('lbPrev');
     var btnNext = document.getElementById('lbNext');
+    var stage = document.getElementById('lbStage');
     var current = 0;
     var lastFocused = null;
 
@@ -192,6 +193,10 @@
       var src = card.querySelector('img');
       img.src = src.getAttribute('src');
       img.alt = src.getAttribute('alt') || '';
+      // Two of the nine were captured on a phone. Shown in the laptop's 16/10
+      // screen they came out as the top fifth of the shot blown up to full
+      // width, so the lid becomes a phone body for those instead.
+      if (stage) stage.setAttribute('data-shape', card.getAttribute('data-shape') || 'browser');
       name.textContent = card.querySelector('.deck-name').textContent;
       idx.textContent = pad(current + 1) + ' / ' + pad(cards.length);
       open.href = card.getAttribute('href');
@@ -502,11 +507,21 @@
       { rx: 15, ry:  17, rz: -3, z: -55 }
     ];
 
+    /* The stylesheet flattens the resting pose below 900px, on the grounds that
+       a strong 3D tilt on a narrow screen reads as a rendering fault rather than
+       as depth. GSAP writes an inline transform, which outranks that rule, so
+       the same restraint has to be repeated here. Without it a phone got the
+       full desktop tilt and the top card leaned far enough to sit on its own
+       label. */
+    var poseScale = desktop ? 1 : 0.35;
+
     cards.forEach(function (card, i) {
       var pose = POSE[i % POSE.length];
       gsap.set(card, {
-        rotateX: pose.rx, rotateY: pose.ry, rotateZ: pose.rz,
-        z: pose.z, opacity: 0, y: 40
+        rotateX: pose.rx * poseScale,
+        rotateY: pose.ry * poseScale,
+        rotateZ: pose.rz * poseScale,
+        z: pose.z * poseScale, opacity: 0, y: 40
       });
 
       // Arrival. The card lifts into its tilted pose, which reads as the object
