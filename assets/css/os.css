@@ -322,10 +322,14 @@ p{margin:0 0 18px}
   list-style:none;margin:0;padding:0;display:grid;gap:clamp(14px,2.4vw,26px);justify-items:center;
 }
 .w-chain li{
-  border:1px solid rgba(10,10,10,.22);background:#fff;border-radius:100px;
-  padding:12px 24px;font-size:clamp(13px,1.4vw,16px);font-weight:600;color:var(--ink);
+  border:1px solid rgba(10,10,10,.2);background:#fff;border-radius:16px;
+  padding:14px 26px;color:var(--ink);width:min(400px,86vw);text-align:center;
+  box-shadow:0 10px 26px rgba(0,0,0,.08);
 }
+.w-chain li b{display:block;font-size:clamp(15px,1.5vw,18px);font-weight:600}
+.w-chain li span{display:block;margin-top:3px;font-size:13px;color:var(--muted)}
 .w-chain li:last-child{background:var(--primary);border-color:var(--primary);color:#fff}
+.w-chain li:last-child span{color:rgba(255,255,255,.85)}
 
 /* the live bits of interface that assemble on top of the screenshot */
 .ui-type{
@@ -374,8 +378,9 @@ p{margin:0 0 18px}
 .foot ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 .foot a{color:rgba(255,255,255,.8);text-decoration:none;font-size:14.5px}
 .foot a:hover{color:#fff;text-decoration:underline}
-.foot-contact{margin-top:16px;font-size:14px}
-.foot-contact a{text-decoration:underline;text-underline-offset:3px}
+.foot-tag{margin:14px 0 0;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.foot-cta{margin-top:20px}
+.foot-cta .hmc-btn{font-size:14px;padding:10px 20px}
 /* Sits under the list of things anyone can open, because that column is where a
    person looking for help is already reading. */
 .foot-crisis{margin:26px 0 0;font-size:13.5px;color:rgba(255,255,255,.62);max-width:34ch}
@@ -384,8 +389,9 @@ p{margin:0 0 18px}
 .foot-mark{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
 .foot-base{
   margin-top:clamp(34px,5vw,56px);padding-top:22px;border-top:1px solid rgba(255,255,255,.14);
-  display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;font-size:12.5px;color:rgba(255,255,255,.5);
+  display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between;font-size:12.5px;color:rgba(255,255,255,.5);
 }
+.foot-base span:first-child{order:-1}
 
 /* ---------- 10. motion states ---------- */
 html.motion [data-reveal]{opacity:0}
@@ -518,11 +524,10 @@ html.motion .pro-line[data-line="1"]{opacity:1}
   position:absolute;inset:0;margin:0;z-index:4;pointer-events:none;
   color:#fff;font-size:clamp(44px,8.4vw,128px);line-height:.9;letter-spacing:-.035em;
 }
-/* The two halves hold the top left and bottom right corners. The options live
-   in the band between them, which is the only way four cards and a headline
-   this size share one screen without touching. */
-.lead-a{position:absolute;left:clamp(16px,4vw,60px);top:clamp(58px,8vh,96px)}
-.lead-b{position:absolute;right:clamp(16px,4vw,60px);bottom:clamp(50px,7vh,86px)}
+/* The question opens at the top and closes at the bottom, both centred, with
+   the four answers held in the band between them. */
+.lead-a{position:absolute;left:0;right:0;text-align:center;top:clamp(56px,8vh,96px)}
+.lead-b{position:absolute;left:0;right:0;text-align:center;bottom:clamp(46px,6.5vh,84px)}
 
 .who{position:absolute;inset:0;margin:0;z-index:3}
 .who-web{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
@@ -708,17 +713,33 @@ html.motion .pro-line[data-line="1"]{opacity:1}
 /* The laptop. Lid, screen, base and notch, all drawn. The base uses a trapezoid
    so it reads as a body sitting under the lid rather than a bar beneath it. */
 .laptop{position:relative;width:100%;filter:drop-shadow(0 44px 70px rgba(0,0,0,.7))}
+/* The desk shadow. A device sitting on something reads as real; a device
+   floating on a flat colour reads as a screenshot with a border. */
+.laptop::after{
+  content:'';position:absolute;left:50%;bottom:-3%;transform:translateX(-50%);
+  width:86%;height:26px;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(0,0,0,.55),rgba(0,0,0,0) 72%);
+  pointer-events:none;
+}
 .laptop-lid{
-  background:linear-gradient(180deg,#26262a,#141416 12%);
-  border-radius:14px 14px 5px 5px;
-  padding:clamp(11px,1.3vw,17px) clamp(11px,1.3vw,17px) clamp(20px,2.2vw,30px);
-  border:1px solid rgba(255,255,255,.13);
+  background:linear-gradient(168deg,#3c3c42,#1b1b1f 18%,#141417 82%,#0f0f12);
+  border-radius:16px 16px 6px 6px;
+  padding:clamp(10px,1.15vw,15px) clamp(10px,1.15vw,15px) clamp(22px,2.4vw,32px);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16);
+}
+/* The camera, centred in the top bezel. */
+.laptop-lid::before{
+  content:'';position:absolute;left:50%;top:clamp(4px,.5vw,7px);transform:translateX(-50%);
+  width:5px;height:5px;border-radius:50%;background:#0b0b0d;
+  box-shadow:0 0 0 1px rgba(255,255,255,.08);
 }
 /* The chin, with the hinge cut into it. Without a chin and a hinge the lid
    reads as a floating rectangle rather than the top half of a laptop. */
+/* The wordmark on the chin, the way every laptop has one. */
 .laptop-lid::after{
-  content:'';position:absolute;left:50%;bottom:clamp(7px,.8vw,11px);transform:translateX(-50%);
-  width:22%;height:2px;border-radius:2px;background:rgba(255,255,255,.14);
+  content:'';position:absolute;left:50%;bottom:clamp(8px,.9vw,13px);transform:translateX(-50%);
+  width:15%;height:3px;border-radius:3px;background:rgba(255,255,255,.13);
 }
 .laptop-lid{position:relative}
 .laptop-screen{
@@ -729,13 +750,15 @@ html.motion .pro-line[data-line="1"]{opacity:1}
 
 /* The deck. Wider than the lid, tapering forward, with the front lip catching
    the light the way an aluminium body does. */
+/* The deck, seen almost edge on. Wider than the lid, tapering forward, with a
+   bright top edge where the hinge catches the light and a dark front lip. */
 .laptop-base{
-  position:relative;height:clamp(14px,1.7vw,22px);
-  margin:0 auto;width:112%;transform:translateX(-6%);
-  background:linear-gradient(180deg,#4a4a50 0%,#2b2b30 38%,#191919 82%,#0e0e10 100%);
-  border-radius:0 0 12px 12px;
-  clip-path:polygon(2.4% 0, 97.6% 0, 100% 100%, 0 100%);
-  box-shadow:0 18px 34px rgba(0,0,0,.5);
+  position:relative;height:clamp(15px,1.9vw,26px);
+  margin:0 auto;width:115%;transform:translateX(-7.5%);
+  background:linear-gradient(180deg,#6a6a72 0%,#43434a 14%,#25252a 46%,#141417 84%,#0b0b0d 100%);
+  border-radius:0 0 14px 14px;
+  clip-path:polygon(2.2% 0, 97.8% 0, 100% 100%, 0 100%);
+  box-shadow:0 22px 40px rgba(0,0,0,.55);
 }
 /* The thumb cut on the front edge. */
 .laptop-notch{

@@ -527,11 +527,16 @@
     if (quiet)  tl.to(quiet,  { opacity: 1, y: 0, duration: 0.6 }, 2.05);
     if (breath) {
       // One complete breath, held long enough to actually follow.
-      tl.to(breath, { opacity: 1, scale: 1, duration: 0.7 }, 2.05)
-        .to(breath.querySelector('.w-ring'), { scale: 1.34, duration: 0.9, ease: 'sine.inOut' }, 2.7)
-        .to(breath.querySelector('.w-ring'), { scale: 1, duration: 0.9, ease: 'sine.inOut' }, 3.6);
+      // Two full breaths, then the four modes, each with room to be read. The
+      // last one was arriving after the beat had already started leaving, so
+      // RESET was never actually seen.
+      tl.to(breath, { opacity: 1, scale: 1, duration: 0.7 }, 1.9)
+        .to(breath.querySelector('.w-ring'), { scale: 1.34, duration: 0.85, ease: 'sine.inOut' }, 2.5)
+        .to(breath.querySelector('.w-ring'), { scale: 1, duration: 0.85, ease: 'sine.inOut' }, 3.35)
+        .to(breath.querySelector('.w-ring'), { scale: 1.34, duration: 0.85, ease: 'sine.inOut' }, 4.2)
+        .to(breath.querySelector('.w-ring'), { scale: 1, duration: 0.85, ease: 'sine.inOut' }, 5.05);
       modes.forEach(function (m, i) {
-        tl.to(m, { opacity: 1, y: 0, duration: 0.35 }, 4.5 + i * 0.24);
+        tl.to(m, { opacity: 1, y: 0, duration: 0.4 }, 3.3 + i * 0.42);
       });
     }
     chain.forEach(function (c, i) {
@@ -539,7 +544,7 @@
     });
 
     // 3. The interface. It assembles, and one live control works on top of it.
-    var uiAt = centred ? 5.6 : 2.9;
+    var uiAt = (mood === 'calm') ? 6.4 : (centred ? 5.6 : 2.9);
     if (world) tl.to(world, { opacity: 0, duration: 0.5 }, uiAt - 0.55);
     if (!centred) tl.to(copy, { opacity: 0, y: -30, duration: 0.45 }, uiAt - 0.5);
     tl.to(ui, { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'power2.out' }, uiAt);
