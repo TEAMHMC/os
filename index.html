@@ -11,7 +11,13 @@
 <meta property="og:title" content="HMC OS | The operating system for community health work">
 <meta property="og:description" content="Nine tools, live today. Find an event, check in on your own head, find a resource, run a volunteer shift, take a referral and close it with an outcome. All on one record.">
 <meta property="og:url" content="https://os.healthmatters.clinic/">
-<meta property="og:image" content="https://os.healthmatters.clinic/screens/eventfinder.png">
+<meta property="og:site_name" content="Health Matters Clinic">
+<!-- A share card at the 1.91:1 every network crops to. The tool screenshot that
+     used to sit here is 4:3, so the crop cut the top and bottom off it. -->
+<meta property="og:image" content="https://os.healthmatters.clinic/assets/site/og-hmc-os.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HMC OS, the operating system for community health work. Nine tools, live today.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#070707">
 
@@ -27,6 +33,10 @@
 </head>
 <body>
 
+<!-- The page is fifteen thousand pixels of scroll driven sequence. Without this
+     a keyboard reader has to tab the whole tour before reaching anything else. -->
+<a class="skip" href="#next">Skip to how to get started</a>
+
 <div class="progress" id="progress" aria-hidden="true"></div>
 
 <header class="topbar" id="topbar">
@@ -36,6 +46,8 @@
   </a>
   <a class="hmc-btn hmc-btn-secondary" data-hmc-label="Start The Tour" href="#tour">Start the tour</a>
 </header>
+
+<main id="main">
 
 <!-- =============== HERO =============== -->
 <section class="hero" id="top">
@@ -420,10 +432,23 @@
   <div class="shell">
     <div class="next-head">
       <p class="eyebrow eyebrow-light" style="justify-content:center">What happens next</p>
-      <h2 data-reveal>Two ways in.</h2>
-      <p data-reveal>Both start with a conversation, and both end with you on the system rather than next to it.</p>
+      <h2 data-reveal>Three ways in.</h2>
+      <p data-reveal>The first is open to anyone this minute. The other two start with a conversation and end with you on the system rather than next to it.</p>
     </div>
     <div class="next-grid">
+      <!-- The person asking for help opens the premise of this page, so they get
+           the first door here rather than a footer link. -->
+      <article class="ncard" data-reveal>
+        <h3>For anyone who needs support</h3>
+        <p>Everything on this page that is open to the public sits behind one door. No application, no cost, and nothing to prove before you can use it.</p>
+        <ol>
+          <li>Enter an email address at the Member Hub.</li>
+          <li>Take a private check-in, or find an event near you.</li>
+          <li>Ask for help with food, housing, care or transport.</li>
+        </ol>
+        <div class="btn-row"><a class="hmc-btn hmc-btn-primary" data-hmc-label="Enter The Member Hub" href="https://hub.healthmatters.clinic">Enter the Member Hub</a></div>
+        <p class="ncard-contact">In a crisis, call or text <a href="tel:988">988</a>, the Suicide and Crisis Lifeline, any time of day.</p>
+      </article>
       <article class="ncard" data-reveal>
         <h3>For partner organizations</h3>
         <p>Reach the whole county with your events, receive referrals matched to what you actually do, and close each one on the record.</p>
@@ -433,6 +458,7 @@
           <li>Start taking referrals and posting your events.</li>
         </ol>
         <div class="btn-row"><a class="hmc-btn hmc-btn-primary" data-hmc-label="Partner With Us" href="https://www.healthmatters.clinic/partners">Partner with us</a></div>
+        <p class="ncard-contact">Or write to <a href="mailto:partner@healthmatters.clinic">partner@healthmatters.clinic</a>.</p>
       </article>
       <article class="ncard" data-reveal>
         <h3>For funders</h3>
@@ -443,10 +469,13 @@
           <li>Fund a named piece of the system and watch it report.</li>
         </ol>
         <div class="btn-row"><a class="hmc-btn hmc-btn-primary" data-hmc-label="Fund The System" href="https://www.healthmatters.clinic/funders">Fund the system</a></div>
+        <p class="ncard-contact">Or write to <a href="mailto:sponsor@healthmatters.clinic">sponsor@healthmatters.clinic</a>.</p>
       </article>
     </div>
   </div>
 </section>
+
+</main>
 
 <!-- =============== FOOTER =============== -->
 <footer class="foot">
@@ -457,6 +486,10 @@
         <h4>HMC OS<sup>&trade;</sup></h4>
         <p>A California 501(c)(3) nonprofit building and running the tools that carry community health work in Los Angeles.</p>
         <p>EIN 85-3784250</p>
+        <p class="foot-contact">
+          Partnerships: <a href="mailto:partner@healthmatters.clinic">partner@healthmatters.clinic</a><br>
+          Funding: <a href="mailto:sponsor@healthmatters.clinic">sponsor@healthmatters.clinic</a>
+        </p>
       </div>
       <div>
         <p class="foot-mark">Open to anyone</p>
@@ -467,10 +500,12 @@
           <li><a href="https://calmkit.healthmatters.clinic">Your CalmKit</a></li>
           <li><a href="https://hub.healthmatters.clinic">Member Hub</a></li>
         </ul>
+        <p class="foot-crisis">In a crisis, call or text <a href="tel:988">988</a>, the Suicide and Crisis Lifeline, any time of day.</p>
       </div>
       <div>
         <p class="foot-mark">Work with us</p>
         <ul>
+          <li><a href="https://www.healthmatters.clinic/volunteer">Volunteer with HMC</a></li>
           <li><a href="https://volunteer.healthmatters.clinic/tour">HMC VMS tour</a></li>
           <li><a href="https://partner.healthmatters.clinic/partner-demo">Partner Portal demo</a></li>
           <li><a href="https://unstoppable.healthmatters.clinic">Unstoppable</a></li>

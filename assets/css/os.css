@@ -62,6 +62,14 @@ p{margin:0 0 18px}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
 
 /* ---------- 2. chrome ---------- */
+/* Off screen until it takes focus, then it lands above the fixed top bar. */
+.skip{
+  position:fixed;top:-100px;left:16px;z-index:70;
+  background:var(--accent);color:var(--ink);text-decoration:none;
+  padding:12px 20px;border-radius:100px;font-size:14px;font-weight:600;
+  transition:top .2s ease;
+}
+.skip:focus-visible{top:14px}
 .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:60;pointer-events:none}
 .topbar{
   position:fixed;top:0;left:0;right:0;z-index:50;
@@ -125,16 +133,8 @@ p{margin:0 0 18px}
 }
 .hero-lede{color:var(--on-dark);font-size:clamp(15.5px,1.5vw,18px);max-width:60ch;margin:0 auto 34px}
 .hero-cta{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
-.hero-stats{
-  display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(22px,5vw,58px);
-  margin:clamp(30px,4.4vw,50px) auto 0;padding-top:26px;border-top:1px solid rgba(255,255,255,.16);max-width:820px;
-}
-.hero-stats div{text-align:center}
-.hero-stats b{
-  display:block;font-family:'Questrial',sans-serif;font-size:clamp(24px,3vw,38px);
-  color:#fff;line-height:1;font-variant-numeric:tabular-nums;
-}
-.hero-stats span{display:block;margin-top:8px;font-size:10.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.56)}
+/* No stat row belongs in this hero, or in any HMC hero. The styles for one were
+   removed with the markup so nothing invites it back. */
 .scroll-cue{
   position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;
   font-size:10.5px;font-weight:700;letter-spacing:.19em;text-transform:uppercase;color:rgba(255,255,255,.5);
@@ -286,6 +286,12 @@ p{margin:0 0 18px}
   display:flex;align-items:center;justify-content:center;
 }
 .ncard .btn-row{margin-top:auto;padding-top:6px}
+/* The way out of the card that is not the button: an address for the people who
+   would rather write than click, and the crisis line for the person who cannot
+   wait for either. */
+.ncard-contact{margin:0;font-size:14px;color:var(--muted)}
+.ncard-contact a{color:var(--primary);text-decoration:none;border-bottom:1px solid rgba(35,51,223,.4)}
+.ncard-contact a:hover{border-bottom-color:var(--primary)}
 
 /* ---------- 9. footer ---------- */
 .foot{background:var(--ink);color:rgba(255,255,255,.66);padding:clamp(56px,8vw,90px) 0 34px}
@@ -295,6 +301,13 @@ p{margin:0 0 18px}
 .foot ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
 .foot a{color:rgba(255,255,255,.8);text-decoration:none;font-size:14.5px}
 .foot a:hover{color:#fff;text-decoration:underline}
+.foot-contact{margin-top:16px;font-size:14px}
+.foot-contact a{text-decoration:underline;text-underline-offset:3px}
+/* Sits under the list of things anyone can open, because that column is where a
+   person looking for help is already reading. */
+.foot-crisis{margin:26px 0 0;font-size:13.5px;color:rgba(255,255,255,.62);max-width:34ch}
+.foot-crisis a{color:var(--accent);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(249,199,79,.5)}
+.foot-crisis a:hover{border-bottom-color:var(--accent)}
 .foot-mark{font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
 .foot-base{
   margin-top:clamp(34px,5vw,56px);padding-top:22px;border-top:1px solid rgba(255,255,255,.14);
@@ -306,6 +319,15 @@ html.motion [data-reveal]{opacity:0}
 html.motion .beat{opacity:0}
 html.motion .beat.b1{opacity:1}
 .btn-row{display:flex;gap:12px;flex-wrap:wrap}
+
+/* The shared pill sets transition-duration without a transition-property, so it
+   transitions every animatable property, opacity and transform included. Those
+   two belong to the motion layer. GSAP wrote the from state on the hero pair,
+   CSS then eased the live value toward it, and the value GSAP recorded as the
+   tween's destination was whatever the transition had already reached, which
+   left both hero buttons at opacity 0 permanently. Hand the colour transition
+   the hover needs back to CSS and keep the rest for GSAP. */
+.hmc-btn{transition-property:background-color,border-color,color,box-shadow}
 
 /* Buttons on dark stages: the shared secondary pill is white on #1a1a1a text,
    which is the highest contrast option against #070707. Nothing is restyled
@@ -347,8 +369,8 @@ html.motion .beat.b1{opacity:1}
 
 @media (max-width:900px){
   body{font-size:16px}
-  /* The hero is taller than the viewport on a phone, so the cue would sit on
-     top of the stat row rather than below it. */
+  /* The hero fills the viewport on a phone and the two buttons already sit at
+     the bottom of it, so the cue would land on top of them. */
   .scroll-cue{display:none}
   .premise{height:auto}
   .premise-sticky{position:static;height:auto;padding:clamp(70px,14vw,110px) 0;display:block}
@@ -373,6 +395,5 @@ html.motion .beat.b1{opacity:1}
 @media (max-width:560px){
   .topbar .hmc-btn{display:none}
   .hero{padding:104px 0 70px}
-  .hero-stats{gap:20px 30px}
   .hero-cta .hmc-btn{width:100%;justify-content:center}
 }

@@ -50,6 +50,12 @@
       e.preventDefault();
       var top = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
       window.scrollTo({ top: top, behavior: reduce ? 'auto' : 'smooth' });
+      // Preventing the default also cancels the focus move the browser would
+      // have done, which on a page this long strands a keyboard reader back at
+      // the top of the tab order. The skip link in particular does nothing at
+      // all without this.
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
     });
   });
 

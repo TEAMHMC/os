@@ -4,7 +4,7 @@ The guided unveiling of HMC OS, the operating system Health Matters Clinic runs 
 One page, nine tools, built as a standalone site so the animation is under our
 control rather than a page builder's.
 
-Live at `os.healthmatters.clinic` once the repo and DNS below exist.
+Live at `os.healthmatters.clinic`.
 
 ## What is here
 
@@ -50,3 +50,13 @@ CNAME                 os.healthmatters.clinic
   page. Those numbers are not accurate.
 - Never link a tool to a login screen. Every outbound link here lands on
   something a stranger can use or watch.
+- The shared pill (`hmc-buttons-1.0.4.css`) sets `transition-duration` with no
+  `transition-property`, so it transitions everything, opacity and transform
+  included. GSAP and a CSS transition on the same property fight: GSAP writes
+  the from state, CSS eases the live value toward it, and the value GSAP records
+  as the destination is whatever the transition had already reached. That is how
+  both hero buttons ended up invisible on the live page. `os.css` narrows
+  `.hmc-btn` to the colour properties. Do not widen it back, and do not fix this
+  in the shared file, which other HMC surfaces load.
+- Three doors close the page, in the order the premise sets up: the person
+  asking for help, the partner, the funder. The person goes first.
