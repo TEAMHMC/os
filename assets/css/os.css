@@ -215,7 +215,6 @@ p{margin:0 0 18px}
    paper, because that is the working surface partners actually sit on. */
 .seq-intro-sec{background:var(--hero)}
 .seq-intro{padding:clamp(90px,13vw,170px) 0 clamp(40px,6vw,80px);text-align:center}
-.who-lead{color:#fff;font-size:clamp(32px,5.4vw,70px);line-height:.98;margin:0 auto 18px;max-width:16ch}
 
 .dives{display:flex;flex-direction:column}
 .dive{position:relative;height:420vh}
@@ -380,6 +379,10 @@ p{margin:0 0 18px}
 .foot a:hover{color:#fff;text-decoration:underline}
 .foot-tag{margin:14px 0 0;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
 .foot-cta{margin-top:20px}
+/* .foot a wins over the shared pill's own colour, so the label has to be put
+   back or the button renders as an empty white capsule. */
+.foot .hmc-btn-secondary{color:#1a1a1a}
+.foot .hmc-btn-primary{color:#fff}
 .foot-cta .hmc-btn{font-size:14px;padding:10px 20px}
 /* Sits under the list of things anyone can open, because that column is where a
    person looking for help is already reading. */
