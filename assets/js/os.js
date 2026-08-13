@@ -73,13 +73,17 @@
 
      Nothing is removed from the DOM. Out-of-path stages are marked and pushed
      to the end, so every tool stays reachable and the page stays crawlable. */
+  /* Dive order per answer. 1 Resource Directory, 2 CheckYourself,
+     3 EventFinder, 4 Your CalmKit, 5 Partner Portal. Nothing is removed: the
+     dives that are not on somebody's path follow underneath, so every product
+     stays reachable and the page stays crawlable. */
   var PERSONA_PATHS = {
-    all:       [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    member:    [3, 2, 1, 4, 9],
-    wellbeing: [4, 2, 1, 9],
-    volunteer: [1, 6, 7, 9],
-    partner:   [8, 3, 1, 6],
-    funder:    [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    all:       [1, 2, 3, 4, 5],
+    member:    [1, 2, 3, 4],
+    wellbeing: [4, 2, 3, 1],
+    volunteer: [3, 1, 4, 2],
+    partner:   [5, 1, 3, 2],
+    funder:    [1, 2, 3, 4, 5]
   };
   var PERSONA_NOTES = {
     all:       '',
@@ -91,8 +95,8 @@
   };
   var whoBtns = [].slice.call(document.querySelectorAll('.who-btn, .who-all'));
   var whoNote = document.getElementById('whoNote');
-  var seq = document.getElementById('tour');
-  var stages = [].slice.call(document.querySelectorAll('article.tool'));
+  var seq = document.getElementById('dives');
+  var stages = [].slice.call(document.querySelectorAll('.dive'));
 
   if (whoBtns.length && stages.length) {
     // Remember where each stage started so "show me everything" can put the
@@ -105,27 +109,7 @@
       path.forEach(function (n, i) { inPath[n] = i; });
 
       stages.forEach(function (el) {
-        var n = parseInt(el.getAttribute('data-tool'), 10);
-        var lines = {};
-        try { lines = JSON.parse(el.getAttribute('data-lines') || '{}'); } catch (e) {}
-        var line = el.querySelector('.line');
-
-        if (line) {
-          if (!line.getAttribute('data-default')) line.setAttribute('data-default', line.textContent);
-          line.textContent = (key !== 'all' && lines[key]) ? lines[key] : line.getAttribute('data-default');
-        }
-
-        var idx = el.querySelector('.idx span');
-        if (idx) {
-          if (!idx.getAttribute('data-default')) idx.setAttribute('data-default', idx.textContent);
-          if (key === 'all' || key === 'funder' || !(n in inPath)) {
-            idx.textContent = idx.getAttribute('data-default');
-          } else {
-            var pos = inPath[n] + 1;
-            idx.textContent = ('0' + pos).slice(-2) + ' / ' + ('0' + path.length).slice(-2);
-          }
-        }
-
+        var n = parseInt(el.getAttribute('data-dive'), 10);
         if (n in inPath) {
           el.classList.remove('is-aside');
           el.style.order = String(inPath[n]);
@@ -407,92 +391,129 @@
     });
   }
 
-  /* ---------- 3. the nine tools ----------
-     Each tool holds the viewport for one screen of scrolling. Its interface
-     settles into place, the copy follows a beat later, and both leave as the
-     next tool arrives. That arrival and departure is what makes the section
-     read as a sequence instead of a list. */
-  var railItems = document.querySelectorAll('[data-rail]');
-  var hud = document.getElementById('hud');
-  var hudIdx = document.getElementById('hudIdx');
-  var hudName = document.getElementById('hudName');
+  /* ---------- 3. the dives ----------
+     Each product is entered, not listed. Five beats, same order every time:
 
-  gsap.utils.toArray('.tool').forEach(function (tool) {
-    var media = tool.querySelector('.stage-media');
-    var copy = tool.querySelector('.tool-copy');
-    var index = tool.getAttribute('data-tool');
+       1  the name arrives from a distance
+       2  the world of that product assembles around it
+       3  the interface comes together
+       4  it says the one thing it is for
+       5  the whole scene compresses back to a point
 
-    if (desktop) {
-      // Arrive. Finishes before the stage locks, so the settled state is what
-      // the reader spends most of the section looking at.
-      gsap.timeline({
-        scrollTrigger: { trigger: tool, start: 'top 95%', end: 'top 45%', scrub: 0.45 }
-      })
-        .fromTo(media, { y: 80, opacity: 0, scale: 0.96 }, { y: 0, opacity: 1, scale: 1, ease: 'power2.out' }, 0)
-        .fromTo(copy, { y: 44, opacity: 0 }, { y: 0, opacity: 1, ease: 'power2.out' }, 0.1);
+     Beat five is the reason this reads as one journey rather than five landing
+     pages. The scene does not scroll away, it falls back into the distance, so
+     the next product activates out of the same space the last one returned to.
 
-      // Hand off. The stage releases upward just before it unsticks, so one
-      // tool is always giving the screen to the next rather than cutting.
-      gsap.timeline({
-        scrollTrigger: { trigger: tool, start: 'bottom 118%', end: 'bottom bottom', scrub: 0.45 }
-      })
-        .to([media, copy], { y: -55, opacity: 0, ease: 'power1.in' }, 0);
+     One timeline per dive owns every property on every element in it, because
+     two tweens on the same property fight and the later render wins. */
+  gsap.utils.toArray('.dive').forEach(function (dv) {
+    var copy  = dv.querySelector('.dive-copy');
+    var world = dv.querySelector('.dive-world');
+    var ui    = dv.querySelector('.dive-ui');
+    var close = dv.querySelector('.dive-close');
+    var cta   = dv.querySelector('.dive-cta');
+    var mood  = dv.getAttribute('data-mood');
 
-      // Depth. A stage holds the screen for eighty viewport pixels of scroll in
-      // which the arrival has finished and the exit has not started, and until
-      // now nothing moved in it. The device drifts against the copy across the
-      // whole stage, so the two columns read as two planes rather than one flat
-      // card. It runs on the frame inside .stage-media, never on .stage-media
-      // itself, because the arrival and the hand off already own that element's
-      // y and a second tween on the same property would fight them.
-      var device = tool.querySelector('.frame, .phone');
-      if (device) {
-        gsap.fromTo(device, { y: 30 }, {
-          y: -30, ease: 'none',
-          scrollTrigger: { trigger: tool, start: 'top bottom', end: 'bottom top', scrub: 0.5 }
-        });
-      }
-
-      // The same idea one layer deeper: the screenshot slides behind the browser
-      // chrome the way a view moves behind a window frame. .frame already clips,
-      // so the only thing to get right is that the image still covers the
-      // opening at both ends of the travel. The shot is 50vh tall within a
-      // clamp that floors at 250px, and a scale of 1.1 buys 12.5px of overhang
-      // at that floor, which is the 10px of travel with room to spare. Widen
-      // the travel and the frame shows a white sliver at the turn.
-      var shot = tool.querySelector('.frame-shot');
-      if (shot) {
-        gsap.fromTo(shot, { y: -10, scale: 1.1 }, {
-          y: 10, scale: 1.1, ease: 'none',
-          scrollTrigger: { trigger: tool, start: 'top bottom', end: 'bottom top', scrub: 0.5 }
-        });
-      }
-
-      ScrollTrigger.create({
-        trigger: tool, start: 'top 60%', end: 'bottom 40%',
-        onToggle: function (self) {
-          if (!self.isActive) return;
-          railItems.forEach(function (li) {
-            li.classList.toggle('is-active', li.getAttribute('data-rail') === index);
-          });
-          if (hudIdx) hudIdx.textContent = ('0' + index).slice(-2);
-          if (hudName) hudName.textContent = tool.getAttribute('data-name') || '';
-        }
-      });
-    } else {
-      gsap.fromTo([media, copy], { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out', stagger: 0.08,
-          scrollTrigger: { trigger: tool, start: 'top 82%', once: true } });
+    if (!desktop) {
+      // Phones get the same content as an ordinary stacked block. The camera
+      // needs width and a long scroll, and neither is available here.
+      gsap.fromTo([copy, ui, close, cta], { y: 26, opacity: 0 },
+        { y: 0, opacity: 1, duration: .7, ease: 'power2.out', stagger: .08,
+          scrollTrigger: { trigger: dv, start: 'top 80%', once: true } });
+      return;
     }
-  });
 
-  // The position marker only exists while the sequence does.
-  if (hud && desktop) {
-    ScrollTrigger.create({
-      trigger: '.seq', start: 'top 20%', end: 'bottom 80%',
-      onToggle: function (self) { hud.classList.toggle('is-on', self.isActive); }
+    var words  = gsap.utils.toArray(dv.querySelectorAll('.w-word'));
+    var quiet  = dv.querySelector('.w-quiet');
+    var breath = dv.querySelector('.w-breath');
+    var modes  = gsap.utils.toArray(dv.querySelectorAll('.w-modes li'));
+    var chain  = gsap.utils.toArray(dv.querySelectorAll('.w-chain li'));
+    var chips  = gsap.utils.toArray(dv.querySelectorAll('.ui-chips li'));
+    var typed  = dv.querySelector('.ui-type');
+    var caret  = dv.querySelector('.ui-caret');
+
+    // Scatter the loose words of a world across their stage once, by index, so
+    // the arrangement is fixed rather than reshuffling on every resize.
+    words.forEach(function (w, i) {
+      var cols = [10, 62, 30, 74, 6, 48, 80];
+      var rows = [14, 8, 70, 46, 44, 84, 26];
+      w.style.left = cols[i % cols.length] + '%';
+      w.style.top  = rows[i % rows.length] + '%';
     });
-  }
+
+    var depth = function (el) { return parseFloat(el.getAttribute('data-depth')) || 2; };
+
+    gsap.set(copy,  { opacity: 0, scale: 0.62, y: 30 });
+    gsap.set(ui,    { opacity: 0, scale: 0.9, y: 40 });
+    gsap.set(close, { opacity: 0, y: 26 });
+    gsap.set(cta,   { opacity: 0, y: 18 });
+    if (words.length) gsap.set(words, { opacity: 0, y: 26 });
+    if (quiet)  gsap.set(quiet,  { opacity: 0, y: 18 });
+    if (breath) gsap.set(breath, { opacity: 0, scale: 0.7 });
+    if (modes.length) gsap.set(modes, { opacity: 0, y: 12 });
+    if (chain.length) gsap.set(chain, { opacity: 0, y: 18 });
+    if (chips.length) gsap.set(chips, { opacity: 0, y: 10 });
+    if (typed) gsap.set(typed, { opacity: 0 });
+
+    var tl = gsap.timeline({
+      scrollTrigger: { trigger: dv, start: 'top top', end: 'bottom bottom', scrub: 0.6 }
+    });
+
+    // 1. Arrival. Coming up from small is the camera closing the distance.
+    tl.to(copy, { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.1);
+
+    // 2. The world. Every product gets its own, because "a world assembles"
+    //    means nothing if all five assemble the same way.
+    if (words.length) {
+      words.forEach(function (w, i) {
+        tl.to(w, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.7 + i * 0.12);
+        tl.to(w, { y: (depth(w) - 2) * -34, duration: 2.2, ease: 'none' }, 0.7 + i * 0.12);
+      });
+      var dom = dv.querySelector('.w-word.is-dominant');
+      if (dom) tl.to(dom, { scale: 1.5, duration: 0.5, ease: 'power2.out' }, 1.8);
+    }
+    if (quiet)  tl.to(quiet,  { opacity: 1, y: 0, duration: 0.6 }, 0.8);
+    if (breath) {
+      // One complete breath, held long enough to actually follow.
+      tl.to(breath, { opacity: 1, scale: 1, duration: 0.7 }, 0.7)
+        .to(breath.querySelector('.w-ring'), { scale: 1.34, duration: 0.9, ease: 'sine.inOut' }, 1.4)
+        .to(breath.querySelector('.w-ring'), { scale: 1, duration: 0.9, ease: 'sine.inOut' }, 2.3);
+      modes.forEach(function (m, i) {
+        tl.to(m, { opacity: 1, y: 0, duration: 0.35 }, 3.2 + i * 0.28);
+      });
+    }
+    chain.forEach(function (c, i) {
+      tl.to(c, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 0.9 + i * 0.5);
+    });
+
+    // 3. The interface. It assembles, and one live control works on top of it.
+    tl.to(ui, { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 2.6);
+    if (world) tl.to(world, { opacity: 0.18, duration: 0.6 }, 2.6);
+
+    if (typed && caret) {
+      // The search runs itself, one character at a time, tied to scroll.
+      var term = 'housing';
+      tl.to(typed, { opacity: 1, duration: 0.3 }, 3.3);
+      tl.to({ i: 0 }, {
+        i: term.length, duration: 0.9, ease: 'none',
+        onUpdate: function () { caret.textContent = term.slice(0, Math.round(this.targets()[0].i)); }
+      }, 3.5);
+    }
+    chips.forEach(function (c, i) {
+      tl.to(c, { opacity: 1, y: 0, duration: 0.3 }, 3.3 + i * 0.16);
+    });
+    if (chips.length) tl.call(function () { chips[2].classList.add('is-on'); }, null, 4.1);
+
+    // 4. The one thing it is for. The interface steps back so the line lands.
+    tl.to([copy, ui], { opacity: 0, y: -34, duration: 0.5 }, 4.6)
+      .to(close, { opacity: 1, y: 0, duration: 0.5 }, 4.9)
+      .to(cta,   { opacity: 1, y: 0, duration: 0.4 }, 5.2);
+
+    // 5. Back to a point, so the next product activates out of the same space.
+    tl.to([close, cta], { opacity: 0, duration: 0.4 }, 6.1)
+      .to(dv.querySelector('.dive-sticky'), { scale: 0.86, opacity: 0, duration: 0.6, ease: 'power2.in' }, 6.2);
+    if (world) tl.to(world, { opacity: 0, duration: 0.4 }, 6.1);
+  });
 
   /* ---------- 4. the loop ----------
      Five steps that hand a single person from one tool to the next. They move

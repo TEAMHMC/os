@@ -116,6 +116,177 @@
   </div>
 </section>
 
+<!-- =============== WHAT BRINGS YOU HERE =============== -->
+<section class="seq-intro-sec" id="tour">
+  <div class="shell seq-intro">
+    <p class="eyebrow eyebrow-light" style="justify-content:center">Start with what matters</p>
+    <h2 data-reveal>Nobody starts over.</h2>
+    <p data-reveal>Ask for help in this county and you tell your story again at every door. HMC OS was built so the story travels with the person instead of stopping at the table.</p>
+
+    <!-- The persona engine. The reader names what they came for rather than
+         picking which kind of person they are, which is a question nobody wants
+         to answer about themselves. Choosing re-cuts the tour below. -->
+    <div class="who" id="who" data-reveal>
+      <p class="who-q" id="whoLabel">What brings you here?</p>
+      <div class="who-row" role="group" aria-labelledby="whoLabel">
+        <button type="button" class="who-btn" data-persona="member" aria-pressed="false">
+          <b>I need support</b><span>Resources, guidance, and practical next steps.</span>
+        </button>
+        <button type="button" class="who-btn" data-persona="wellbeing" aria-pressed="false">
+          <b>I want to take care of myself</b><span>Simple tools to check in, reset, and build healthier habits.</span>
+        </button>
+        <button type="button" class="who-btn" data-persona="volunteer" aria-pressed="false">
+          <b>I want to get involved</b><span>Events, learning, volunteering, and opportunities to take action.</span>
+        </button>
+        <button type="button" class="who-btn" data-persona="partner" aria-pressed="false">
+          <b>I represent an organization</b><span>Partnership, collaboration, and tools to strengthen your community impact.</span>
+        </button>
+      </div>
+      <p class="who-note" id="whoNote" role="status" aria-live="polite"></p>
+      <button type="button" class="who-all" data-persona="all" aria-pressed="true">Show me everything</button>
+    </div>
+  </div>
+</section>
+
+<!-- =============== THE DIVES ===============
+     Five products, each entered rather than listed. Every dive runs the same
+     five beats: the name arrives from a distance, the world of that product
+     assembles around it, its interface comes together, it says the one thing it
+     is for, and then the whole scene compresses back to a point so the next one
+     can activate. The mood attribute is what makes them feel different: the
+     stylesheet changes the ground, the pace and the type for each.
+
+     The wrapper is a flex column so the persona engine can reorder the dives
+     without touching the DOM. -->
+<div class="dives" id="dives">
+<section class="dive" id="dive-1" data-dive="1" data-mood="support" aria-labelledby="diveName1">
+  <div class="dive-sticky">
+    <div class="dive-world" aria-hidden="true">
+      <span class="w-word" data-depth="1">Health care</span>
+      <span class="w-word" data-depth="3">Mental health</span>
+      <span class="w-word" data-depth="2">Food</span>
+      <span class="w-word is-dominant" data-depth="1">Housing</span>
+      <span class="w-word" data-depth="2">Legal services</span>
+      <span class="w-word" data-depth="3">Basic needs</span>
+      <span class="w-word" data-depth="1">Community support</span>
+    </div>
+    <div class="dive-copy">
+      <p class="dive-kicker">Find support.</p>
+      <h2 class="dive-name" id="diveName1">Resource Directory</h2>
+      <p class="dive-say">When you need help, knowing where to start matters.</p>
+    </div>
+    <div class="dive-ui">
+      <div class="frame">
+        <div class="frame-bar"><em></em><em></em><em></em><b>directory.healthmatters.clinic</b></div>
+        <img class="frame-shot" src="./screens/directory.png" alt="The Resource Directory with keyword search, category filter and a Service Planning Area filter above listings." loading="lazy" width="1600" height="1125">
+        <div class="ui-type"><span class="ui-caret" id="typed1"></span></div>
+      </div>
+    </div>
+    <p class="dive-close">Find what you need.<br>When you need it.</p>
+    <div class="dive-cta"><a class="hmc-btn-ghost" href="https://directory.healthmatters.clinic">Open the Directory</a></div>
+  </div>
+</section>
+
+<section class="dive" id="dive-2" data-dive="2" data-mood="checkin" aria-labelledby="diveName2">
+  <div class="dive-sticky">
+    <div class="dive-world" aria-hidden="true">
+      <div class="w-quiet">
+        <p class="w-q">Over the last two weeks, how often have you felt down, or hopeless?</p>
+        <ul class="w-opts"><li>Not at all</li><li>Several days</li><li>More than half the days</li><li>Nearly every day</li></ul>
+        <p class="w-prog"><i></i></p>
+        <p class="w-note">Question 1 of 9</p>
+      </div>
+    </div>
+    <div class="dive-copy">
+      <p class="dive-kicker">Check in.</p>
+      <h2 class="dive-name" id="diveName2">CheckYourself<sup>&trade;</sup></h2>
+      <p class="dive-say">Sometimes the first step is understanding what you're feeling.</p>
+    </div>
+    <div class="dive-ui">
+      <div class="frame">
+        <div class="frame-bar"><em></em><em></em><em></em><b>checkyourself.healthmatters.clinic</b></div>
+        <img class="frame-shot" src="./screens/checkyourself.png" alt="The CheckYourself opening screen offering a three minute private check-in in English or Spanish." loading="lazy" width="1600" height="1125">
+
+      </div>
+    </div>
+    <p class="dive-close">Here's what your answers<br>may be telling you.</p>
+    <div class="dive-cta"><a class="hmc-btn-ghost" href="https://checkyourself.healthmatters.clinic">Take the check-in</a></div>
+  </div>
+</section>
+
+<section class="dive" id="dive-3" data-dive="3" data-mood="discover" aria-labelledby="diveName3">
+  <div class="dive-sticky">
+    <div class="dive-world" aria-hidden="true">
+      <span class="w-word" data-depth="1">A wellness walk</span>
+      <span class="w-word" data-depth="3">A screening</span>
+      <span class="w-word" data-depth="2">A workshop</span>
+      <span class="w-word" data-depth="1">An Unstoppable event</span>
+      <span class="w-word" data-depth="2">A class</span>
+      <span class="w-word" data-depth="3">A volunteer shift</span>
+    </div>
+    <div class="dive-copy">
+      <p class="dive-kicker">Find something to do.</p>
+      <h2 class="dive-name" id="diveName3">EventFinder<sup>&trade;</sup></h2>
+      <p class="dive-say">Screenings, workshops, classes, walks, and ways to take part, all in one feed.</p>
+    </div>
+    <div class="dive-ui">
+      <div class="frame">
+        <div class="frame-bar"><em></em><em></em><em></em><b>eventfinder.healthmatters.clinic</b></div>
+        <img class="frame-shot" src="./screens/eventfinder.png" alt="The EventFinder map view with filters for month, type and location beside a list of upcoming events." loading="lazy" width="1600" height="1125">
+        <ul class="ui-chips"><li>Today</li><li>This week</li><li>Near me</li><li>Free</li></ul>
+      </div>
+    </div>
+    <p class="dive-close">There's more happening<br>around you. Find it.</p>
+    <div class="dive-cta"><a class="hmc-btn-ghost" href="https://eventfinder.healthmatters.clinic">Open EventFinder</a></div>
+  </div>
+</section>
+
+<section class="dive" id="dive-4" data-dive="4" data-mood="calm" aria-labelledby="diveName4">
+  <div class="dive-sticky">
+    <div class="dive-world" aria-hidden="true">
+      <div class="w-breath"><span class="w-ring"></span></div>
+      <ul class="w-modes"><li>Move</li><li>Breathe</li><li>Reflect</li><li>Reset</li></ul>
+    </div>
+    <div class="dive-copy">
+      <p class="dive-kicker">Take a moment.</p>
+      <h2 class="dive-name" id="diveName4">Your CalmKit<sup>&trade;</sup></h2>
+      <p class="dive-say">Breathe.</p>
+    </div>
+    <div class="dive-ui">
+      <div class="frame">
+        <div class="frame-bar"><em></em><em></em><em></em><b>calmkit.healthmatters.clinic</b></div>
+        <img class="frame-shot" src="./screens/calmkit.png" alt="Your CalmKit with the daily strength card and the Move, Breathe, Calm and Reflect tiles." loading="lazy" width="1600" height="1125">
+
+      </div>
+    </div>
+    <p class="dive-close">Something for this moment.</p>
+    <div class="dive-cta"><a class="hmc-btn-ghost" href="https://calmkit.healthmatters.clinic">Open CalmKit</a></div>
+  </div>
+</section>
+
+<section class="dive" id="dive-5" data-dive="5" data-mood="build" aria-labelledby="diveName5">
+  <div class="dive-sticky">
+    <div class="dive-world" aria-hidden="true">
+      <ol class="w-chain"><li>Community listing</li><li>Claim this resource</li><li>Partner Portal</li></ol>
+    </div>
+    <div class="dive-copy">
+      <p class="dive-kicker">Build together.</p>
+      <h2 class="dive-name" id="diveName5">Partner Portal</h2>
+      <p class="dive-say">Community impact works better when the people doing the work can find each other.</p>
+    </div>
+    <div class="dive-ui">
+      <div class="frame">
+        <div class="frame-bar"><em></em><em></em><em></em><b>partner.healthmatters.clinic/partner-demo</b></div>
+        <img class="frame-shot" src="./screens/partner.png" alt="The partner referrals queue showing housing, behavioral health and enrollment referrals with accept and record outcome controls." loading="lazy" width="1600" height="1125">
+
+      </div>
+    </div>
+    <p class="dive-close">Work better together.</p>
+    <div class="dive-cta"><a class="hmc-btn-ghost" href="https://partner.healthmatters.clinic/partner-demo">Open the partner demo</a></div>
+  </div>
+</section>
+</div>
+
 <!-- =============== THE DECK =============== -->
 <section class="deck" id="deck" aria-labelledby="deckTitle">
   <div class="shell deck-intro">
@@ -181,292 +352,6 @@
       </a>
     </div>
   </div>
-</section>
-
-<!-- =============== THE TOUR =============== -->
-<section class="seq" id="tour">
-  <div class="shell seq-intro">
-    <p class="eyebrow eyebrow-light" style="justify-content:center">The tour</p>
-    <h2 data-reveal>Nobody starts over.</h2>
-    <p data-reveal>Ask for help in this county and you tell your story again at every door. HMC OS was built so the story travels with the person instead of stopping at the table.</p>
-
-    <!-- The persona engine. The reader names what they came for rather than
-         picking which kind of person they are, which is a question nobody wants
-         to answer about themselves. Choosing re-cuts the tour below. -->
-    <div class="who" id="who" data-reveal>
-      <p class="who-q" id="whoLabel">What brings you here?</p>
-      <div class="who-row" role="group" aria-labelledby="whoLabel">
-        <button type="button" class="who-btn" data-persona="member" aria-pressed="false">
-          <b>I need support</b><span>Resources, guidance, and practical next steps.</span>
-        </button>
-        <button type="button" class="who-btn" data-persona="wellbeing" aria-pressed="false">
-          <b>I want to take care of myself</b><span>Simple tools to check in, reset, and build healthier habits.</span>
-        </button>
-        <button type="button" class="who-btn" data-persona="volunteer" aria-pressed="false">
-          <b>I want to get involved</b><span>Events, learning, volunteering, and opportunities to take action.</span>
-        </button>
-        <button type="button" class="who-btn" data-persona="partner" aria-pressed="false">
-          <b>I represent an organization</b><span>Partnership, collaboration, and tools to strengthen your community impact.</span>
-        </button>
-      </div>
-      <p class="who-note" id="whoNote" role="status" aria-live="polite"></p>
-      <button type="button" class="who-all" data-persona="all" aria-pressed="true">Show me everything</button>
-    </div>
-  </div>
-
-  <div class="hud" id="hud" aria-hidden="true">
-    <span class="hud-idx" id="hudIdx">01</span>
-    <span class="hud-name" id="hudName">EventFinder</span>
-    <ol class="hud-bars">
-      <li data-rail="1" class="is-active"></li>
-      <li data-rail="2"></li>
-      <li data-rail="3"></li>
-      <li data-rail="4"></li>
-      <li data-rail="5"></li>
-      <li data-rail="6"></li>
-      <li data-rail="7"></li>
-      <li data-rail="8"></li>
-      <li data-rail="9"></li>
-    </ol>
-  </div>
-
-  <!-- 01 EventFinder -->
-  <article class="tool" data-tool="1" data-name="EventFinder" data-lines='{"member": "Type a zip code and see what is near you this week. Screenings, workshops, classes, and a seat you can claim in about a minute.", "volunteer": "Every shift and session HMC is running, in one place. Find the date that works and sign up without emailing anyone.", "partner": "Publish your own events to the whole county at no cost, and see who registered before the day arrives.", "funder": "The demand side of the operation, visible and countable. Every event HMC and its partners run is published, registered for, and counted in one feed.", "client": "The events your team already told you about, with the dates and the address, so you are not calling to ask again."}'>
-    <div class="stage">
-      <div class="stage-grid">
-        <div class="tool-copy">
-          <p class="idx"><span>01 / 09</span><i></i></p>
-          <h3>EventFinder<sup>&trade;</sup></h3>
-          <p class="tool-tag">Find your next move.</p>
-          <p class="line">Type a zip code and see what is happening near you. Wellness events, workshops, classes and professional training, from HMC and from partner organizations, with registration in about a minute.</p>
-          <ul class="chips">
-            <li>Search by zip code</li>
-            <li>No account needed</li>
-            <li>Partners list at no cost</li>
-          </ul>
-          <div class="btn-row"><a class="hmc-btn-ghost" href="https://eventfinder.healthmatters.clinic">Open EventFinder</a></div>
-        </div>
-        <div class="stage-media">
-          <div class="frame">
-            <div class="frame-bar"><em></em><em></em><em></em><b>eventfinder.healthmatters.clinic</b></div>
-            <img class="frame-shot" src="./screens/eventfinder.png" alt="The EventFinder map view with filters for month, type and location beside a list of upcoming events." loading="lazy" width="1600" height="1125">
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- 02 CheckYourself -->
-  <article class="tool" data-tool="2" data-name="CheckYourself" data-lines='{"member": "Three minutes, in private, to see where your head is at. No account, no cost, and nobody sees it but you.", "volunteer": "The screening you will hand people at the table. Take it yourself first so you know what you are asking of them.", "partner": "Point the people you already serve at a validated screening, and let the result carry into a referral rather than a note.", "funder": "Validated screening at population scale without a clinician per person. PHQ-9 and GAD-7, in two languages, at no cost.", "client": "Check in between appointments and bring the result with you, so the conversation starts further along."}'>
-    <div class="stage">
-      <div class="stage-grid">
-        <div class="tool-copy">
-          <p class="idx"><span>02 / 09</span><i></i></p>
-          <h3>CheckYourself<sup>&trade;</sup></h3>
-          <p class="tool-tag">Check in. Know your next step.</p>
-          <p class="line">Three minutes, in private, to see where your head is at. The questions are PHQ-9 and GAD-7. What comes back is plain language and a plan you can act on the same day.</p>
-          <ul class="chips">
-            <li>PHQ-9 and GAD-7</li>
-            <li>English and Spanish</li>
-            <li>No account, no cost</li>
-          </ul>
-          <p class="tool-note">Screening, not diagnosis. Anyone in danger is pointed to 911 or 988 before anything else.</p>
-          <div class="btn-row"><a class="hmc-btn-ghost" href="https://checkyourself.healthmatters.clinic">Take the check-in</a></div>
-        </div>
-        <div class="stage-media">
-          <div class="frame">
-            <div class="frame-bar"><em></em><em></em><em></em><b>checkyourself.healthmatters.clinic</b></div>
-            <img class="frame-shot" src="./screens/checkyourself.png" alt="The CheckYourself opening screen offering a three minute private check-in in English or Spanish." loading="lazy" width="1600" height="1125">
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- 03 Resource Directory -->
-  <article class="tool" data-tool="3" data-name="Resource Directory" data-lines='{"member": "Food, housing, care, legal help. Narrowed to your Service Planning Area so what comes back is close enough to actually use.", "volunteer": "What you reach for when someone asks a question you cannot answer. Search it at the table and hand over something specific.", "partner": "List your services once and be findable by every HMC team and every person searching their own area.", "funder": "The referral surface. It turns a screening result into a named service in a specific area, which is where most programs lose people.", "client": "The food, housing and transport help your care plan mentions, with the numbers already narrowed to your area."}'>
-    <div class="stage">
-      <div class="stage-grid">
-        <div class="tool-copy">
-          <p class="idx"><span>03 / 09</span><i></i></p>
-          <h3>Resource Directory</h3>
-          <p class="tool-tag">Find support.</p>
-          <p class="line">Healthcare, mental health, food, housing, legal aid and basic needs across LA County, narrowed to the Service Planning Area you actually live in, so what you get back is close enough to use.</p>
-          <ul class="chips">
-            <li>Filter by SPA</li>
-            <li>Open to everyone</li>
-            <li>Kept current by the team</li>
-          </ul>
-          <div class="btn-row"><a class="hmc-btn-ghost" href="https://directory.healthmatters.clinic">Open the Directory</a></div>
-        </div>
-        <div class="stage-media">
-          <div class="frame">
-            <div class="frame-bar"><em></em><em></em><em></em><b>directory.healthmatters.clinic</b></div>
-            <img class="frame-shot" src="./screens/directory.png" alt="The Resource Directory with keyword search, category filter and a Service Planning Area filter above listings." loading="lazy" width="1600" height="1125">
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- 04 Your CalmKit -->
-  <article class="tool" data-tool="4" data-name="Your CalmKit" data-lines='{"member": "Breathing, grounding, movement and journaling for the hours between appointments. What you write stays on your device.", "volunteer": "Something to leave with someone who is not in crisis but is not fine either. It works on any phone and costs nothing.", "partner": "A no-cost tool you can point clients at between contacts, with nothing to install and no account to create.", "funder": "What carries someone between contacts. Attrition happens in the gaps, and this is the piece most programs do not fund.", "client": "Something for the night before an appointment, or the week after one. It asks nothing of you."}'>
-    <div class="stage">
-      <div class="stage-grid">
-        <div class="tool-copy">
-          <p class="idx"><span>04 / 09</span><i></i></p>
-          <h3>Your CalmKit<sup>&trade;</sup></h3>
-          <p class="tool-tag">Take a moment. Take care of yourself.</p>
-          <p class="line">Breathing, grounding, movement and journaling, sized for the hours between appointments. What you write stays on your device.</p>
-          <ul class="chips">
-            <li>Entries stay on the device</li>
-            <li>Built for a phone</li>
-            <li>English and Spanish</li>
-          </ul>
-          <div class="btn-row"><a class="hmc-btn-ghost" href="https://calmkit.healthmatters.clinic">Open CalmKit</a></div>
-        </div>
-        <div class="stage-media">
-          <div class="frame">
-            <div class="frame-bar"><em></em><em></em><em></em><b>calmkit.healthmatters.clinic</b></div>
-            <img class="frame-shot" src="./screens/calmkit.png" alt="Your CalmKit with the daily strength card and the Move, Breathe, Calm and Reflect tiles." loading="lazy" width="1600" height="1125">
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- 05 Sunny -->
-  <article class="tool" data-tool="5" data-name="Sunny" data-lines='{"member": "Ask a question in plain language, in English or Spanish, and get an answer on whatever page you are already on.", "volunteer": "Answers the questions you get asked most, so you are not the only source of information at the table.", "partner": "Handles the first question so your staff get the second one. It runs on every HMC surface your clients touch.", "funder": "Triage and navigation across every surface at once. Crisis routing is enforced by rule rather than left to model judgement.", "client": "Ask a question at eleven at night without waiting for the office to open."}'>
-    <div class="stage">
-      <div class="stage-grid">
-        <div class="tool-copy">
-          <p class="idx"><span>05 / 09</span><i></i></p>
-          <h3>Sunny<sup>&trade;</sup></h3>
-          <p class="tool-tag">Ask, and get pointed somewhere real.</p>
-          <p class="line">Ask a question in English or Spanish and get an answer wherever you already are, because Sunny sits on every HMC surface rather than in one app.</p>
-          <ul class="chips">
-            <li>English and Spanish</li>
-            <li>On every HMC surface</li>
-            <li>Crisis routing by rule</li>
-          </ul>
-          <p class="tool-note">When a message signals distress, Sunny surfaces 988, Crisis Text Line and the HMC team. That path is a rule in the system, not a judgement call the model gets to make.</p>
-          <div class="btn-row"><a class="hmc-btn-ghost" href="https://directory.healthmatters.clinic">Ask Sunny in the Directory</a></div>
-        </div>
-        <div class="stage-media">
-          <div class="frame">
-            <div class="frame-bar"><em></em><em></em><em></em><b>directory.healthmatters.clinic</b></div>
-            <img class="frame-shot" src="./screens/sunny.png" alt="The Sunny panel open on the Resource Directory, with the crisis line banner above it." loading="lazy" width="1600" height="1125">
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- 06 HMC VMS -->
-  <article class="tool" data-tool="6" data-name="HMC VMS" data-lines='{"member": "The system behind the people you meet at an event. Everyone at the table has been trained and cleared before they get there.", "volunteer": "Your training, your credentials, your shifts and your hours, on one record that follows you instead of living in somebody&#39;s inbox.", "partner": "Know who is coming to your site, what they are cleared to do, and that their training is current before the day starts.", "funder": "The workforce record that makes a field team auditable. Training, credentialing, deployment and hours, one file per volunteer.", "client": "The people who show up for you are trained, cleared and recorded. That is not left to chance."}'>
-    <div class="stage">
-      <div class="stage-grid">
-        <div class="tool-copy">
-          <p class="idx"><span>06 / 09</span><i></i></p>
-          <h3>HMC VMS<sup>&trade;</sup></h3>
-          <p class="tool-tag">Put your time to work.</p>
-          <p class="line">The HMC Volunteer Management System. It is AI powered and it runs end to end, which means recruitment, registration, core training, credentialing, scheduling, deployment and the service record all live on one file that follows the volunteer.</p>
-          <ul class="chips">
-            <li>One record per volunteer</li>
-            <li>Training and credentials</li>
-            <li>Shifts, hours and history</li>
-          </ul>
-          <p class="tool-note">More than 1,000 people registered to date, counted cumulatively since 2020.</p>
-          <div class="btn-row"><a class="hmc-btn-ghost" href="https://volunteer.healthmatters.clinic/tour">Take the VMS tour</a></div>
-        </div>
-        <div class="stage-media">
-          <div class="frame">
-            <div class="frame-bar"><em></em><em></em><em></em><b>volunteer.healthmatters.clinic</b></div>
-            <img class="frame-shot mid" src="./screens/vms.png" alt="A volunteer dashboard showing hours contributed, level, events attended, upcoming events and training progress." loading="lazy" width="1600" height="1125">
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- 07 HMC Academy -->
-  <article class="tool" data-tool="7" data-name="HMC Academy" data-lines='{"member": "The training every person who works an HMC event completes before they meet you.", "volunteer": "Start with orientation and core modules, then unlock the roles you want. Progress saves as you go.", "partner": "Your staff can take the same training our volunteers do, including the courses carrying continuing education credit.", "funder": "How capability is built and verified. Completion gates what a volunteer may do, and Unstoppable carries LACDMH approved continuing education.", "client": "The training behind the person sitting across from you."}'>
-    <div class="stage">
-      <div class="stage-grid">
-        <div class="tool-copy">
-          <p class="idx"><span>07 / 09</span><i></i></p>
-          <h3>HMC Academy</h3>
-          <p class="tool-tag">Learn what moves communities forward.</p>
-          <p class="line">Self paced training that decides what a volunteer is cleared to do. Orientation and core modules come first, then the specialist tracks, then Unstoppable<sup>&trade;</sup>, our mental health workshop for practitioners.</p>
-          <ul class="chips">
-            <li>Progress saved as you go</li>
-            <li>Completion unlocks roles</li>
-            <li>1.0 CE and CEU</li>
-          </ul>
-          <p class="tool-note">LACDMH approved Unstoppable on February 27 2026 for 1.0 CE and CEU across BBS, BRN, CCAPP and psychology.</p>
-          <div class="btn-row"><a class="hmc-btn-ghost" href="https://unstoppable.healthmatters.clinic">See Unstoppable</a></div>
-        </div>
-        <div class="stage-media">
-          <div class="frame">
-            <div class="frame-bar"><em></em><em></em><em></em><b>volunteer.healthmatters.clinic</b></div>
-            <img class="frame-shot mid" src="./screens/academy.png" alt="The training academy view listing orientation and tier modules with completion states and a progress bar." loading="lazy" width="1600" height="1125">
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- 08 Partner Portal -->
-  <article class="tool" data-tool="8" data-name="Partner Portal" data-lines='{"member": "How the organizations near you receive a referral and follow it up, rather than handing you a flyer.", "volunteer": "Where the referral you make at the table actually goes, and how it comes back closed.", "partner": "Referrals arrive matched to the services you declared, and each one ends in a known state instead of silence.", "funder": "How referrals reach other organizations and return to a known state. This is the closing half of the loop.", "client": "When you are referred somewhere else, the organization receives what you already said. You do not start the story again."}'>
-    <div class="stage">
-      <div class="stage-grid">
-        <div class="tool-copy">
-          <p class="idx"><span>08 / 09</span><i></i></p>
-          <h3>Partner Portal</h3>
-          <p class="tool-tag">Work better together.</p>
-          <p class="line">Referrals arrive matched to the services your organization actually declared, and each one ends in a known state. Accept it, serve the person, record what happened. You post your events to the whole county from the same screen.</p>
-          <ul class="chips">
-            <li>Referrals that close</li>
-            <li>Event publishing</li>
-            <li>Outcomes you can report</li>
-          </ul>
-          <div class="btn-row"><a class="hmc-btn-ghost" href="https://partner.healthmatters.clinic/partner-demo">Open the partner demo</a></div>
-        </div>
-        <div class="stage-media">
-          <div class="frame">
-            <div class="frame-bar"><em></em><em></em><em></em><b>partner.healthmatters.clinic/partner-demo</b></div>
-            <img class="frame-shot" src="./screens/partner.png" alt="The partner referrals queue showing housing, behavioral health and enrollment referrals with accept and record outcome controls." loading="lazy" width="1600" height="1125">
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <!-- 09 Member Hub -->
-  <article class="tool" data-tool="9" data-name="Member Hub" data-lines='{"member": "One door to all of it. An email address gets you in. No application, no cost, nothing to prove first.", "volunteer": "Where your training, your events and your record all sit together.", "partner": "The front door you can send people to when they need more than your organization provides.", "funder": "The front door that keeps the whole system reachable. No application process, which is where access usually breaks.", "client": "Your events, your check-ins and your next steps in one place, whenever you want them."}'>
-    <div class="stage">
-      <div class="stage-grid">
-        <div class="tool-copy">
-          <p class="idx"><span>09 / 09</span><i></i></p>
-          <h3>Member Hub</h3>
-          <p class="tool-tag">One door to all of it.</p>
-          <p class="line">One door to everything above. Screenings, community events, help with food, housing and care, and self paced courses that open into health careers. An email address gets you in. There is no application and no cost.</p>
-          <ul class="chips">
-            <li>No application</li>
-            <li>No cost</li>
-            <li>Everything in one place</li>
-          </ul>
-          <div class="btn-row"><a class="hmc-btn-ghost" href="https://hub.healthmatters.clinic">Enter the Member Hub</a></div>
-        </div>
-        <div class="stage-media">
-          <div class="frame">
-            <div class="frame-bar"><em></em><em></em><em></em><b>hub.healthmatters.clinic</b></div>
-            <img class="frame-shot" src="./screens/hub.png" alt="The Member Hub entry screen offering free screenings, community events and courses after entering an email address." loading="lazy" width="1600" height="1125">
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
 </section>
 
 <!-- =============== THE LOOP =============== -->
