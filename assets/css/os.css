@@ -8,9 +8,8 @@
      3  hero
      4  the canvas (prologue + bird's eye view)
      5  the dives (five pinned product worlds)
-     6  the loop (pinned horizontal track)
-     7  numbers + proof
-     8  what happens next
+     6  the deck (all nine products)
+     7  the reveal
      9  footer
     10  motion states + reduced motion + responsive
 
@@ -208,8 +207,7 @@ p{margin:0 0 18px}
    paper, because that is the working surface partners actually sit on. */
 .seq-intro-sec{background:var(--hero)}
 .seq-intro{padding:clamp(90px,13vw,170px) 0 clamp(40px,6vw,80px);text-align:center}
-.seq-intro h2{color:#fff;font-size:clamp(32px,5.4vw,70px);line-height:.98;margin:0 auto 18px;max-width:16ch}
-.seq-intro p{color:var(--on-dark);max-width:56ch;margin:0 auto;font-size:clamp(15.5px,1.5vw,18px)}
+.who-lead{color:#fff;font-size:clamp(32px,5.4vw,70px);line-height:.98;margin:0 auto 18px;max-width:16ch}
 
 .dives{display:flex;flex-direction:column}
 .dive{position:relative;height:420vh}
@@ -350,83 +348,19 @@ p{margin:0 0 18px}
 }
 .ui-chips li.is-on{background:var(--accent);border-color:var(--accent);color:var(--ink)}
 
-/* ---------- 6. the loop ---------- */
-.loop{position:relative;background:var(--paper);height:240vh}
-.loop-sticky{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
-.loop-head{width:var(--shell);margin:0 auto clamp(24px,4vw,48px)}
-.loop-head h2{font-size:clamp(30px,5vw,64px);line-height:.98;margin:0 0 14px;max-width:16ch}
-.loop-head p{color:var(--muted);max-width:56ch;margin:0}
-.track{display:flex;gap:clamp(14px,1.8vw,24px);padding:0 max(4vw,calc((100vw - var(--shell))/2));will-change:transform}
-.panel{
-  flex:0 0 min(420px,80vw);background:#fff;border:1px solid var(--ink);border-radius:24px;
-  padding:clamp(22px,2.6vw,32px);display:flex;flex-direction:column;gap:12px;
+/* ---------- 8. the reveal ---------- */
+.reveal{background:var(--hero);padding:clamp(90px,14vw,190px) 0;text-align:center}
+.reveal-line{
+  color:#fff;font-size:clamp(30px,5.4vw,70px);line-height:1.02;letter-spacing:-.02em;
+  margin:0 auto clamp(40px,6vw,74px);max-width:20ch;
 }
-.panel .step{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--primary)}
-.panel h3{font-size:clamp(20px,2.2vw,27px);line-height:1.06;margin:0}
-.panel p{margin:0;font-size:15px;color:var(--muted);line-height:1.55}
-.panel .tag{margin-top:auto;font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);opacity:.55}
-.panel.pop{background:var(--accent);border-color:var(--ink)}
-.panel.pop .step{color:var(--ink)}
-.panel.deep{background:var(--primary);border-color:var(--primary);color:#fff}
-.panel.deep .step{color:var(--accent)}
-.panel.deep p{color:rgba(255,255,255,.9)}
-.panel.deep .tag{color:#fff;opacity:.75}
-
-/* ---------- 7. numbers + proof ---------- */
-.numbers{background:var(--paper);padding:clamp(70px,10vw,130px) 0 clamp(30px,5vw,50px)}
-.num-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(14px,1.8vw,22px)}
-.num{background:#fff;border:1px solid var(--ink);border-radius:22px;padding:26px 24px}
-.num b{display:block;font-family:'Questrial',sans-serif;font-size:clamp(40px,5vw,62px);line-height:1;font-variant-numeric:tabular-nums}
-.num span{display:block;margin-top:12px;font-size:13.5px;color:var(--muted);line-height:1.45}
-.num.pop{background:var(--accent)}
-.num.deep{background:var(--primary);border-color:var(--primary);color:#fff}
-.num.deep span{color:rgba(255,255,255,.88)}
-
-.proof{background:var(--paper);padding:clamp(30px,5vw,60px) 0 clamp(80px,11vw,140px)}
-.proof-head{max-width:640px;margin:0 0 clamp(28px,4vw,46px)}
-.proof-head h2{font-size:clamp(28px,4.4vw,54px);line-height:1;margin:0 0 14px}
-.proof-head p{color:var(--muted);margin:0}
-.proof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(14px,1.8vw,22px)}
-.pcard{background:#fff;border:1px solid var(--ink);border-radius:22px;padding:24px 22px}
-.pcard h3{font-size:15px;font-family:'Inter',sans-serif;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--primary);margin:0 0 10px}
-.pcard p{margin:0;font-size:15px;color:var(--muted);line-height:1.55}
-.secure{
-  margin-top:clamp(18px,2.6vw,28px);background:var(--ink);color:#fff;border-radius:22px;
-  padding:clamp(22px,3vw,34px);display:grid;gap:10px;
+.reveal-mark{
+  font-family:'Questrial',sans-serif;color:#fff;font-size:clamp(34px,6vw,84px);
+  line-height:1;letter-spacing:-.03em;margin:0 0 20px;
 }
-.secure h3{color:var(--accent);font-size:15px;font-family:'Inter',sans-serif;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin:0}
-.secure p{margin:0;color:rgba(255,255,255,.86);max-width:78ch}
-
-/* ---------- 8. what happens next ---------- */
-.next{background:var(--hero);padding:clamp(80px,11vw,150px) 0}
-.next-head{text-align:center;margin:0 auto clamp(34px,5vw,60px);max-width:720px}
-.next-head h2{color:#fff;font-size:clamp(30px,5vw,64px);line-height:.98;margin:0 0 16px}
-.next-head p{color:var(--on-dark);margin:0}
-.next-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(16px,2.2vw,28px)}
-.ncard{
-  background:#fff;border-radius:26px;padding:clamp(26px,3.2vw,40px);
-  display:flex;flex-direction:column;gap:16px;
-}
-.ncard h3{font-size:clamp(23px,2.6vw,32px);line-height:1.04;margin:0}
-.ncard>p{margin:0;color:var(--muted);font-size:15.5px}
-.ncard ol{margin:0;padding:0;list-style:none;display:grid;gap:11px;counter-reset:s}
-.ncard ol li{
-  counter-increment:s;display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;
-  font-size:15px;color:var(--ink);
-}
-.ncard ol li::before{
-  content:counter(s,decimal-leading-zero);
-  font-family:'Questrial',sans-serif;font-size:12px;letter-spacing:.08em;color:var(--primary);
-  border:1px solid var(--line);border-radius:50%;width:26px;height:26px;
-  display:flex;align-items:center;justify-content:center;
-}
-.ncard .btn-row{margin-top:auto;padding-top:6px}
-/* The way out of the card that is not the button: an address for the people who
-   would rather write than click, and the crisis line for the person who cannot
-   wait for either. */
-.ncard-contact{margin:0;font-size:14px;color:var(--muted)}
-.ncard-contact a{color:var(--primary);text-decoration:none;border-bottom:1px solid rgba(35,51,223,.4)}
-.ncard-contact a:hover{border-bottom-color:var(--primary)}
+.reveal-mark sup{font-size:.24em;vertical-align:super;color:rgba(255,255,255,.8)}
+.reveal-say{color:var(--on-dark);font-size:clamp(15.5px,1.6vw,19px);max-width:58ch;margin:0 auto 34px}
+.reveal-cta{justify-content:center}
 
 /* ---------- 9. footer ---------- */
 .foot{background:var(--ink);color:rgba(255,255,255,.66);padding:clamp(56px,8vw,90px) 0 34px}
@@ -476,10 +410,10 @@ html.motion .pro-line[data-line="1"]{opacity:1}
 .hmc-btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.08)}
 
 /* Reduced motion is not just "hold the animation still". The four opening
-   lines, the nine stages and the five loop steps are stacked on top of each
-   other by design, and only scroll motion separates them. With motion off they
-   have to become an ordinary stacked page, or they render as one pile of
-   overlapping text. This block is the same flattening the phone layout uses. */
+   canvas beats and the five beats inside every dive are stacked in one cell by
+   design, and only the camera separates them. With motion off they have to
+   become an ordinary page, or they render as one pile of overlapping text.
+   This block is the same flattening the phone layout uses. */
 @media (prefers-reduced-motion:reduce){
   html.motion [data-reveal],html.motion .pro-line{opacity:1!important;transform:none!important}
 
@@ -495,10 +429,21 @@ html.motion .pro-line[data-line="1"]{opacity:1}
   .stage{position:static;height:auto;padding:clamp(54px,8vw,90px) 0}
   .hud{display:none}
 
-  .loop{height:auto}
-  .loop-sticky{position:static;height:auto;display:block;padding:clamp(70px,12vw,120px) 0;overflow:visible}
-  .track{flex-wrap:wrap;transform:none!important;padding:0;width:var(--shell);margin:0 auto}
-  .panel{flex:1 1 min(390px,100%)}
+  /* The dives are camera work. With no camera the five beats have nothing
+     separating them, and they were rendering on top of each other in one grid
+     cell. Unstack them into an ordinary block flow. */
+  .dive{height:auto}
+  .dive-sticky{position:static;height:auto;display:block;padding:clamp(54px,12vw,88px) 0;overflow:visible}
+  .dive-world,.dive-copy,.dive-ui,.dive-close,.dive-cta{width:var(--shell);margin:0 auto}
+  /* The worlds are depth and drift. Flat and still they are just loose words. */
+  .dive-world{display:none}
+  .dive-copy{text-align:left;padding-top:0}
+  .dive-say{margin:0}
+  .dive-ui{width:100%;margin:22px auto}
+  .dive-close{text-align:left;font-size:clamp(24px,6.4vw,34px);margin:0 auto 18px}
+  .dive-cta{text-align:left;padding-bottom:0}
+  .ui-type,.ui-chips{display:none}
+
 }
 
 /* ---------- responsive ---------- */
@@ -524,11 +469,21 @@ html.motion .pro-line[data-line="1"]{opacity:1}
   .frame-shot{height:clamp(210px,52vw,330px)}
   .phone img{height:auto;max-height:520px}
 
-  .loop{height:auto}
-  .loop-sticky{position:static;height:auto;padding:clamp(70px,13vw,110px) 0;overflow:visible}
-  .track{flex-direction:column;padding:0;width:var(--shell);margin:0 auto;transform:none!important}
-  .panel{flex:1 1 auto}
-  .loop-head{margin-bottom:26px}
+  /* The dives are camera work. With no camera the five beats have nothing
+     separating them, and they were rendering on top of each other in one grid
+     cell. Unstack them into an ordinary block flow. */
+  .dive{height:auto}
+  .dive-sticky{position:static;height:auto;display:block;padding:clamp(54px,12vw,88px) 0;overflow:visible}
+  .dive-world,.dive-copy,.dive-ui,.dive-close,.dive-cta{width:var(--shell);margin:0 auto}
+  /* The worlds are depth and drift. Flat and still they are just loose words. */
+  .dive-world{display:none}
+  .dive-copy{text-align:left;padding-top:0}
+  .dive-say{margin:0}
+  .dive-ui{width:100%;margin:22px auto}
+  .dive-close{text-align:left;font-size:clamp(24px,6.4vw,34px);margin:0 auto 18px}
+  .dive-cta{text-align:left;padding-bottom:0}
+  .ui-type,.ui-chips{display:none}
+
 }
 
 @media (max-width:560px){

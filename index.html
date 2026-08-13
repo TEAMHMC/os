@@ -116,18 +116,16 @@
   </div>
 </section>
 
-<!-- =============== WHAT BRINGS YOU HERE =============== -->
+<!-- =============== START WITH WHAT MATTERS =============== -->
 <section class="seq-intro-sec" id="tour">
   <div class="shell seq-intro">
-    <p class="eyebrow eyebrow-light" style="justify-content:center">Start with what matters</p>
-    <h2 data-reveal>Nobody starts over.</h2>
-    <p data-reveal>Ask for help in this county and you tell your story again at every door. HMC OS was built so the story travels with the person instead of stopping at the table.</p>
+    <h2 class="who-lead" data-reveal>Start with what matters to you.</h2>
 
     <!-- The persona engine. The reader names what they came for rather than
          picking which kind of person they are, which is a question nobody wants
          to answer about themselves. Choosing re-cuts the tour below. -->
     <div class="who" id="who" data-reveal>
-      <p class="who-q" id="whoLabel">What brings you here?</p>
+      <p class="who-q sr-only" id="whoLabel">What brings you here?</p>
       <div class="who-row" role="group" aria-labelledby="whoLabel">
         <button type="button" class="who-btn" data-persona="member" aria-pressed="false">
           <b>I need support</b><span>Resources, guidance, and practical next steps.</span>
@@ -288,12 +286,7 @@
 </div>
 
 <!-- =============== THE DECK =============== -->
-<section class="deck" id="deck" aria-labelledby="deckTitle">
-  <div class="shell deck-intro">
-    <p class="eyebrow eyebrow-light" style="justify-content:center">All of it</p>
-    <h2 id="deckTitle" data-reveal>Nine, running at once.</h2>
-    <p data-reveal>Not a roadmap. Every screen below is a live product somebody used today.</p>
-  </div>
+<section class="deck" id="deck" aria-label="Every HMC OS product">
   <div class="deck-stage" aria-hidden="false">
     <div class="deck-grid" id="deckGrid">
       <a class="deck-card" href="https://eventfinder.healthmatters.clinic" data-card="0">
@@ -354,146 +347,18 @@
   </div>
 </section>
 
-<!-- =============== THE LOOP =============== -->
-<section class="loop" id="loop">
-  <div class="loop-sticky">
-    <div class="loop-head">
-      <p class="eyebrow eyebrow-dark">The loop</p>
-      <h2 data-reveal>Follow one person all the way through.</h2>
-      <p data-reveal>Nine tools only matter if they hand off to each other. Here is the handoff, in the order it happens.</p>
-    </div>
-    <div class="track" id="track">
-      <article class="panel">
-        <span class="step">Step one</span>
-        <h3>Someone shows up.</h3>
-        <p>A screening at a park, an event found by zip code, or a private check-in at eleven at night. All three start the same record.</p>
-        <span class="tag">EventFinder, CheckYourself</span>
-      </article>
-      <article class="panel">
-        <span class="step">Step two</span>
-        <h3>A trained volunteer takes the visit.</h3>
-        <p>Their orientation, their credential, their shift and their hours are already on file, so who ran the visit is never a question afterwards.</p>
-        <span class="tag">HMC VMS, HMC Academy</span>
-      </article>
-      <article class="panel pop">
-        <span class="step">Step three</span>
-        <h3>A referral goes out.</h3>
-        <p>Routed to a partner by the services that partner declared. Housing to housing. Behavioral health to behavioral health. Not a flyer and a hope.</p>
-        <span class="tag">Resource Directory, Partner Portal</span>
-      </article>
-      <article class="panel deep">
-        <span class="step">Step four</span>
-        <h3>The partner closes it.</h3>
-        <p>Accept or decline, serve the person, then record the outcome and how many people it covered. Nothing sits open with nobody watching.</p>
-        <span class="tag">Partner Portal</span>
-      </article>
-      <article class="panel">
-        <span class="step">Step five</span>
-        <h3>The result comes back.</h3>
-        <p>Outcomes, hours and completions land in one place, so a report is pulled from the work rather than rebuilt from memory a quarter later.</p>
-        <span class="tag">HMC OS</span>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- =============== NUMBERS =============== -->
-<section class="numbers" id="proof">
+<!-- =============== THE REVEAL ===============
+     The name is explained only here, after the reader has travelled the parts.
+     The visual makes the connection; the copy just gives them the language for
+     what they have already seen. -->
+<section class="reveal" id="next">
   <div class="shell">
-    <p class="eyebrow eyebrow-dark">Where it stands</p>
-    <div class="num-grid">
-      <div class="num" data-reveal><b class="count" data-count="9">9</b><span>Tools running in production, not in a roadmap</span></div>
-      <div class="num pop" data-reveal><b class="count" data-count="25000" data-suffix="+" data-format="comma">25,000+</b><span>Angelenos served since 2020</span></div>
-      <div class="num deep" data-reveal><b class="count" data-count="1000" data-suffix="+" data-format="comma">1,000+</b><span>Volunteers registered to date, counted cumulatively since 2020</span></div>
-      <div class="num" data-reveal><b>1.0</b><span>CE and CEU approved by LACDMH for Unstoppable on February 27 2026</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- =============== PROOF =============== -->
-<section class="proof">
-  <div class="shell">
-    <div class="proof-head">
-      <h2 data-reveal>The work under the software.</h2>
-      <p data-reveal>Every tool on this page was built for a program that was already running. Here is what those programs are answerable to.</p>
-    </div>
-    <div class="proof-grid">
-      <article class="pcard" data-reveal>
-        <h3>County funding</h3>
-        <p>Named in the CalMHSA Intent to Award for LACDMH Community Grants, through a competitive RFP.</p>
-      </article>
-      <article class="pcard" data-reveal>
-        <h3>Continuing education</h3>
-        <p>Unstoppable<sup>&trade;</sup> approved by LACDMH on February 27 2026 for 1.0 CE and CEU across BBS, BRN, CCAPP and psychology.</p>
-      </article>
-      <article class="pcard" data-reveal>
-        <h3>Field research</h3>
-        <p>A February 2025 Skid Row study of 75 respondents, certified exempt by the UCLA Institutional Review Board.</p>
-      </article>
-      <article class="pcard" data-reveal>
-        <h3>Community design</h3>
-        <p>Mobile Health Outreach was built from a community needs assessment of 169 respondents, who named cost, time and transportation as what stops them.</p>
-      </article>
-      <article class="pcard" data-reveal>
-        <h3>Standing</h3>
-        <p>California 501(c)(3), EIN 85-3784250, founded 2020, certified as an LA County Social Enterprise.</p>
-      </article>
-      <article class="pcard" data-reveal>
-        <h3>Federal registration</h3>
-        <p>Active in SAM.gov, Grants.gov and eRA Commons, so a federal award has nothing to wait on.</p>
-      </article>
-    </div>
-    <div class="secure" data-reveal>
-      <h3>How the data is held</h3>
-      <p>Access is controlled and logged, and data is encrypted in transit and at rest. HMC OS<sup>&trade;</sup> is built to HIPAA and SOC 2 standards.</p>
-    </div>
-  </div>
-</section>
-
-<!-- =============== WHAT HAPPENS NEXT =============== -->
-<section class="next" id="next">
-  <div class="shell">
-    <div class="next-head">
-      <p class="eyebrow eyebrow-light" style="justify-content:center">What happens next</p>
-      <h2 data-reveal>Three ways in.</h2>
-      <p data-reveal>The first is open to anyone this minute. The other two start with a conversation and end with you on the system rather than next to it.</p>
-    </div>
-    <div class="next-grid">
-      <!-- The person asking for help opens the premise of this page, so they get
-           the first door here rather than a footer link. -->
-      <article class="ncard" data-reveal>
-        <h3>For anyone who needs support</h3>
-        <p>Everything on this page that is open to the public sits behind one door. No application, no cost, and nothing to prove before you can use it.</p>
-        <ol>
-          <li>Enter an email address at the Member Hub.</li>
-          <li>Take a private check-in, or find an event near you.</li>
-          <li>Ask for help with food, housing, care or transport.</li>
-        </ol>
-        <div class="btn-row"><a class="hmc-btn hmc-btn-primary" data-hmc-label="Enter The Member Hub" href="https://hub.healthmatters.clinic">Enter the Member Hub</a></div>
-        <p class="ncard-contact">In a crisis, call or text <a href="tel:988">988</a>, the Suicide and Crisis Lifeline, any time of day.</p>
-      </article>
-      <article class="ncard" data-reveal>
-        <h3>For partner organizations</h3>
-        <p>Reach the whole county with your events, receive referrals matched to what you actually do, and close each one on the record.</p>
-        <ol>
-          <li>Tell us the services your organization provides.</li>
-          <li>Get an account on the Partner Portal.</li>
-          <li>Start taking referrals and posting your events.</li>
-        </ol>
-        <div class="btn-row"><a class="hmc-btn hmc-btn-primary" data-hmc-label="Partner With Us" href="https://www.healthmatters.clinic/partners">Partner with us</a></div>
-        <p class="ncard-contact">Or write to <a href="mailto:partner@healthmatters.clinic">partner@healthmatters.clinic</a>.</p>
-      </article>
-      <article class="ncard" data-reveal>
-        <h3>For funders</h3>
-        <p>Fund a system that already runs. Events, referrals, volunteer hours and training completions are captured where they happen, so reporting comes out of the work instead of being rebuilt after it.</p>
-        <ol>
-          <li>Walk the tools with us, live and with real data.</li>
-          <li>Ask for the numbers behind any program on this page.</li>
-          <li>Fund a named piece of the system and watch it report.</li>
-        </ol>
-        <div class="btn-row"><a class="hmc-btn hmc-btn-primary" data-hmc-label="Fund The System" href="https://www.healthmatters.clinic/funders">Fund the system</a></div>
-        <p class="ncard-contact">Or write to <a href="mailto:sponsor@healthmatters.clinic">sponsor@healthmatters.clinic</a>.</p>
-      </article>
+    <h2 class="reveal-line" data-reveal>What you need<br>is connected to what comes next.</h2>
+    <p class="reveal-mark" data-reveal>HMC OS<sup>&trade;</sup></p>
+    <p class="reveal-say" data-reveal>One connected platform for finding support, taking care of yourself, getting involved, helping others, and building stronger communities.</p>
+    <div class="btn-row reveal-cta" data-reveal>
+      <a class="hmc-btn hmc-btn-primary" data-hmc-label="Find What I Need" href="#who">Find what I need</a>
+      <a class="hmc-btn hmc-btn-secondary" data-hmc-label="Partner With Us" href="https://www.healthmatters.clinic/partners">Partner with us</a>
     </div>
   </div>
 </section>

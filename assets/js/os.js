@@ -515,60 +515,7 @@
     if (world) tl.to(world, { opacity: 0, duration: 0.4 }, 6.1);
   });
 
-  /* ---------- 4. the loop ----------
-     Five steps that hand a single person from one tool to the next. They move
-     sideways because the point is the handoff, and sideways is what a handoff
-     looks like. Vertical stacking loses that on desktop; on phones the CSS
-     stacks them and this never runs. */
-  if (desktop) {
-    var track = document.getElementById('track');
-    if (track) {
-      // CSS sticky holds the panel; this only converts scroll progress into
-      // sideways distance across the five steps.
-      ScrollTrigger.create({
-        trigger: '.loop', start: 'top top', end: 'bottom bottom', scrub: true,
-        onUpdate: function (self) {
-          var distance = track.scrollWidth - window.innerWidth + 40;
-          if (distance < 0) distance = 0;
-          gsap.set(track, { x: -distance * self.progress });
-        }
-      });
-
-      // The heading rises a little while the steps travel sideways. Two
-      // directions at once is what stops the pinned panel from reading as a
-      // still image with a slider bolted onto it. Small on purpose: the heading
-      // has to stay readable for the length of the whole track.
-      gsap.to('.loop-head', {
-        y: -42, ease: 'none',
-        scrollTrigger: { trigger: '.loop', start: 'top top', end: 'bottom bottom', scrub: true }
-      });
-    }
-  }
-
-  /* ---------- 5. numbers ----------
-     A number that counts up is read. A number that is simply printed is
-     skimmed. Only used on the four figures that carry the argument. */
-  document.querySelectorAll('.count').forEach(function (el) {
-    var end = parseFloat(el.getAttribute('data-count'));
-    if (isNaN(end)) return;
-    var suffix = el.getAttribute('data-suffix') || '';
-    var comma = el.getAttribute('data-format') === 'comma';
-    var obj = { v: 0 };
-    ScrollTrigger.create({
-      trigger: el, start: 'top 88%', once: true,
-      onEnter: function () {
-        gsap.to(obj, {
-          v: end, duration: 1.5, ease: 'power2.out',
-          onUpdate: function () {
-            var n = Math.round(obj.v);
-            el.textContent = (comma ? n.toLocaleString('en-US') : String(n)) + suffix;
-          }
-        });
-      }
-    });
-  });
-
-  /* ---------- the deck ----------
+  /* ---------- 4. the deck ----------
      Nine cards on a shared perspective plane. Each one starts tilted on its own
      axis and rotates toward flat as the section crosses the viewport, so the
      grid reads as a solid object turning to face the reader rather than as a
@@ -641,7 +588,7 @@
     });
   }
 
-  /* ---------- 6. reveals ---------- */
+  /* ---------- 5. reveals ---------- */
   gsap.utils.toArray('[data-reveal]').forEach(function (el) { gsap.set(el, { y: 34, opacity: 0 }); });
   ScrollTrigger.batch('[data-reveal]', {
     start: 'top 88%',
@@ -651,7 +598,7 @@
     }
   });
 
-  /* ---------- 7. keep measurements honest ---------- */
+  /* ---------- 6. keep measurements honest ---------- */
   window.addEventListener('load', function () { ScrollTrigger.refresh(); });
   var t;
   document.querySelectorAll('img[loading="lazy"]').forEach(function (img) {
