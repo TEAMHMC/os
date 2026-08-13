@@ -162,6 +162,92 @@
   }
 
 
+
+  /* ---------- deck lightbox ----------
+     Cards are real links to the tool, so this only ever enhances: if the script
+     fails the click still goes somewhere useful. Intercepting it lets somebody
+     look through all nine without leaving the page and losing their scroll
+     position, which is the whole reason the deck exists. */
+  (function () {
+    var lb = document.getElementById('lb');
+    var grid = document.getElementById('deckGrid');
+    if (!lb || !grid) return;
+
+    var cards = [].slice.call(grid.querySelectorAll('.deck-card'));
+    var img = document.getElementById('lbImg');
+    var name = document.getElementById('lbName');
+    var idx = document.getElementById('lbIdx');
+    var open = document.getElementById('lbOpen');
+    var btnClose = document.getElementById('lbClose');
+    var btnPrev = document.getElementById('lbPrev');
+    var btnNext = document.getElementById('lbNext');
+    var current = 0;
+    var lastFocused = null;
+
+    function pad(n) { return ('0' + n).slice(-2); }
+
+    function show(i) {
+      current = (i + cards.length) % cards.length;
+      var card = cards[current];
+      var src = card.querySelector('img');
+      img.src = src.getAttribute('src');
+      img.alt = src.getAttribute('alt') || '';
+      name.textContent = card.querySelector('.deck-name').textContent;
+      idx.textContent = pad(current + 1) + ' / ' + pad(cards.length);
+      open.href = card.getAttribute('href');
+    }
+
+    function openLb(i) {
+      lastFocused = document.activeElement;
+      show(i);
+      lb.hidden = false;
+      // Two frames so the browser paints the hidden state before transitioning.
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { lb.classList.add('is-open'); });
+      });
+      document.documentElement.style.overflow = 'hidden';
+      btnClose.focus();
+    }
+
+    function closeLb() {
+      lb.classList.remove('is-open');
+      document.documentElement.style.overflow = '';
+      var done = function () { lb.hidden = true; lb.removeEventListener('transitionend', done); };
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) done();
+      else lb.addEventListener('transitionend', done);
+      if (lastFocused) lastFocused.focus();
+    }
+
+    cards.forEach(function (card, i) {
+      card.addEventListener('click', function (e) {
+        // Let a modified click do what the visitor asked for.
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+        e.preventDefault();
+        openLb(i);
+      });
+    });
+
+    btnClose.addEventListener('click', closeLb);
+    btnPrev.addEventListener('click', function () { show(current - 1); });
+    btnNext.addEventListener('click', function () { show(current + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+
+    document.addEventListener('keydown', function (e) {
+      if (lb.hidden) return;
+      if (e.key === 'Escape') closeLb();
+      else if (e.key === 'ArrowLeft') show(current - 1);
+      else if (e.key === 'ArrowRight') show(current + 1);
+      else if (e.key === 'Tab') {
+        // Keep focus inside the dialog while it is open.
+        var f = [btnClose, open, btnPrev, btnNext];
+        var i = f.indexOf(document.activeElement);
+        if (i === -1) { e.preventDefault(); btnClose.focus(); return; }
+        var next = e.shiftKey ? i - 1 : i + 1;
+        if (next < 0 || next >= f.length) { e.preventDefault(); f[e.shiftKey ? f.length - 1 : 0].focus(); }
+      }
+    });
+  })();
+
   if (reduce || !hasGsap) return;
 
   doc.classList.add('motion');

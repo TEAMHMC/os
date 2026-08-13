@@ -606,5 +606,37 @@
 <script src="./assets/js/vendor/lenis.min.js"></script>
 <script src="./assets/site/hmc-buttons-1.0.4.js"></script>
 <script src="./assets/js/os.js"></script>
+
+<!-- The deck lightbox. Cards stay real links so a no-script visitor still
+     reaches the tool; the script intercepts the click and opens this instead. -->
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lbName">
+  <button type="button" class="lb-close" id="lbClose" aria-label="Close">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+  </button>
+  <a class="lb-open" id="lbOpen" href="#" target="_blank" rel="noopener">
+    <span>Open it</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+  </a>
+
+  <button type="button" class="lb-arrow lb-prev" id="lbPrev" aria-label="Previous tool">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <button type="button" class="lb-arrow lb-next" id="lbNext" aria-label="Next tool">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+
+  <figure class="lb-stage">
+    <div class="laptop">
+      <div class="laptop-lid">
+        <div class="laptop-screen"><img id="lbImg" src="" alt=""></div>
+      </div>
+      <div class="laptop-base"><span class="laptop-notch"></span></div>
+    </div>
+    <figcaption class="lb-meta">
+      <span class="lb-idx" id="lbIdx">01 / 09</span>
+      <span class="lb-name" id="lbName">Event Finder</span>
+    </figcaption>
+  </figure>
+</div>
 </body>
 </html>
