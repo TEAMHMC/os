@@ -66,16 +66,51 @@
   <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
 </section>
 
-<!-- =============== PREMISE =============== -->
-<section class="premise" id="premise">
-  <div class="premise-sticky">
-    <div class="premise-stack">
-      <p class="beat b1" data-beat="1">Someone asks for help at a folding table in a park.</p>
-      <p class="beat b2" data-beat="2">A volunteer runs the visit. A partner takes the referral.</p>
-      <p class="beat b3" data-beat="3">A funder asks, months later, what came of it.</p>
-      <p class="beat b4" data-beat="4">HMC OS keeps all three on the same record.</p>
+<!-- =============== THE PROLOGUE AND THE BIRD'S EYE VIEW ===============
+     One pinned canvas, one continuous camera move. The reader sees a single
+     moment, then the points around it, then the connections, then the whole
+     environment those connections sit in. Nothing here is decoration: the
+     camera pulls back exactly when the copy stops talking about the moment and
+     starts talking about the system. -->
+<section class="canvas" id="prologue" aria-labelledby="proHeading">
+  <h2 id="proHeading" class="sr-only">You see the moment. We see what connects it.</h2>
+  <div class="canvas-sticky">
+
+    <div class="pro-field" id="proField" aria-hidden="true">
+      <svg class="pro-lines" viewBox="0 0 1000 620" fill="none" preserveAspectRatio="xMidYMid meet">
+        <line data-link="1" x1="500" y1="310" x2="320" y2="236"/>
+        <line data-link="2" x1="500" y1="310" x2="680" y2="372"/>
+        <line data-link="3" x1="320" y1="236" x2="220" y2="409"/>
+        <line data-link="4" x1="680" y1="372" x2="780" y2="198"/>
+        <line data-link="5" x1="500" y1="310" x2="440" y2="136"/>
+        <line data-link="6" x1="680" y1="372" x2="600" y2="484"/>
+        <line data-link="7" x1="320" y1="236" x2="140" y2="273"/>
+        <line data-link="8" x1="780" y1="198" x2="860" y2="335"/>
+        <line data-link="9" x1="220" y1="409" x2="600" y2="484"/>
+      </svg>
+      <i class="pro-dot" data-dot="1" data-depth="2" style="left:50.000%;top:50.000%"></i>
+      <i class="pro-dot" data-dot="2" data-depth="1" style="left:32.000%;top:38.065%"></i>
+      <i class="pro-dot" data-dot="3" data-depth="3" style="left:68.000%;top:60.000%"></i>
+      <i class="pro-dot" data-dot="4" data-depth="2" style="left:22.000%;top:65.968%"></i>
+      <i class="pro-dot" data-dot="5" data-depth="1" style="left:78.000%;top:31.935%"></i>
+      <i class="pro-dot" data-dot="6" data-depth="3" style="left:44.000%;top:21.935%"></i>
+      <i class="pro-dot" data-dot="7" data-depth="2" style="left:60.000%;top:78.065%"></i>
+      <i class="pro-dot" data-dot="8" data-depth="1" style="left:14.000%;top:44.032%"></i>
+      <i class="pro-dot" data-dot="9" data-depth="2" style="left:86.000%;top:54.032%"></i>
+      <span class="terr" data-depth="1" style="left:18%;top:30%">Support</span>
+      <span class="terr" data-depth="2" style="left:74%;top:22%">Wellness</span>
+      <span class="terr" data-depth="3" style="left:50%;top:62%">Discovery</span>
+      <span class="terr" data-depth="2" style="left:26%;top:78%">Action</span>
+      <span class="terr" data-depth="1" style="left:82%;top:68%">Community</span>
     </div>
-    <span class="premise-rule" aria-hidden="true"></span>
+
+    <div class="pro-copy" id="proCopy">
+      <p class="pro-line" data-line="1">You see the moment.</p>
+      <p class="pro-line" data-line="2">We see what connects it.</p>
+      <p class="pro-line" data-line="3">Your life doesn't happen in categories.</p>
+      <p class="pro-line" data-line="4">Neither should your path to better health.</p>
+    </div>
+
   </div>
 </section>
 

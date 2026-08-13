@@ -6,7 +6,7 @@
      1  tokens + base
      2  chrome (top bar, progress, rail)
      3  hero
-     4  premise (pinned beats)
+     4  the canvas (prologue + bird's eye view)
      5  the tour (nine pinned tool stages)
      6  the loop (pinned horizontal track)
      7  numbers + proof
@@ -142,18 +142,60 @@ p{margin:0 0 18px}
 }
 .scroll-cue i{width:1px;height:34px;background:linear-gradient(180deg,rgba(255,255,255,.55),transparent);display:block}
 
-/* ---------- 4. premise ---------- */
-.premise{position:relative;background:var(--hero);height:300vh}
-.premise-sticky{position:sticky;top:0;height:100vh;height:100svh;display:grid;place-items:center;overflow:hidden}
-.premise-stack{position:relative;width:var(--shell);text-align:center}
-.beat{
-  position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
-  font-family:'Questrial',sans-serif;color:#fff;
-  font-size:clamp(27px,5vw,68px);line-height:1.06;letter-spacing:-.02em;
-  margin:0 auto;max-width:20ch;
+/* ---------- 4. the canvas (prologue + bird's eye view) ----------
+   One pinned stage carrying four beats of copy and one continuous camera move.
+   The field is authored in a 1000x620 space: the dots are placed by percentage
+   of that box and the SVG uses the same viewBox, so a point and the pathway
+   leaving it can never drift apart at any width.
+
+   Depth is the whole trick. data-depth 1 is far, 3 is near. The motion layer
+   scales the travel of each element by its depth, so when the camera pulls back
+   the near points move furthest and the far ones barely shift, which is what
+   makes it read as space rather than as a shrinking picture. */
+.canvas{position:relative;background:var(--hero);height:520vh}
+.canvas-sticky{
+  position:sticky;top:0;height:100vh;height:100svh;
+  display:grid;place-items:center;overflow:hidden;
 }
-.beat.b4{color:var(--accent)}
-.premise-rule{position:absolute;left:50%;bottom:12vh;transform:translateX(-50%);width:1px;height:9vh;background:rgba(255,255,255,.22)}
+
+.pro-field{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(1080px,92vw);aspect-ratio:1000/620;
+  will-change:transform;
+}
+.pro-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.pro-lines line{
+  stroke:rgba(122,142,255,.5);stroke-width:1.25;stroke-linecap:round;
+}
+.pro-dot{
+  position:absolute;display:block;width:10px;height:10px;margin:-5px 0 0 -5px;
+  border-radius:50%;background:#fff;
+  box-shadow:0 0 0 4px rgba(35,51,223,.28),0 0 26px 6px rgba(90,110,255,.5);
+}
+.pro-dot[data-depth="1"]{width:6px;height:6px;margin:-3px 0 0 -3px;opacity:.62}
+.pro-dot[data-depth="3"]{width:13px;height:13px;margin:-6.5px 0 0 -6.5px}
+/* The first point is the moment the reader is looking at, so it is the only one
+   that carries the accent. Everything else is the system around it. */
+.pro-dot[data-dot="1"]{background:var(--accent);box-shadow:0 0 0 5px rgba(249,199,79,.2),0 0 34px 8px rgba(249,199,79,.45)}
+
+.terr{
+  position:absolute;transform:translate(-50%,-50%);
+  font-family:'Inter',sans-serif;font-size:clamp(10px,1vw,12.5px);
+  font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,.62);white-space:nowrap;
+}
+.terr[data-depth="1"]{color:rgba(255,255,255,.34)}
+.terr[data-depth="3"]{color:rgba(255,255,255,.82)}
+
+.pro-copy{position:relative;z-index:3;width:var(--shell);text-align:center;pointer-events:none}
+.pro-line{
+  position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);
+  margin:0 auto;max-width:22ch;
+  font-family:'Questrial',sans-serif;color:#fff;
+  font-size:clamp(28px,5vw,66px);line-height:1.06;letter-spacing:-.02em;
+  text-shadow:0 8px 40px rgba(0,0,0,.75);
+}
+.pro-line[data-line="2"]{color:var(--accent)}
 
 /* ---------- 5. the tour ---------- */
 .seq{position:relative;background:var(--hero)}
@@ -316,8 +358,8 @@ p{margin:0 0 18px}
 
 /* ---------- 10. motion states ---------- */
 html.motion [data-reveal]{opacity:0}
-html.motion .beat{opacity:0}
-html.motion .beat.b1{opacity:1}
+html.motion .pro-line{opacity:0}
+html.motion .pro-line[data-line="1"]{opacity:1}
 .btn-row{display:flex;gap:12px;flex-wrap:wrap}
 
 /* The shared pill sets transition-duration without a transition-property, so it
@@ -346,13 +388,15 @@ html.motion .beat.b1{opacity:1}
    have to become an ordinary stacked page, or they render as one pile of
    overlapping text. This block is the same flattening the phone layout uses. */
 @media (prefers-reduced-motion:reduce){
-  html.motion [data-reveal],html.motion .beat{opacity:1!important;transform:none!important}
+  html.motion [data-reveal],html.motion .pro-line{opacity:1!important;transform:none!important}
 
-  .premise{height:auto}
-  .premise-sticky{position:static;height:auto;display:block;padding:clamp(70px,12vw,120px) 0}
-  .premise-stack{position:static;display:grid;gap:clamp(20px,3vw,34px);text-align:center}
-  .beat{position:static;transform:none;margin:0 auto;max-width:24ch;font-size:clamp(26px,4vw,44px)}
-  .premise-rule{display:none}
+  .canvas{height:auto}
+  .canvas-sticky{position:static;height:auto;display:block;padding:clamp(70px,12vw,120px) 0}
+  /* The field is the camera move. With motion off there is no camera, so the
+     points would sit there as decoration with nothing to say. */
+  .pro-field{display:none}
+  .pro-copy{position:static;width:var(--shell);margin:0 auto;display:grid;gap:clamp(20px,3vw,34px)}
+  .pro-line{position:static;transform:none;margin:0 auto;max-width:24ch;font-size:clamp(26px,4vw,44px)}
 
   .tool{height:auto}
   .stage{position:static;height:auto;padding:clamp(54px,8vw,90px) 0}
@@ -372,11 +416,13 @@ html.motion .beat.b1{opacity:1}
   /* The hero fills the viewport on a phone and the two buttons already sit at
      the bottom of it, so the cue would land on top of them. */
   .scroll-cue{display:none}
-  .premise{height:auto}
-  .premise-sticky{position:static;height:auto;padding:clamp(70px,14vw,110px) 0;display:block}
-  .premise-stack{position:static;display:grid;gap:26px;text-align:left}
-  .beat{position:static;transform:none;opacity:1!important;max-width:26ch;font-size:clamp(24px,6.4vw,34px)}
-  .premise-rule{display:none}
+  /* Phones keep the field but stop pinning: a five viewport pin on a small
+     screen is a scroll trap, and the camera move needs width to read anyway. */
+  .canvas{height:auto}
+  .canvas-sticky{position:static;height:auto;display:block;padding:clamp(70px,14vw,110px) 0;overflow:visible}
+  .pro-field{position:relative;top:auto;left:auto;transform:none;width:100%;margin:0 auto clamp(28px,7vw,44px)}
+  .pro-copy{position:static;width:var(--shell);margin:0 auto;display:grid;gap:24px;text-align:left}
+  .pro-line{position:static;transform:none;opacity:1!important;max-width:26ch;font-size:clamp(24px,6.4vw,34px);text-shadow:none}
 
   .tool{height:auto}
   .stage{position:static;height:auto;padding:clamp(52px,11vw,80px) 0}

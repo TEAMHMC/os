@@ -316,29 +316,106 @@
     });
   })();
 
-  /* ---------- 2. the four opening lines ----------
-     Four short statements, one at a time, held on a pinned black screen.
-     Scroll is the cut between them. This is the only place on the page where
-     motion replaces layout, and it is doing the job a voiceover would. */
+  /* ---------- 2. the camera move ----------
+     The prologue and the bird's eye view are one shot, not two sections. The
+     reader is shown a single moment, then the points around it, then the
+     pathways between them, then the environment those pathways sit in, and the
+     camera pulls back through the whole thing without cutting.
+
+     Two rules hold it together. The copy beat always changes on the same frame
+     as the camera does something, so the words are never narrating a still
+     picture. And depth is real: every element carries data-depth, and the pull
+     back scales its travel by that depth, so near points sweep and far points
+     barely move. That difference is the only reason it reads as space. */
   if (desktop) {
-    var beats = gsap.utils.toArray('.beat');
-    if (beats.length) {
-      gsap.set(beats, { opacity: 0, y: 26 });
-      gsap.set(beats[0], { opacity: 1, y: 0 });
-      // The sticky hold is CSS. ScrollTrigger only reads progress across it,
-      // so there is no second pinning mechanism fighting the first.
-      var tlBeats = gsap.timeline({
-        scrollTrigger: { trigger: '.premise', start: 'top top', end: 'bottom bottom', scrub: 0.6 }
+    var field = document.getElementById('proField');
+    var proLines = gsap.utils.toArray('.pro-line');
+
+    if (field && proLines.length) {
+      var dots = gsap.utils.toArray('.pro-dot');
+      var links = gsap.utils.toArray('.pro-lines line');
+      var terrs = gsap.utils.toArray('.terr');
+
+      // Starting state. The moment is lit; nothing else exists yet.
+      gsap.set(proLines, { opacity: 0, y: 24 });
+      gsap.set(proLines[0], { opacity: 1, y: 0 });
+      gsap.set(dots, { opacity: 0, scale: 0.2 });
+      gsap.set(dots[0], { opacity: 1, scale: 1 });
+      gsap.set(terrs, { opacity: 0, y: 14 });
+      gsap.set(field, { scale: 1.9 });
+
+      // A pathway is drawn, not faded. Dash the whole length and walk the
+      // offset back to zero so it travels from one point to the other.
+      links.forEach(function (ln) {
+        var len = ln.getTotalLength ? ln.getTotalLength() : 400;
+        gsap.set(ln, { attr: { 'stroke-dasharray': len, 'stroke-dashoffset': len } });
       });
-      beats.forEach(function (b, i) {
+
+      var depth = function (el) { return parseFloat(el.getAttribute('data-depth')) || 2; };
+
+      // The sticky hold is CSS. ScrollTrigger only reads progress across it, so
+      // there is no second pinning mechanism fighting the first.
+      var cam = gsap.timeline({
+        scrollTrigger: { trigger: '.canvas', start: 'top top', end: 'bottom bottom', scrub: 0.6 }
+      });
+
+      // 0 to 1. The moment, alone, with the camera close on it.
+      cam.to({}, { duration: 0.7 });
+
+      // 1 to 2.6. Points arrive one at a time, out of the dark, and the first
+      // pathways reach between them. The camera has not moved yet: the reader
+      // is still inside the moment, just noticing there is something around it.
+      dots.forEach(function (d, i) {
         if (i === 0) return;
-        tlBeats.to(beats[i - 1], { opacity: 0, y: -26, duration: 0.4 }, i - 1)
-               .fromTo(b, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5 }, i - 0.75);
+        cam.to(d, {
+          opacity: gsap.getProperty(d, 'opacity') || 1, scale: 1,
+          duration: 0.28, ease: 'power2.out'
+        }, 0.75 + i * 0.16);
       });
-      tlBeats.to({}, { duration: 0.6 });
+      links.slice(0, 3).forEach(function (ln, i) {
+        cam.to(ln, { attr: { 'stroke-dashoffset': 0 }, duration: 0.5, ease: 'none' }, 1.15 + i * 0.2);
+      });
+
+      // 2.6. The line changes and the camera starts moving at the same moment.
+      cam.to(proLines[0], { opacity: 0, y: -24, duration: 0.3 }, 2.5)
+         .fromTo(proLines[1], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 2.7);
+
+      // 2.7 to 4.2. The pull back. The field falls away from the reader and the
+      // remaining pathways complete, so the moment they were looking at becomes
+      // one point inside something much larger.
+      cam.to(field, { scale: 0.82, duration: 1.5, ease: 'power1.inOut' }, 2.7);
+      dots.forEach(function (d) {
+        cam.to(d, { y: (depth(d) - 2) * 46, duration: 1.5, ease: 'power1.inOut' }, 2.7);
+      });
+      links.slice(3).forEach(function (ln, i) {
+        cam.to(ln, { attr: { 'stroke-dashoffset': 0 }, duration: 0.55, ease: 'none' }, 2.9 + i * 0.14);
+      });
+
+      // 4.2. The environment names itself. Territories, not cards, and they
+      // arrive at their own depths rather than all at once.
+      cam.to(proLines[1], { opacity: 0, y: -24, duration: 0.3 }, 4.2)
+         .fromTo(proLines[2], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 4.4);
+      terrs.forEach(function (t) {
+        cam.to(t, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 4.3 + (3 - depth(t)) * 0.18);
+      });
+
+      // 5.4. The answer to the line before it, and the pathways brighten as it
+      // lands, which is the visual form of the sentence.
+      cam.to(proLines[2], { opacity: 0, y: -24, duration: 0.3 }, 5.4)
+         .fromTo(proLines[3], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 5.6)
+         .to(links, { attr: { stroke: 'rgba(160,178,255,.92)' }, duration: 0.6 }, 5.6);
+
+      // Hold, then hand the screen to the deck.
+      cam.to({}, { duration: 0.7 });
+      cam.to([field, proLines[3]], { opacity: 0, duration: 0.5 }, 6.9);
     }
   } else {
-    gsap.set('.beat', { clearProps: 'all' });
+    // Phones get the field as a still diagram above the lines, so the idea still
+    // arrives without a five viewport scroll trap. See the matching CSS.
+    gsap.set('.pro-line', { clearProps: 'all' });
+    gsap.utils.toArray('.pro-lines line').forEach(function (ln) {
+      gsap.set(ln, { attr: { 'stroke-dasharray': 'none', 'stroke-dashoffset': 0 } });
+    });
   }
 
   /* ---------- 3. the nine tools ----------
