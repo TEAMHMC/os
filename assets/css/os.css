@@ -102,11 +102,13 @@ p{margin:0 0 18px}
 .hud-bars li.is-active{width:26px;background:var(--accent)}
 
 /* ---------- 3. hero ---------- */
-.hero{
-  position:relative;min-height:100vh;min-height:100svh;
-  display:flex;align-items:center;
-  background:var(--hero);overflow:hidden;
-  padding:118px 0 116px;
+/* The hero is a scroll, not a screen. The mark opens at full width and hands
+   its size to the promise as the reader moves: HMC OS shrinks to the size the
+   line was, and the line grows to the size the mark was. */
+.hero{position:relative;height:280vh;background:var(--hero)}
+.hero-sticky{
+  position:sticky;top:0;height:100vh;height:100svh;
+  display:flex;align-items:center;overflow:hidden;
 }
 .hero-glow{
   position:absolute;left:50%;top:38%;width:min(1100px,120vw);height:min(1100px,120vw);
@@ -124,15 +126,17 @@ p{margin:0 0 18px}
    rest of the eyebrows carry. */
 .hero .eyebrow::before{display:none}
 .hero .eyebrow{letter-spacing:.24em}
-.hero-inner{position:relative;z-index:2;text-align:center}
+.hero-inner{position:relative;z-index:2;text-align:center;width:var(--shell);margin:0 auto}
 .hero-mark{
   font-size:clamp(64px,15.5vw,232px);line-height:.82;margin:0 0 6px;
   letter-spacing:-.04em;color:#fff;
+  transform-origin:50% 50%;will-change:transform;
 }
 .hero-mark sup{font-size:.2em;vertical-align:super;letter-spacing:0;-webkit-text-fill-color:rgba(255,255,255,.8);color:rgba(255,255,255,.8)}
 .hero-sub{
   color:#fff;font-family:'Questrial',sans-serif;font-size:clamp(34px,5.4vw,72px);
   line-height:1.04;margin:0 auto 26px;max-width:14ch;letter-spacing:-.025em;
+  transform-origin:50% 50%;will-change:transform;
 }
 .hero-lede{color:var(--on-dark);font-size:clamp(15.5px,1.5vw,18px);max-width:60ch;margin:0 auto 34px}
 .hero-cta{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
@@ -263,9 +267,8 @@ p{margin:0 0 18px}
    16/10, so the interface is never cropped: these are real products and cutting
    their edges off makes them look broken. Same drawn laptop the lightbox uses. */
 .dive-ui .laptop-screen{aspect-ratio:1600/1125}
-.dive-ui .laptop-lid{background:#131316;border-color:rgba(255,255,255,.1)}
 .dive[data-mood="checkin"] .laptop-lid,
-.dive[data-mood="build"] .laptop-lid{background:#2a2a2e}
+.dive[data-mood="build"] .laptop-lid{background:linear-gradient(180deg,#4a4a50,#2b2b30 12%)}
 .dive-ui .frame-shot{width:100%;height:100%;object-fit:cover;object-position:top center;aspect-ratio:auto;border-radius:0}
 
 /* the worlds */
@@ -346,15 +349,20 @@ p{margin:0 0 18px}
 
 /* ---------- 8. the reveal ---------- */
 .reveal{background:var(--hero);padding:clamp(90px,14vw,190px) 0;text-align:center}
+/* The line is the point of this section. The mark had been set at hero size
+   here too, which made the bottom of the page read as the top of it again, so
+   it is now a signature under the statement rather than a second title. */
 .reveal-line{
-  color:#fff;font-size:clamp(30px,5.4vw,70px);line-height:1.02;letter-spacing:-.02em;
-  margin:0 auto clamp(40px,6vw,74px);max-width:20ch;
+  color:#fff;font-size:clamp(34px,6.4vw,88px);line-height:1;letter-spacing:-.03em;
+  margin:0 auto clamp(34px,5vw,58px);max-width:18ch;
 }
 .reveal-mark{
-  font-family:'Questrial',sans-serif;color:#fff;font-size:clamp(34px,6vw,84px);
-  line-height:1;letter-spacing:-.03em;margin:0 0 20px;
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,.72);margin:0 0 16px;
 }
-.reveal-mark sup{font-size:.24em;vertical-align:super;color:rgba(255,255,255,.8)}
+.reveal-mark::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.reveal-mark sup{font-size:.7em;vertical-align:super;letter-spacing:0}
 .reveal-say{color:var(--on-dark);font-size:clamp(15.5px,1.6vw,19px);max-width:58ch;margin:0 auto 34px}
 .reveal-cta{justify-content:center}
 
@@ -447,6 +455,10 @@ html.motion .pro-line[data-line="1"]{opacity:1}
 
 @media (max-width:900px){
   body{font-size:16px}
+  /* No swap on a phone: there is not enough width for the mark to be dramatic
+     at either end of it. */
+  .hero{height:auto}
+  .hero-sticky{position:static;height:auto;min-height:100svh;padding:104px 0 70px}
   /* The hero fills the viewport on a phone and the two buttons already sit at
      the bottom of it, so the cue would land on top of them. */
   .scroll-cue{display:none}
@@ -493,43 +505,52 @@ html.motion .pro-line[data-line="1"]{opacity:1}
    Sits at the top of the tour so the reader chooses a lens before the nine
    stages start, rather than discovering at the end that three of them were
    aimed at somebody else. */
-/* The persona engine. The headline holds the middle of the screen on its own,
-   then the four cards fly in past it from depth. They are goals, not user
-   types, and each carries its promise so the reader can see where it leads
-   before choosing. */
-.seq-intro-sec{position:relative;height:260vh}
+/* The persona engine. Not a row of four. The headline breaks to opposite
+   corners and the options sit out in the field between them, each on a line
+   back to the middle, so the choice reads as four places in one space rather
+   than a menu bar. */
+.seq-intro-sec{position:relative;height:300vh}
 .seq-intro{
   position:sticky;top:0;height:100vh;height:100svh;
-  display:grid;place-items:center;align-content:center;
-  padding:0;text-align:center;overflow:hidden;
+  display:block;padding:0;overflow:hidden;
 }
 .who-lead{
-  color:#fff;font-size:clamp(38px,7.4vw,104px);line-height:.96;letter-spacing:-.03em;
-  margin:0 auto;max-width:15ch;position:relative;z-index:3;
+  position:absolute;inset:0;margin:0;z-index:4;pointer-events:none;
+  color:#fff;font-size:clamp(44px,8.4vw,128px);line-height:.9;letter-spacing:-.035em;
 }
-.who{margin:0;position:absolute;inset:0;display:grid;place-items:center;z-index:2}
-.who-row{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:clamp(12px,1.6vw,20px);width:min(1240px,92vw);margin:0 auto;text-align:left;
-}
+/* The two halves hold the top left and bottom right corners. The options live
+   in the band between them, which is the only way four cards and a headline
+   this size share one screen without touching. */
+.lead-a{position:absolute;left:clamp(16px,4vw,60px);top:clamp(58px,8vh,96px)}
+.lead-b{position:absolute;right:clamp(16px,4vw,60px);bottom:clamp(50px,7vh,86px)}
+
+.who{position:absolute;inset:0;margin:0;z-index:3}
+.who-web{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.who-web line{stroke:rgba(255,255,255,.2);stroke-width:1}
+
+.who-row{position:absolute;inset:0;display:block}
 .who-btn{
-  display:flex;flex-direction:column;gap:8px;
-  padding:clamp(18px,2vw,26px);border-radius:20px;cursor:pointer;
-  min-height:clamp(150px,15vw,190px);
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.18);
+  position:absolute;width:clamp(210px,20vw,280px);
+  display:flex;flex-direction:column;gap:7px;
+  padding:clamp(16px,1.7vw,22px);border-radius:18px;cursor:pointer;
+  background:rgba(20,20,24,.72);border:1px solid rgba(255,255,255,.2);
   color:rgba(255,255,255,.74);font-family:inherit;text-align:left;
-  backdrop-filter:blur(6px);will-change:transform,opacity;
+  backdrop-filter:blur(8px);will-change:transform,opacity;
   transition:background .25s ease,border-color .25s ease,color .25s ease;
 }
-.who-btn b{font-family:'Questrial',sans-serif;font-weight:400;font-size:clamp(18px,1.8vw,23px);line-height:1.12;color:#fff}
-.who-btn span{font-size:13.5px;line-height:1.45}
-.who-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.48)}
+.who-btn[data-spot="a"]{left:6%;top:30%}
+.who-btn[data-spot="b"]{right:6%;top:24%}
+.who-btn[data-spot="c"]{left:8%;top:55%}
+.who-btn[data-spot="d"]{right:8%;top:50%}
+.who-btn b{font-family:'Questrial',sans-serif;font-weight:400;font-size:clamp(17px,1.7vw,22px);line-height:1.12;color:#fff}
+.who-btn span{font-size:13px;line-height:1.45}
+.who-btn:hover{background:rgba(32,32,38,.9);border-color:rgba(255,255,255,.5)}
 .who-btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .who-btn[aria-pressed="true"]{background:#fff;border-color:#fff;color:var(--muted)}
 .who-btn[aria-pressed="true"] b{color:var(--ink)}
-.who-note{position:absolute;left:0;right:0;bottom:16%;margin:0;font-size:14px;color:rgba(255,255,255,.6);text-align:center}
+.who-note{position:absolute;left:0;right:0;top:52%;margin:0;font-size:14px;color:rgba(255,255,255,.62);text-align:center;z-index:5}
 .who-all{
-  position:absolute;left:50%;bottom:9%;transform:translateX(-50%);
+  position:absolute;left:50%;top:58%;transform:translateX(-50%);z-index:5;
   background:none;border:0;cursor:pointer;font-family:inherit;
   font-size:13px;letter-spacing:.06em;color:rgba(255,255,255,.5);
   text-decoration:underline;text-underline-offset:4px;padding:6px 8px;white-space:nowrap;
@@ -547,13 +568,16 @@ html.motion .pro-line[data-line="1"]{opacity:1}
 @media (prefers-reduced-motion:reduce){.seq .tool.is-aside{opacity:1}}
 
 @media (max-width:600px){
-  /* No pin on a phone, and one card per row. */
+  /* The scatter needs width. On a phone it becomes an ordinary stack. */
   .seq-intro-sec{height:auto}
   .seq-intro{position:static;height:auto;display:block;padding:clamp(64px,13vw,100px) 0;overflow:visible}
+  .who-lead{position:static;display:grid;gap:2px;width:var(--shell);margin:0 auto;font-size:clamp(38px,11vw,58px)}
+  .lead-a,.lead-b{position:static}
+  .who-web{display:none}
   .who{position:static;display:block;margin-top:clamp(26px,7vw,44px)}
-  .who-row{gap:10px;grid-template-columns:1fr;width:var(--shell)}
-  .who-btn{min-height:0}
-  .who-note{position:static;margin-top:14px}
+  .who-row{position:static;display:grid;gap:10px;width:var(--shell);margin:0 auto}
+  .who-btn{position:static;width:auto}
+  .who-note{position:static;margin-top:14px;text-align:left;width:var(--shell);margin-inline:auto}
   .who-all{position:static;transform:none;display:block;margin:14px auto 0}
 }
 
@@ -685,27 +709,39 @@ html.motion .pro-line[data-line="1"]{opacity:1}
    so it reads as a body sitting under the lid rather than a bar beneath it. */
 .laptop{position:relative;width:100%;filter:drop-shadow(0 44px 70px rgba(0,0,0,.7))}
 .laptop-lid{
-  background:#141416;border-radius:14px 14px 4px 4px;
-  padding:clamp(9px,1.1vw,15px) clamp(9px,1.1vw,15px) clamp(11px,1.3vw,18px);
-  border:1px solid rgba(255,255,255,.09);
+  background:linear-gradient(180deg,#26262a,#141416 12%);
+  border-radius:14px 14px 5px 5px;
+  padding:clamp(11px,1.3vw,17px) clamp(11px,1.3vw,17px) clamp(20px,2.2vw,30px);
+  border:1px solid rgba(255,255,255,.13);
 }
+/* The chin, with the hinge cut into it. Without a chin and a hinge the lid
+   reads as a floating rectangle rather than the top half of a laptop. */
+.laptop-lid::after{
+  content:'';position:absolute;left:50%;bottom:clamp(7px,.8vw,11px);transform:translateX(-50%);
+  width:22%;height:2px;border-radius:2px;background:rgba(255,255,255,.14);
+}
+.laptop-lid{position:relative}
 .laptop-screen{
   position:relative;border-radius:5px;overflow:hidden;background:#000;
   aspect-ratio:1600/1125;
 }
 .laptop-screen img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
 
+/* The deck. Wider than the lid, tapering forward, with the front lip catching
+   the light the way an aluminium body does. */
 .laptop-base{
-  position:relative;height:clamp(11px,1.3vw,17px);
-  margin:0 auto;width:104%;transform:translateX(-2%);
-  background:linear-gradient(180deg,#3a3a3e 0%,#232326 42%,#141416 100%);
-  border-radius:0 0 10px 10px;
-  clip-path:polygon(1.6% 0, 98.4% 0, 100% 100%, 0 100%);
+  position:relative;height:clamp(14px,1.7vw,22px);
+  margin:0 auto;width:112%;transform:translateX(-6%);
+  background:linear-gradient(180deg,#4a4a50 0%,#2b2b30 38%,#191919 82%,#0e0e10 100%);
+  border-radius:0 0 12px 12px;
+  clip-path:polygon(2.4% 0, 97.6% 0, 100% 100%, 0 100%);
+  box-shadow:0 18px 34px rgba(0,0,0,.5);
 }
+/* The thumb cut on the front edge. */
 .laptop-notch{
   position:absolute;left:50%;top:0;transform:translateX(-50%);
-  width:13%;height:38%;
-  background:#111;border-radius:0 0 7px 7px;
+  width:15%;height:42%;
+  background:#0d0d0f;border-radius:0 0 8px 8px;
 }
 
 .lb-meta{

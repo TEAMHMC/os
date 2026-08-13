@@ -51,21 +51,17 @@
 
 <!-- =============== HERO =============== -->
 <section class="hero" id="top">
-  <div class="hero-glow" aria-hidden="true"></div>
-  <div class="hero-grid" aria-hidden="true"></div>
-  <div class="shell hero-inner">
-    <p class="eyebrow eyebrow-light" style="justify-content:center">Health Matters Clinic presents</p>
-    <h1 class="hero-mark hmc-mask hmc-mask-light" id="heroMark">HMC OS<sup>&trade;</sup></h1>
-    <p class="hero-sub">Your next step<br>starts here.</p>
-    <p class="hero-lede">Whether you need support, want to take better care of yourself, are ready to get involved, or want to build something bigger with your organization, HMC OS<sup>&trade;</sup> helps you find your way forward.</p>
-    <!-- Two choices, not eight. Every other way in is reachable further down;
-         the hero's job is to get somebody moving, not to list the catalogue. -->
-    <div class="hero-cta">
-      <a class="hmc-btn hmc-btn-primary" data-hmc-label="Find What I Need" href="#who">Find what I need</a>
-      <a class="hmc-btn hmc-btn-secondary" data-hmc-label="Explore Ways To Get Involved" href="#who">Explore ways to get involved</a>
+  <div class="hero-sticky">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="shell hero-inner">
+      <p class="eyebrow eyebrow-light" style="justify-content:center">Health Matters Clinic presents</p>
+      <h1 class="hero-mark hmc-mask hmc-mask-light" id="heroMark">HMC OS<sup>&trade;</sup></h1>
+      <p class="hero-sub" id="heroSub">Your next step<br>starts here.</p>
+      <p class="hero-lede">Whether you need support, want to take better care of yourself, are ready to get involved, or want to build something bigger with your organization, HMC OS<sup>&trade;</sup> helps you find your way forward.</p>
     </div>
+    <div class="scroll-cue" aria-hidden="true"><span>Scroll to begin</span><i></i></div>
   </div>
-  <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
 </section>
 
 <!-- =============== THE SYSTEM REVEALS ITSELF ===============
@@ -119,24 +115,30 @@
 <!-- =============== START WITH WHAT MATTERS =============== -->
 <section class="seq-intro-sec" id="tour">
   <div class="shell seq-intro">
-    <h2 class="who-lead">Start with what matters to you.</h2>
+    <h2 class="who-lead"><span class="lead-a">What</span><span class="lead-b">matters to you.</span></h2>
 
     <!-- The persona engine. The reader names what they came for rather than
          picking which kind of person they are, which is a question nobody wants
          to answer about themselves. Choosing re-cuts the tour below. -->
     <div class="who" id="who" data-reveal>
-      <p class="who-q sr-only" id="whoLabel">What brings you here?</p>
+      <p class="who-q sr-only" id="whoLabel">What matters to you?</p>
+      <svg class="who-web" viewBox="0 0 1000 600" fill="none" aria-hidden="true" preserveAspectRatio="none">
+        <line x1="500" y1="300" x2="157" y2="222"/>
+        <line x1="500" y1="300" x2="843" y2="186"/>
+        <line x1="500" y1="300" x2="177" y2="366"/>
+        <line x1="500" y1="300" x2="823" y2="342"/>
+      </svg>
       <div class="who-row" role="group" aria-labelledby="whoLabel">
-        <button type="button" class="who-btn" data-persona="member" aria-pressed="false">
+        <button type="button" class="who-btn" data-spot="a" data-persona="member" aria-pressed="false">
           <b>I need support</b><span>Resources, guidance, and practical next steps.</span>
         </button>
-        <button type="button" class="who-btn" data-persona="wellbeing" aria-pressed="false">
+        <button type="button" class="who-btn" data-spot="b" data-persona="wellbeing" aria-pressed="false">
           <b>I want to take care of myself</b><span>Simple tools to check in, reset, and build healthier habits.</span>
         </button>
-        <button type="button" class="who-btn" data-persona="volunteer" aria-pressed="false">
+        <button type="button" class="who-btn" data-spot="c" data-persona="volunteer" aria-pressed="false">
           <b>I want to get involved</b><span>Events, learning, volunteering, and opportunities to take action.</span>
         </button>
-        <button type="button" class="who-btn" data-persona="partner" aria-pressed="false">
+        <button type="button" class="who-btn" data-spot="d" data-persona="partner" aria-pressed="false">
           <b>I represent an organization</b><span>Partnership, collaboration, and tools to strengthen your community impact.</span>
         </button>
       </div>

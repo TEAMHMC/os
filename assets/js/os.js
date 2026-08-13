@@ -262,43 +262,41 @@
   }
 
   /* ---------- 1. the opening ----------
-     The product name arrives first and by itself, then the sentence that
-     explains it, then the way in. That order is the whole point of the hero. */
+     The mark arrives at full width, then hands its size over. HMC OS shrinks to
+     roughly the size the promise was, and the promise grows to roughly the size
+     the mark was, so the screen ends up saying the thing the reader needs
+     rather than the thing we are called. Scrubbed, so the swap is the reader's
+     own movement rather than something that happens at them. */
   (function hero() {
     var mark = document.getElementById('heroMark');
+    var sub = document.getElementById('heroSub');
     if (!mark) return;
+
     var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.from(mark, { yPercent: 18, opacity: 0, scale: 1.04, duration: 1.1 })
+    tl.from(mark, { scale: 1.16, opacity: 0, duration: 1.1 })
       .from('.hero .eyebrow', { y: 14, opacity: 0, duration: 0.6 }, 0.15)
-      .from('.hero-sub', { y: 24, opacity: 0, duration: 0.8 }, '-=0.55')
-      .from('.hero-lede', { y: 20, opacity: 0, duration: 0.8 }, '-=0.6')
-      .from('.hero-cta .hmc-btn', { y: 16, opacity: 0, duration: 0.6, stagger: 0.09 }, '-=0.55')
+      .from(sub, { opacity: 0, duration: 0.7 }, '-=0.5')
+      .from('.hero-lede', { y: 20, opacity: 0, duration: 0.8 }, '-=0.5')
       .from('.scroll-cue', { opacity: 0, duration: 0.6 }, '-=0.3');
 
-    // The hero lifts away rather than cutting, so the first pinned section
-    // feels like the same shot continuing.
-    gsap.to('.hero-inner', {
-      y: -70, opacity: 0.15, ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 25%', scrub: true }
-    });
-    gsap.to('.scroll-cue', {
-      opacity: 0, ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: '30% top', scrub: true }
-    });
+    if (!desktop) return;
 
-    // Depth on the way out. The copy lifts, and behind it the grid and the glow
-    // fall at two slower rates, which is the whole of what parallax is: things
-    // further away moving less. The glow carries its own translate(-50%,-50%)
-    // for centring and GSAP keeps that as xPercent and yPercent, so the y here
-    // is added to it rather than replacing it.
-    gsap.to('.hero-grid', {
-      y: 90, ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    // The swap. The two scales are picked off the two type sizes: the mark tops
+    // out at 232px and the promise at 72px, so a third and a bit over three
+    // times is the pair of numbers that actually trades their places.
+    var swap = gsap.timeline({
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: 0.5 }
     });
-    gsap.to('.hero-glow', {
-      y: 150, opacity: 0.4, ease: 'none',
-      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
-    });
+    swap.to(mark, { scale: 0.33, y: -18, duration: 1, ease: 'power2.inOut' }, 0.15)
+        .fromTo(sub, { scale: 0.62 }, { scale: 1.85, duration: 1, ease: 'power2.inOut' }, 0.15)
+        .to('.hero-lede', { opacity: 0, y: -14, duration: 0.4 }, 0.15)
+        .to('.scroll-cue', { opacity: 0, duration: 0.3 }, 0.1)
+        .to('.hero .eyebrow', { opacity: 0, duration: 0.3 }, 0.15);
+
+    // Depth behind the swap, and the whole thing leaving at the end.
+    swap.to('.hero-grid', { y: 120, duration: 1.6, ease: 'none' }, 0)
+        .to('.hero-glow', { y: 190, opacity: 0.45, duration: 1.6, ease: 'none' }, 0)
+        .to('.hero-inner', { opacity: 0, y: -50, duration: 0.5 }, 1.5);
   })();
 
   /* ---------- 2. the camera move ----------
@@ -391,42 +389,50 @@
     });
   }
 
-  /* ---------- the persona cards ----------
-     The headline holds the screen alone, then splits open: the four cards come
-     past it out of depth, each from its own distance, and settle into the row.
-     Scrubbed, so the reader drives the arrival rather than watching it. */
+  /* ---------- the persona map ----------
+     The headline arrives split to opposite corners, then the four options come
+     out of the field between them, each on its own line back to the middle.
+     Scattered rather than in a row, so the choice reads as four places in one
+     space instead of a menu bar. */
   if (desktop) {
-    var lead = document.querySelector('.who-lead');
+    var leadA = document.querySelector('.lead-a');
+    var leadB = document.querySelector('.lead-b');
     var whoWrap = document.querySelector('.who');
     var cards4 = gsap.utils.toArray('.who-btn');
+    var webs = gsap.utils.toArray('.who-web line');
 
-    if (lead && whoWrap && cards4.length) {
-      gsap.set(cards4, { opacity: 0, scale: 0.42, yPercent: 60, filter: 'blur(9px)' });
+    if (leadA && leadB && whoWrap && cards4.length) {
+      gsap.set(cards4, { opacity: 0, scale: 0.5, filter: 'blur(8px)' });
+      gsap.set([leadA, leadB], { opacity: 0 });
       gsap.set(whoWrap, { pointerEvents: 'none' });
+      webs.forEach(function (ln) {
+        var len = ln.getTotalLength ? ln.getTotalLength() : 400;
+        gsap.set(ln, { attr: { 'stroke-dasharray': len, 'stroke-dashoffset': len } });
+      });
 
       var wt = gsap.timeline({
         scrollTrigger: { trigger: '.seq-intro-sec', start: 'top top', end: 'bottom bottom', scrub: 0.55 }
       });
 
-      // The headline alone, then it gives way as the cards come through it.
-      // The headline has to be clear of the middle before the first card gets
-      // there, or they arrive on top of each other.
-      wt.to({}, { duration: 0.6 })
-        .to(lead, { scale: 0.62, y: '-31vh', duration: 0.9, ease: 'power2.inOut' }, 0.6);
+      // The question, opening to the corners it will hold.
+      wt.fromTo(leadA, { opacity: 0, x: -70 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' }, 0.2)
+        .fromTo(leadB, { opacity: 0, x: 70 }, { opacity: 1, x: 0, duration: 0.8, ease: 'power2.out' }, 0.5);
 
+      // Then the lines reach out, and an option lands on the end of each.
+      webs.forEach(function (ln, i) {
+        wt.to(ln, { attr: { 'stroke-dashoffset': 0 }, duration: 0.5, ease: 'none' }, 1.3 + i * 0.18);
+      });
       cards4.forEach(function (c, i) {
-        // Out of the middle, each from a different distance, so they arrive as
-        // four objects travelling rather than one row fading up.
-        var spread = [-30, -10, 10, 30][i];
-        gsap.set(c, { xPercent: spread * 1.6 });
+        var from = [{x:-90,y:-60},{x:90,y:-70},{x:-80,y:70},{x:90,y:80}][i];
+        gsap.set(c, { x: from.x, y: from.y });
         wt.to(c, {
-          opacity: 1, scale: 1, yPercent: 0, xPercent: 0, filter: 'blur(0px)',
-          duration: 0.9, ease: 'power2.out'
-        }, 1.5 + i * 0.14);
+          opacity: 1, scale: 1, x: 0, y: 0, filter: 'blur(0px)',
+          duration: 0.85, ease: 'power2.out'
+        }, 1.55 + i * 0.16);
       });
 
       wt.call(function () { gsap.set(whoWrap, { pointerEvents: 'auto' }); }, null, 2.6);
-      wt.to({}, { duration: 0.5 });
+      wt.to({}, { duration: 0.8 });
     }
   }
 
@@ -498,8 +504,15 @@
       scrollTrigger: { trigger: dv, start: 'top top', end: 'bottom bottom', scrub: 0.6 }
     });
 
+    /* Timing rule for the whole dive: a beat is fully gone before the next one
+       arrives. Two beats sharing the screen is what made the words read as one
+       pile of text on top of another. Where a world sits in the middle of the
+       frame rather than out at the edges, the copy leaves before it appears. */
+    var centred = (mood === 'checkin' || mood === 'calm' || mood === 'build');
+
     // 1. Arrival. Coming up from small is the camera closing the distance.
     tl.to(copy, { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.1);
+    if (centred) tl.to(copy, { opacity: 0, y: -30, duration: 0.45 }, 1.5);
 
     // 2. The world. Every product gets its own, because "a world assembles"
     //    means nothing if all five assemble the same way.
@@ -511,47 +524,49 @@
       var dom = dv.querySelector('.w-word.is-dominant');
       if (dom) tl.to(dom, { scale: 1.5, duration: 0.5, ease: 'power2.out' }, 1.8);
     }
-    if (quiet)  tl.to(quiet,  { opacity: 1, y: 0, duration: 0.6 }, 0.8);
+    if (quiet)  tl.to(quiet,  { opacity: 1, y: 0, duration: 0.6 }, 2.05);
     if (breath) {
       // One complete breath, held long enough to actually follow.
-      tl.to(breath, { opacity: 1, scale: 1, duration: 0.7 }, 0.7)
-        .to(breath.querySelector('.w-ring'), { scale: 1.34, duration: 0.9, ease: 'sine.inOut' }, 1.4)
-        .to(breath.querySelector('.w-ring'), { scale: 1, duration: 0.9, ease: 'sine.inOut' }, 2.3);
+      tl.to(breath, { opacity: 1, scale: 1, duration: 0.7 }, 2.05)
+        .to(breath.querySelector('.w-ring'), { scale: 1.34, duration: 0.9, ease: 'sine.inOut' }, 2.7)
+        .to(breath.querySelector('.w-ring'), { scale: 1, duration: 0.9, ease: 'sine.inOut' }, 3.6);
       modes.forEach(function (m, i) {
-        tl.to(m, { opacity: 1, y: 0, duration: 0.35 }, 3.2 + i * 0.28);
+        tl.to(m, { opacity: 1, y: 0, duration: 0.35 }, 4.5 + i * 0.24);
       });
     }
     chain.forEach(function (c, i) {
-      tl.to(c, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 0.9 + i * 0.5);
+      tl.to(c, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 2.1 + i * 0.5);
     });
 
     // 3. The interface. It assembles, and one live control works on top of it.
-    tl.to(ui, { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 2.6);
-    if (world) tl.to(world, { opacity: 0.18, duration: 0.6 }, 2.6);
+    var uiAt = centred ? 5.6 : 2.9;
+    if (world) tl.to(world, { opacity: 0, duration: 0.5 }, uiAt - 0.55);
+    if (!centred) tl.to(copy, { opacity: 0, y: -30, duration: 0.45 }, uiAt - 0.5);
+    tl.to(ui, { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: 'power2.out' }, uiAt);
 
     if (typed && caret) {
       // The search runs itself, one character at a time, tied to scroll.
       var term = 'housing';
-      tl.to(typed, { opacity: 1, duration: 0.3 }, 3.3);
+      tl.to(typed, { opacity: 1, duration: 0.3 }, uiAt + 0.7);
       tl.to({ i: 0 }, {
         i: term.length, duration: 0.9, ease: 'none',
         onUpdate: function () { caret.textContent = term.slice(0, Math.round(this.targets()[0].i)); }
-      }, 3.5);
+      }, uiAt + 0.9);
     }
     chips.forEach(function (c, i) {
-      tl.to(c, { opacity: 1, y: 0, duration: 0.3 }, 3.3 + i * 0.16);
+      tl.to(c, { opacity: 1, y: 0, duration: 0.3 }, uiAt + 0.7 + i * 0.16);
     });
-    if (chips.length) tl.call(function () { chips[2].classList.add('is-on'); }, null, 4.1);
+    if (chips.length) tl.call(function () { chips[2].classList.add('is-on'); }, null, uiAt + 1.5);
 
     // 4. The one thing it is for. The interface steps back so the line lands.
-    tl.to([copy, ui], { opacity: 0, y: -34, duration: 0.5 }, 4.6)
-      .to(close, { opacity: 1, y: 0, duration: 0.5 }, 4.9)
-      .to(cta,   { opacity: 1, y: 0, duration: 0.4 }, 5.2);
+    var closeAt = uiAt + 3.1;
+    tl.to(ui, { opacity: 0, y: -34, duration: 0.5 }, closeAt - 0.6)
+      .to(close, { opacity: 1, y: 0, duration: 0.5 }, closeAt)
+      .to(cta,   { opacity: 1, y: 0, duration: 0.4 }, closeAt + 0.3);
 
     // 5. Back to a point, so the next product activates out of the same space.
-    tl.to([close, cta], { opacity: 0, duration: 0.4 }, 6.1)
-      .to(dv.querySelector('.dive-sticky'), { scale: 0.86, opacity: 0, duration: 0.6, ease: 'power2.in' }, 6.2);
-    if (world) tl.to(world, { opacity: 0, duration: 0.4 }, 6.1);
+    tl.to([close, cta], { opacity: 0, duration: 0.45 }, closeAt + 1.5)
+      .to(dv.querySelector('.dive-sticky'), { scale: 0.86, opacity: 0, duration: 0.6, ease: 'power2.in' }, closeAt + 1.7);
   });
 
   /* ---------- the EventFinder rotor ----------
@@ -584,62 +599,70 @@
      grid reads as a solid object turning to face the reader rather than as a
      wall of thumbnails.
 
-     Per-card variation is what stops it looking mechanical: the seed below gives
-     every card a slightly different starting angle and a slightly different rate,
-     so the deck settles the way a hand-arranged set of objects would. */
+     The wall moves by row rather than by card: a row shares one tilt and turns
+     as a single plane, and neighbouring rows travel sideways in opposite
+     directions, which is what gives the whole thing its drift. */
   var deckGrid = document.getElementById('deckGrid');
   if (deckGrid) {
     var cards = [].slice.call(deckGrid.querySelectorAll('.deck-card'));
 
-    // Fixed, not random: a reload should not reshuffle the composition.
-    var POSE = [
-      { rx: 16, ry: -18, rz: -3, z: -60 },
-      { rx: 13, ry:   0, rz:  2, z: -20 },
-      { rx: 16, ry:  18, rz:  3, z: -60 },
-      { rx: 10, ry: -14, rz:  2, z: -30 },
-      { rx:  8, ry:   0, rz: -1, z:   0 },
-      { rx: 10, ry:  14, rz: -2, z: -30 },
-      { rx: 15, ry: -17, rz:  3, z: -55 },
-      { rx: 12, ry:   0, rz: -2, z: -15 },
-      { rx: 15, ry:  17, rz: -3, z: -55 }
-    ];
-
-    /* The stylesheet flattens the resting pose below 900px, on the grounds that
-       a strong 3D tilt on a narrow screen reads as a rendering fault rather than
-       as depth. GSAP writes an inline transform, which outranks that rule, so
-       the same restraint has to be repeated here. Without it a phone got the
-       full desktop tilt and the top card leaned far enough to sit on its own
-       label. */
+    /* The stylesheet flattens the pose below 900px, on the grounds that a strong
+       3D tilt on a narrow screen reads as a rendering fault rather than depth.
+       GSAP writes an inline transform, which outranks that rule, so the same
+       restraint has to be repeated here. */
     var poseScale = desktop ? 1 : 0.35;
 
-    cards.forEach(function (card, i) {
-      var pose = POSE[i % POSE.length];
-      gsap.set(card, {
-        rotateX: pose.rx * poseScale,
-        rotateY: pose.ry * poseScale,
-        rotateZ: pose.rz * poseScale,
-        z: pose.z * poseScale, opacity: 0, y: 40
-      });
+    /* Rows, not cards. Every card in a row shares one tilt so the row reads as
+       a single plane being turned, and the rows travel sideways in alternate
+       directions as the reader scrolls, which is what gives the wall its drift.
+       Rows are read off the layout rather than assumed from the index, because
+       the grid is three across, then two, then one. */
+    var rows = [];
+    cards.forEach(function (c) {
+      var top = Math.round(c.offsetTop);
+      var row = rows.filter(function (r) { return Math.abs(r.top - top) < 24; })[0];
+      if (!row) { row = { top: top, cards: [] }; rows.push(row); }
+      row.cards.push(c);
+    });
+    rows.sort(function (a, b) { return a.top - b.top; });
 
-      // Arrival. The card lifts into its tilted pose, which reads as the object
-      // being set down rather than as a fade.
-      gsap.to(card, {
-        opacity: 1, y: 0,
-        duration: 0.9, ease: 'power3.out',
-        scrollTrigger: { trigger: card, start: 'top 92%', once: true }
-      });
+    var ROW_POSE = [
+      { rx: 13, ry: -13, rz: -2.5 },
+      { rx: 10, ry:  13, rz:  2.5 },
+      { rx: 13, ry: -11, rz: -2 }
+    ];
 
-      // The turn. Scrub means the reader drives it; the deck is never animating
-      // on its own while somebody is reading.
-      gsap.to(card, {
-        rotateX: 0, rotateY: 0, rotateZ: 0, z: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: deckGrid,
-          start: 'top 85%',
-          end: 'bottom 55%',
-          scrub: 0.6 + (i % 3) * 0.18
-        }
+    rows.forEach(function (row, ri) {
+      var pose = ROW_POSE[ri % ROW_POSE.length];
+      // Rows one and three go one way, row two the other.
+      var dir = (ri % 2 === 0) ? -1 : 1;
+
+      row.cards.forEach(function (card) {
+        gsap.set(card, {
+          rotateX: pose.rx * poseScale, rotateY: pose.ry * poseScale,
+          rotateZ: pose.rz * poseScale, opacity: 0, y: 40
+        });
+
+        gsap.to(card, {
+          opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+          scrollTrigger: { trigger: card, start: 'top 92%', once: true }
+        });
+
+        // The turn. One scrub value for the whole row, so a row flattens
+        // together instead of the cards in it arriving at different angles.
+        gsap.to(card, {
+          rotateX: 0, rotateY: 0, rotateZ: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: deckGrid, start: 'top 85%', end: 'bottom 55%', scrub: 0.6
+          }
+        });
+
+        // The drift.
+        gsap.fromTo(card, { xPercent: dir * -7 }, {
+          xPercent: dir * 7, ease: 'none',
+          scrollTrigger: { trigger: deckGrid, start: 'top bottom', end: 'bottom top', scrub: 0.8 }
+        });
       });
     });
 
