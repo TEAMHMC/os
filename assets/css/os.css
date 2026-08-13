@@ -432,3 +432,70 @@ html.motion .beat.b1{opacity:1}
   .who-row{gap:8px}
   .who-btn{padding:10px 15px;font-size:13px}
 }
+
+
+/* ---------- the deck ----------
+   Nine live products shown as one object. The cards sit on a real perspective
+   plane, each tilted on its own axis, and the scroll flattens them toward the
+   reader. The tilt is what makes it read as depth rather than as a grid of
+   thumbnails, and the flattening is what makes scrolling feel like the system
+   turning to face you.
+
+   Every value below is a transform. Nothing here reflows, so nine cards move
+   at once without touching layout. */
+.deck{background:#050505;padding:clamp(70px,9vw,130px) 0 clamp(90px,12vw,170px);overflow:hidden}
+.deck-intro{text-align:center;margin-bottom:clamp(44px,6vw,80px)}
+
+.deck-stage{
+  perspective:1400px;
+  perspective-origin:50% 42%;
+  padding:0 clamp(16px,3vw,44px);
+}
+.deck-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:clamp(18px,2.4vw,38px);
+  max-width:1320px;margin:0 auto;
+  transform-style:preserve-3d;
+}
+
+.deck-card{
+  position:relative;display:block;text-decoration:none;
+  transform-style:preserve-3d;
+  will-change:transform;
+  /* The resting pose. JS overwrites these per card and per scroll position;
+     these values are what a visitor sees if the script never runs. */
+  transform:rotateX(14deg) rotateY(-12deg) rotateZ(-2deg);
+  transition:filter .35s ease;
+}
+.deck-shell{
+  display:block;border-radius:14px;overflow:hidden;
+  background:#e9e9ec;
+  padding:clamp(8px,1vw,14px);
+  box-shadow:0 30px 60px rgba(0,0,0,.55), 0 4px 14px rgba(0,0,0,.4);
+}
+.deck-shell img{display:block;width:100%;height:auto;border-radius:6px}
+.deck-name{
+  display:block;margin-top:14px;text-align:center;
+  font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);transition:color .25s ease;
+}
+.deck-card:hover .deck-name,
+.deck-card:focus-visible .deck-name{color:#fff}
+.deck-card:focus-visible{outline:2px solid var(--accent);outline-offset:14px;border-radius:16px}
+.deck-card:hover{filter:brightness(1.06)}
+
+@media (max-width:900px){
+  .deck-grid{grid-template-columns:repeat(2,1fr)}
+  .deck-stage{perspective:900px}
+}
+@media (max-width:560px){
+  .deck-grid{grid-template-columns:1fr;gap:22px}
+  /* A big 3D tilt on a narrow screen reads as a rendering fault rather than as
+     depth, so the cards sit almost flat and the scroll does the rest. */
+  .deck-card{transform:rotateX(6deg) rotateY(0deg) rotateZ(0deg)}
+}
+@media (prefers-reduced-motion:reduce){
+  .deck-card{transform:none !important}
+  .deck-shell{box-shadow:0 12px 30px rgba(0,0,0,.5)}
+}

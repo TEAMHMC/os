@@ -79,21 +79,89 @@
   </div>
 </section>
 
+<!-- =============== THE DECK =============== -->
+<section class="deck" id="deck" aria-labelledby="deckTitle">
+  <div class="shell deck-intro">
+    <p class="eyebrow eyebrow-light" style="justify-content:center">All of it</p>
+    <h2 id="deckTitle" data-reveal>Nine, running at once.</h2>
+    <p data-reveal>Not a roadmap. Every screen below is a live product somebody used today.</p>
+  </div>
+  <div class="deck-stage" aria-hidden="false">
+    <div class="deck-grid" id="deckGrid">
+      <a class="deck-card" href="https://eventfinder.healthmatters.clinic" data-card="0">
+        <span class="deck-shell">
+          <img src="./screens/eventfinder.png" alt="Event Finder running in a browser" loading="lazy" width="1280" height="900">
+        </span>
+        <span class="deck-name">Event Finder</span>
+      </a>
+      <a class="deck-card" href="https://checkyourself.healthmatters.clinic" data-card="1">
+        <span class="deck-shell">
+          <img src="./screens/checkyourself.png" alt="Check Yourself running in a browser" loading="lazy" width="1280" height="900">
+        </span>
+        <span class="deck-name">Check Yourself</span>
+      </a>
+      <a class="deck-card" href="https://directory.healthmatters.clinic" data-card="2">
+        <span class="deck-shell">
+          <img src="./screens/directory.png" alt="Resource Directory running in a browser" loading="lazy" width="1280" height="900">
+        </span>
+        <span class="deck-name">Resource Directory</span>
+      </a>
+      <a class="deck-card" href="https://calmkit.healthmatters.clinic" data-card="3">
+        <span class="deck-shell">
+          <img src="./screens/calmkit.png" alt="Your CalmKit running in a browser" loading="lazy" width="1280" height="900">
+        </span>
+        <span class="deck-name">Your CalmKit</span>
+      </a>
+      <a class="deck-card" href="https://directory.healthmatters.clinic" data-card="4">
+        <span class="deck-shell">
+          <img src="./screens/sunny.png" alt="Sunny running in a browser" loading="lazy" width="1280" height="900">
+        </span>
+        <span class="deck-name">Sunny</span>
+      </a>
+      <a class="deck-card" href="https://volunteer.healthmatters.clinic/tour" data-card="5">
+        <span class="deck-shell">
+          <img src="./screens/vms.png" alt="HMC VMS running in a browser" loading="lazy" width="1280" height="900">
+        </span>
+        <span class="deck-name">HMC VMS</span>
+      </a>
+      <a class="deck-card" href="https://unstoppable.healthmatters.clinic" data-card="6">
+        <span class="deck-shell">
+          <img src="./screens/academy.png" alt="HMC Academy running in a browser" loading="lazy" width="1280" height="900">
+        </span>
+        <span class="deck-name">HMC Academy</span>
+      </a>
+      <a class="deck-card" href="https://partner.healthmatters.clinic/partner-demo" data-card="7">
+        <span class="deck-shell">
+          <img src="./screens/partner.png" alt="Partner Portal running in a browser" loading="lazy" width="1280" height="900">
+        </span>
+        <span class="deck-name">Partner Portal</span>
+      </a>
+      <a class="deck-card" href="https://hub.healthmatters.clinic" data-card="8">
+        <span class="deck-shell">
+          <img src="./screens/hub.png" alt="Member Hub running in a browser" loading="lazy" width="1280" height="900">
+        </span>
+        <span class="deck-name">Member Hub</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- =============== THE TOUR =============== -->
 <section class="seq" id="tour">
   <div class="shell seq-intro">
     <p class="eyebrow eyebrow-light" style="justify-content:center">The tour</p>
-    <h2 data-reveal>Nine tools. One at a time.</h2>
-    <p data-reveal>Six of them are open to anyone who lands on them. Three run the work behind the scenes. Keep scrolling and each one takes the screen.</p>
+    <h2 data-reveal>Nobody starts over.</h2>
+    <p data-reveal>Ask for help in this county and you tell your story again at every door. HMC OS was built so the story travels with the person instead of stopping at the table.</p>
 
     <div class="who" data-reveal>
-      <p class="who-q" id="whoLabel">Who are you here as?</p>
+      <p class="who-q" id="whoLabel">Start where you are.</p>
       <div class="who-row" role="group" aria-labelledby="whoLabel">
-        <button type="button" class="who-btn" data-persona="all" aria-pressed="true">Show me everything</button>
-        <button type="button" class="who-btn" data-persona="member" aria-pressed="false">I need support</button>
-        <button type="button" class="who-btn" data-persona="volunteer" aria-pressed="false">I want to volunteer</button>
-        <button type="button" class="who-btn" data-persona="partner" aria-pressed="false">We are an organization</button>
-        <button type="button" class="who-btn" data-persona="funder" aria-pressed="false">We fund this work</button>
+        <button type="button" class="who-btn" data-persona="all" aria-pressed="true">All of it</button>
+        <button type="button" class="who-btn" data-persona="member" aria-pressed="false">I need something</button>
+        <button type="button" class="who-btn" data-persona="client" aria-pressed="false">I am already in care</button>
+        <button type="button" class="who-btn" data-persona="volunteer" aria-pressed="false">I want to help</button>
+        <button type="button" class="who-btn" data-persona="partner" aria-pressed="false">We serve the same people</button>
+        <button type="button" class="who-btn" data-persona="funder" aria-pressed="false">We fund this</button>
       </div>
       <p class="who-note" id="whoNote" role="status" aria-live="polite"></p>
     </div>
@@ -116,7 +184,7 @@
   </div>
 
   <!-- 01 Event Finder -->
-  <article class="tool" data-tool="1" data-name="Event Finder" data-lines='{"member": "Type a zip code and see what is near you this week. Screenings, workshops, classes, and a seat you can claim in about a minute.", "volunteer": "Every shift and session HMC is running, in one place. Find the date that works and sign up without emailing anyone.", "partner": "Publish your own events to the whole county at no cost, and see who registered before the day arrives.", "funder": "The demand side of the operation, visible and countable. Every event HMC and its partners run is published, registered for, and counted in one feed."}'>
+  <article class="tool" data-tool="1" data-name="Event Finder" data-lines='{"member": "Type a zip code and see what is near you this week. Screenings, workshops, classes, and a seat you can claim in about a minute.", "volunteer": "Every shift and session HMC is running, in one place. Find the date that works and sign up without emailing anyone.", "partner": "Publish your own events to the whole county at no cost, and see who registered before the day arrives.", "funder": "The demand side of the operation, visible and countable. Every event HMC and its partners run is published, registered for, and counted in one feed.", "client": "The events your team already told you about, with the dates and the address, so you are not calling to ask again."}'>
     <div class="stage">
       <div class="stage-grid">
         <div class="tool-copy">
@@ -141,7 +209,7 @@
   </article>
 
   <!-- 02 Check Yourself -->
-  <article class="tool" data-tool="2" data-name="Check Yourself" data-lines='{"member": "Three minutes, in private, to see where your head is at. No account, no cost, and nobody sees it but you.", "volunteer": "The screening you will hand people at the table. Take it yourself first so you know what you are asking of them.", "partner": "Point the people you already serve at a validated screening, and let the result carry into a referral rather than a note.", "funder": "Validated screening at population scale without a clinician per person. PHQ-9 and GAD-7, in two languages, at no cost."}'>
+  <article class="tool" data-tool="2" data-name="Check Yourself" data-lines='{"member": "Three minutes, in private, to see where your head is at. No account, no cost, and nobody sees it but you.", "volunteer": "The screening you will hand people at the table. Take it yourself first so you know what you are asking of them.", "partner": "Point the people you already serve at a validated screening, and let the result carry into a referral rather than a note.", "funder": "Validated screening at population scale without a clinician per person. PHQ-9 and GAD-7, in two languages, at no cost.", "client": "Check in between appointments and bring the result with you, so the conversation starts further along."}'>
     <div class="stage">
       <div class="stage-grid">
         <div class="tool-copy">
@@ -167,7 +235,7 @@
   </article>
 
   <!-- 03 Resource Directory -->
-  <article class="tool" data-tool="3" data-name="Resource Directory" data-lines='{"member": "Food, housing, care, legal help. Narrowed to your Service Planning Area so what comes back is close enough to actually use.", "volunteer": "What you reach for when someone asks a question you cannot answer. Search it at the table and hand over something specific.", "partner": "List your services once and be findable by every HMC team and every person searching their own area.", "funder": "The referral surface. It turns a screening result into a named service in a specific area, which is where most programs lose people."}'>
+  <article class="tool" data-tool="3" data-name="Resource Directory" data-lines='{"member": "Food, housing, care, legal help. Narrowed to your Service Planning Area so what comes back is close enough to actually use.", "volunteer": "What you reach for when someone asks a question you cannot answer. Search it at the table and hand over something specific.", "partner": "List your services once and be findable by every HMC team and every person searching their own area.", "funder": "The referral surface. It turns a screening result into a named service in a specific area, which is where most programs lose people.", "client": "The food, housing and transport help your care plan mentions, with the numbers already narrowed to your area."}'>
     <div class="stage">
       <div class="stage-grid">
         <div class="tool-copy">
@@ -192,7 +260,7 @@
   </article>
 
   <!-- 04 Your CalmKit -->
-  <article class="tool" data-tool="4" data-name="Your CalmKit" data-lines='{"member": "Breathing, grounding, movement and journaling for the hours between appointments. What you write stays on your device.", "volunteer": "Something to leave with someone who is not in crisis but is not fine either. It works on any phone and costs nothing.", "partner": "A no-cost tool you can point clients at between contacts, with nothing to install and no account to create.", "funder": "What carries someone between contacts. Attrition happens in the gaps, and this is the piece most programs do not fund."}'>
+  <article class="tool" data-tool="4" data-name="Your CalmKit" data-lines='{"member": "Breathing, grounding, movement and journaling for the hours between appointments. What you write stays on your device.", "volunteer": "Something to leave with someone who is not in crisis but is not fine either. It works on any phone and costs nothing.", "partner": "A no-cost tool you can point clients at between contacts, with nothing to install and no account to create.", "funder": "What carries someone between contacts. Attrition happens in the gaps, and this is the piece most programs do not fund.", "client": "Something for the night before an appointment, or the week after one. It asks nothing of you."}'>
     <div class="stage">
       <div class="stage-grid">
         <div class="tool-copy">
@@ -216,7 +284,7 @@
   </article>
 
   <!-- 05 Sunny -->
-  <article class="tool" data-tool="5" data-name="Sunny" data-lines='{"member": "Ask a question in plain language, in English or Spanish, and get an answer on whatever page you are already on.", "volunteer": "Answers the questions you get asked most, so you are not the only source of information at the table.", "partner": "Handles the first question so your staff get the second one. It runs on every HMC surface your clients touch.", "funder": "Triage and navigation across every surface at once. Crisis routing is enforced by rule rather than left to model judgement."}'>
+  <article class="tool" data-tool="5" data-name="Sunny" data-lines='{"member": "Ask a question in plain language, in English or Spanish, and get an answer on whatever page you are already on.", "volunteer": "Answers the questions you get asked most, so you are not the only source of information at the table.", "partner": "Handles the first question so your staff get the second one. It runs on every HMC surface your clients touch.", "funder": "Triage and navigation across every surface at once. Crisis routing is enforced by rule rather than left to model judgement.", "client": "Ask a question at eleven at night without waiting for the office to open."}'>
     <div class="stage">
       <div class="stage-grid">
         <div class="tool-copy">
@@ -241,7 +309,7 @@
   </article>
 
   <!-- 06 HMC VMS -->
-  <article class="tool" data-tool="6" data-name="HMC VMS" data-lines='{"member": "The system behind the people you meet at an event. Everyone at the table has been trained and cleared before they get there.", "volunteer": "Your training, your credentials, your shifts and your hours, on one record that follows you instead of living in somebody&#39;s inbox.", "partner": "Know who is coming to your site, what they are cleared to do, and that their training is current before the day starts.", "funder": "The workforce record that makes a field team auditable. Training, credentialing, deployment and hours, one file per volunteer."}'>
+  <article class="tool" data-tool="6" data-name="HMC VMS" data-lines='{"member": "The system behind the people you meet at an event. Everyone at the table has been trained and cleared before they get there.", "volunteer": "Your training, your credentials, your shifts and your hours, on one record that follows you instead of living in somebody&#39;s inbox.", "partner": "Know who is coming to your site, what they are cleared to do, and that their training is current before the day starts.", "funder": "The workforce record that makes a field team auditable. Training, credentialing, deployment and hours, one file per volunteer.", "client": "The people who show up for you are trained, cleared and recorded. That is not left to chance."}'>
     <div class="stage">
       <div class="stage-grid">
         <div class="tool-copy">
@@ -267,7 +335,7 @@
   </article>
 
   <!-- 07 HMC Academy -->
-  <article class="tool" data-tool="7" data-name="HMC Academy" data-lines='{"member": "The training every person who works an HMC event completes before they meet you.", "volunteer": "Start with orientation and core modules, then unlock the roles you want. Progress saves as you go.", "partner": "Your staff can take the same training our volunteers do, including the courses carrying continuing education credit.", "funder": "How capability is built and verified. Completion gates what a volunteer may do, and Unstoppable carries LACDMH approved continuing education."}'>
+  <article class="tool" data-tool="7" data-name="HMC Academy" data-lines='{"member": "The training every person who works an HMC event completes before they meet you.", "volunteer": "Start with orientation and core modules, then unlock the roles you want. Progress saves as you go.", "partner": "Your staff can take the same training our volunteers do, including the courses carrying continuing education credit.", "funder": "How capability is built and verified. Completion gates what a volunteer may do, and Unstoppable carries LACDMH approved continuing education.", "client": "The training behind the person sitting across from you."}'>
     <div class="stage">
       <div class="stage-grid">
         <div class="tool-copy">
@@ -293,7 +361,7 @@
   </article>
 
   <!-- 08 Partner Portal -->
-  <article class="tool" data-tool="8" data-name="Partner Portal" data-lines='{"member": "How the organizations near you receive a referral and follow it up, rather than handing you a flyer.", "volunteer": "Where the referral you make at the table actually goes, and how it comes back closed.", "partner": "Referrals arrive matched to the services you declared, and each one ends in a known state instead of silence.", "funder": "How referrals reach other organizations and return to a known state. This is the closing half of the loop."}'>
+  <article class="tool" data-tool="8" data-name="Partner Portal" data-lines='{"member": "How the organizations near you receive a referral and follow it up, rather than handing you a flyer.", "volunteer": "Where the referral you make at the table actually goes, and how it comes back closed.", "partner": "Referrals arrive matched to the services you declared, and each one ends in a known state instead of silence.", "funder": "How referrals reach other organizations and return to a known state. This is the closing half of the loop.", "client": "When you are referred somewhere else, the organization receives what you already said. You do not start the story again."}'>
     <div class="stage">
       <div class="stage-grid">
         <div class="tool-copy">
@@ -318,7 +386,7 @@
   </article>
 
   <!-- 09 Member Hub -->
-  <article class="tool" data-tool="9" data-name="Member Hub" data-lines='{"member": "One door to all of it. An email address gets you in. No application, no cost, nothing to prove first.", "volunteer": "Where your training, your events and your record all sit together.", "partner": "The front door you can send people to when they need more than your organization provides.", "funder": "The front door that keeps the whole system reachable. No application process, which is where access usually breaks."}'>
+  <article class="tool" data-tool="9" data-name="Member Hub" data-lines='{"member": "One door to all of it. An email address gets you in. No application, no cost, nothing to prove first.", "volunteer": "Where your training, your events and your record all sit together.", "partner": "The front door you can send people to when they need more than your organization provides.", "funder": "The front door that keeps the whole system reachable. No application process, which is where access usually breaks.", "client": "Your events, your check-ins and your next steps in one place, whenever you want them."}'>
     <div class="stage">
       <div class="stage-grid">
         <div class="tool-copy">

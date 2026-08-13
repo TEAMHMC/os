@@ -390,6 +390,69 @@
     });
   });
 
+  /* ---------- the deck ----------
+     Nine cards on a shared perspective plane. Each one starts tilted on its own
+     axis and rotates toward flat as the section crosses the viewport, so the
+     grid reads as a solid object turning to face the reader rather than as a
+     wall of thumbnails.
+
+     Per-card variation is what stops it looking mechanical: the seed below gives
+     every card a slightly different starting angle and a slightly different rate,
+     so the deck settles the way a hand-arranged set of objects would. */
+  var deckGrid = document.getElementById('deckGrid');
+  if (deckGrid) {
+    var cards = [].slice.call(deckGrid.querySelectorAll('.deck-card'));
+
+    // Fixed, not random: a reload should not reshuffle the composition.
+    var POSE = [
+      { rx: 16, ry: -18, rz: -3, z: -60 },
+      { rx: 13, ry:   0, rz:  2, z: -20 },
+      { rx: 16, ry:  18, rz:  3, z: -60 },
+      { rx: 10, ry: -14, rz:  2, z: -30 },
+      { rx:  8, ry:   0, rz: -1, z:   0 },
+      { rx: 10, ry:  14, rz: -2, z: -30 },
+      { rx: 15, ry: -17, rz:  3, z: -55 },
+      { rx: 12, ry:   0, rz: -2, z: -15 },
+      { rx: 15, ry:  17, rz: -3, z: -55 }
+    ];
+
+    cards.forEach(function (card, i) {
+      var pose = POSE[i % POSE.length];
+      gsap.set(card, {
+        rotateX: pose.rx, rotateY: pose.ry, rotateZ: pose.rz,
+        z: pose.z, opacity: 0, y: 40
+      });
+
+      // Arrival. The card lifts into its tilted pose, which reads as the object
+      // being set down rather than as a fade.
+      gsap.to(card, {
+        opacity: 1, y: 0,
+        duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 92%', once: true }
+      });
+
+      // The turn. Scrub means the reader drives it; the deck is never animating
+      // on its own while somebody is reading.
+      gsap.to(card, {
+        rotateX: 0, rotateY: 0, rotateZ: 0, z: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: deckGrid,
+          start: 'top 85%',
+          end: 'bottom 55%',
+          scrub: 0.6 + (i % 3) * 0.18
+        }
+      });
+    });
+
+    // The whole plane leans back slightly as the section leaves, so the deck
+    // hands off to the tour instead of just scrolling away.
+    gsap.to(deckGrid, {
+      rotateX: -6, y: -30, ease: 'none',
+      scrollTrigger: { trigger: deckGrid, start: 'bottom 70%', end: 'bottom 20%', scrub: 0.8 }
+    });
+  }
+
   /* ---------- 6. reveals ---------- */
   gsap.utils.toArray('[data-reveal]').forEach(function (el) { gsap.set(el, { y: 34, opacity: 0 }); });
   ScrollTrigger.batch('[data-reveal]', {
