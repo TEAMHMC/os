@@ -391,6 +391,45 @@
     });
   }
 
+  /* ---------- the persona cards ----------
+     The headline holds the screen alone, then splits open: the four cards come
+     past it out of depth, each from its own distance, and settle into the row.
+     Scrubbed, so the reader drives the arrival rather than watching it. */
+  if (desktop) {
+    var lead = document.querySelector('.who-lead');
+    var whoWrap = document.querySelector('.who');
+    var cards4 = gsap.utils.toArray('.who-btn');
+
+    if (lead && whoWrap && cards4.length) {
+      gsap.set(cards4, { opacity: 0, scale: 0.42, yPercent: 60, filter: 'blur(9px)' });
+      gsap.set(whoWrap, { pointerEvents: 'none' });
+
+      var wt = gsap.timeline({
+        scrollTrigger: { trigger: '.seq-intro-sec', start: 'top top', end: 'bottom bottom', scrub: 0.55 }
+      });
+
+      // The headline alone, then it gives way as the cards come through it.
+      // The headline has to be clear of the middle before the first card gets
+      // there, or they arrive on top of each other.
+      wt.to({}, { duration: 0.6 })
+        .to(lead, { scale: 0.62, y: '-31vh', duration: 0.9, ease: 'power2.inOut' }, 0.6);
+
+      cards4.forEach(function (c, i) {
+        // Out of the middle, each from a different distance, so they arrive as
+        // four objects travelling rather than one row fading up.
+        var spread = [-30, -10, 10, 30][i];
+        gsap.set(c, { xPercent: spread * 1.6 });
+        wt.to(c, {
+          opacity: 1, scale: 1, yPercent: 0, xPercent: 0, filter: 'blur(0px)',
+          duration: 0.9, ease: 'power2.out'
+        }, 1.5 + i * 0.14);
+      });
+
+      wt.call(function () { gsap.set(whoWrap, { pointerEvents: 'auto' }); }, null, 2.6);
+      wt.to({}, { duration: 0.5 });
+    }
+  }
+
   /* ---------- 3. the dives ----------
      Each product is entered, not listed. Five beats, same order every time:
 
@@ -514,6 +553,30 @@
       .to(dv.querySelector('.dive-sticky'), { scale: 0.86, opacity: 0, duration: 0.6, ease: 'power2.in' }, 6.2);
     if (world) tl.to(world, { opacity: 0, duration: 0.4 }, 6.1);
   });
+
+  /* ---------- the EventFinder rotor ----------
+     Find your peace, your community, your purpose. One word, swapped in place,
+     driven by scroll rather than a timer so it never animates while the reader
+     is somewhere else on the page. */
+  (function () {
+    var rotor = document.getElementById('efRotor');
+    var dive = document.getElementById('dive-3');
+    if (!rotor || !dive) return;
+    var words = ['Peace', 'Community', 'Purpose'];
+    var i = 0;
+    ScrollTrigger.create({
+      trigger: dive, start: 'top top', end: 'bottom bottom', scrub: true,
+      onUpdate: function (self) {
+        // Three words across the first half of the dive, then it settles.
+        var n = Math.min(words.length - 1, Math.floor(self.progress * 6));
+        if (n === i) return;
+        i = n;
+        gsap.fromTo(rotor, { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out',
+            onStart: function () { rotor.textContent = words[i]; } });
+      }
+    });
+  })();
 
   /* ---------- 4. the deck ----------
      Nine cards on a shared perspective plane. Each one starts tilted on its own

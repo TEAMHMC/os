@@ -120,6 +120,10 @@ p{margin:0 0 18px}
   mask-image:radial-gradient(closest-side at 50% 42%,#000,transparent 78%);
   -webkit-mask-image:radial-gradient(closest-side at 50% 42%,#000,transparent 78%);
 }
+/* The presents line is a credit, not a label, so it does not take the dot the
+   rest of the eyebrows carry. */
+.hero .eyebrow::before{display:none}
+.hero .eyebrow{letter-spacing:.24em}
 .hero-inner{position:relative;z-index:2;text-align:center}
 .hero-mark{
   font-size:clamp(64px,15.5vw,232px);line-height:.82;margin:0 0 6px;
@@ -127,8 +131,8 @@ p{margin:0 0 18px}
 }
 .hero-mark sup{font-size:.2em;vertical-align:super;letter-spacing:0;-webkit-text-fill-color:rgba(255,255,255,.8);color:rgba(255,255,255,.8)}
 .hero-sub{
-  color:#fff;font-family:'Questrial',sans-serif;font-size:clamp(19px,2.5vw,32px);
-  line-height:1.18;margin:0 auto 20px;max-width:19ch;letter-spacing:-.01em;
+  color:#fff;font-family:'Questrial',sans-serif;font-size:clamp(34px,5.4vw,72px);
+  line-height:1.04;margin:0 auto 26px;max-width:14ch;letter-spacing:-.025em;
 }
 .hero-lede{color:var(--on-dark);font-size:clamp(15.5px,1.5vw,18px);max-width:60ch;margin:0 auto 34px}
 .hero-cta{display:flex;gap:13px;justify-content:center;flex-wrap:wrap}
@@ -243,7 +247,7 @@ p{margin:0 0 18px}
 .dive[data-mood="build"] .dive-name{color:var(--ink)}
 .dive[data-mood="build"] .dive-say{color:var(--muted)}
 
-.dive-ui{position:relative;z-index:4;width:min(980px,90vw);justify-self:center}
+.dive-ui{position:relative;z-index:4;width:min(860px,86vw);justify-self:center}
 .dive-ui .frame{position:relative}
 .dive-close{
   position:relative;z-index:5;text-align:center;margin:0;
@@ -255,35 +259,14 @@ p{margin:0 0 18px}
 .dive[data-mood="checkin"] .hmc-btn-ghost,.dive[data-mood="build"] .hmc-btn-ghost{border-color:rgba(10,10,10,.28);color:var(--ink)}
 .dive[data-mood="checkin"] .hmc-btn-ghost:hover,.dive[data-mood="build"] .hmc-btn-ghost:hover{border-color:var(--ink);background:rgba(10,10,10,.05)}
 
-/* device frames, shared by every dive */
-.frame{
-  border-radius:16px;overflow:hidden;background:#fff;
-  border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 50px 120px rgba(0,0,0,.62),0 0 0 1px rgba(255,255,255,.05);
-}
-.dive[data-mood="checkin"] .frame,.dive[data-mood="build"] .frame{border-color:rgba(10,10,10,.12);box-shadow:0 40px 90px rgba(0,0,0,.22)}
-.frame-bar{
-  display:flex;align-items:center;gap:7px;height:36px;padding:0 14px;
-  background:#f0eee9;border-bottom:1px solid #e2dfd8;
-}
-.frame-bar em{width:9px;height:9px;border-radius:50%;background:#d6d2ca;display:block}
-.frame-bar b{
-  margin-left:10px;font-size:11px;font-weight:500;color:#7a746a;letter-spacing:.02em;
-  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.frame-shot{display:block;width:100%;height:clamp(250px,46vh,470px);object-fit:cover;object-position:top center}
-
-/* Where a world is centred, the copy moves to the top of the frame instead of
-   sitting on top of it. The scattered worlds keep their edges clear, so those
-   two can share the middle. */
-.dive[data-mood="checkin"] .dive-copy,
-.dive[data-mood="calm"] .dive-copy,
-.dive[data-mood="build"] .dive-copy{align-self:start;padding-top:clamp(58px,11vh,120px)}
-.dive[data-mood="checkin"] .dive-kicker,
-.dive[data-mood="calm"] .dive-kicker,
-.dive[data-mood="build"] .dive-kicker{font-size:clamp(26px,4.2vw,54px)}
-.dive[data-mood="calm"] .w-breath{margin-top:8vh}
-.dive[data-mood="build"] .w-chain{margin-top:9vh}
+/* The laptop the products are shown in. The screen is the capture ratio, not
+   16/10, so the interface is never cropped: these are real products and cutting
+   their edges off makes them look broken. Same drawn laptop the lightbox uses. */
+.dive-ui .laptop-screen{aspect-ratio:1600/1125}
+.dive-ui .laptop-lid{background:#131316;border-color:rgba(255,255,255,.1)}
+.dive[data-mood="checkin"] .laptop-lid,
+.dive[data-mood="build"] .laptop-lid{background:#2a2a2e}
+.dive-ui .frame-shot{width:100%;height:100%;object-fit:cover;object-position:top center;aspect-ratio:auto;border-radius:0}
 
 /* the worlds */
 .w-word{
@@ -294,10 +277,21 @@ p{margin:0 0 18px}
 .w-word[data-depth="1"]{opacity:.42;font-size:clamp(14px,1.6vw,22px)}
 .w-word[data-depth="3"]{color:#fff}
 .w-word.is-dominant{color:var(--accent)}
+/* Uniform boxes, centred text. They are the same object seen at different
+   distances, so they must be the same size; only depth separates them. */
 .dive[data-mood="discover"] .w-word{
-  color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);
-  border-radius:14px;padding:14px 20px;font-size:clamp(14px,1.5vw,20px);
+  color:#fff;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
+  border-radius:16px;padding:0 18px;font-size:clamp(13px,1.4vw,17px);
+  width:clamp(160px,15vw,208px);height:clamp(54px,5.4vw,68px);
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:'Inter',sans-serif;letter-spacing:.01em;
 }
+.dive[data-mood="discover"] .w-word[data-depth="1"]{opacity:.5;font-size:clamp(12px,1.2vw,15px)}
+.dive[data-mood="discover"] .w-word[data-depth="3"]{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
+
+/* The rotor swaps one word in place, the way the EventFinder promo does. The
+   width is animated with it so the line does not jump as the word changes. */
+.rotor{display:inline-block;color:#fff;min-width:1ch}
 
 .w-quiet{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(560px,88vw);text-align:center}
 .w-q{font-family:'Questrial',sans-serif;color:var(--ink);font-size:clamp(20px,2.8vw,34px);line-height:1.2;margin:0 0 26px}
@@ -332,10 +326,12 @@ p{margin:0 0 18px}
 
 /* the live bits of interface that assemble on top of the screenshot */
 .ui-type{
-  position:absolute;left:4.5%;top:56%;width:40%;
-  background:#fff;border:1px solid rgba(10,10,10,.18);border-radius:10px;
-  padding:12px 15px;font-size:15px;color:var(--ink);text-align:left;
-  box-shadow:0 12px 30px rgba(0,0,0,.18);
+  /* Sits exactly on the directory's own keyword field, so the typing reads as
+     the product working rather than as a box floating over a picture. */
+  position:absolute;left:3.4%;top:49.4%;width:45.5%;height:6%;
+  display:flex;align-items:center;
+  background:#fff;border:1px solid rgba(35,51,223,.55);border-radius:9px;
+  padding:0 14px;font-size:14px;color:var(--ink);text-align:left;
 }
 .ui-caret::after{content:'';display:inline-block;width:1.5px;height:1em;background:var(--primary);vertical-align:-2px;margin-left:2px}
 .ui-chips{
@@ -439,7 +435,7 @@ html.motion .pro-line[data-line="1"]{opacity:1}
   .dive-world{display:none}
   .dive-copy{text-align:left;padding-top:0}
   .dive-say{margin:0}
-  .dive-ui{width:100%;margin:22px auto}
+  .dive-ui{width:min(760px,88vw);margin:22px auto}
   .dive-close{text-align:left;font-size:clamp(24px,6.4vw,34px);margin:0 auto 18px}
   .dive-cta{text-align:left;padding-bottom:0}
   .ui-type,.ui-chips{display:none}
@@ -479,7 +475,7 @@ html.motion .pro-line[data-line="1"]{opacity:1}
   .dive-world{display:none}
   .dive-copy{text-align:left;padding-top:0}
   .dive-say{margin:0}
-  .dive-ui{width:100%;margin:22px auto}
+  .dive-ui{width:min(760px,88vw);margin:22px auto}
   .dive-close{text-align:left;font-size:clamp(24px,6.4vw,34px);margin:0 auto 18px}
   .dive-cta{text-align:left;padding-bottom:0}
   .ui-type,.ui-chips{display:none}
@@ -497,42 +493,49 @@ html.motion .pro-line[data-line="1"]{opacity:1}
    Sits at the top of the tour so the reader chooses a lens before the nine
    stages start, rather than discovering at the end that three of them were
    aimed at somebody else. */
-/* The persona engine. Four cards, not a row of pills: each one carries the
-   promise under the label, because "I need support" and "I want to get
-   involved" are choices about a goal, and the reader needs to see what each one
-   actually leads to before picking. */
-.who{margin-top:clamp(34px,4.6vw,54px);text-align:center}
-.who-q{
-  font-family:'Questrial',sans-serif;font-size:clamp(20px,2.4vw,30px);
-  letter-spacing:-.01em;text-transform:none;color:#fff;margin:0 0 clamp(18px,2.4vw,26px);
+/* The persona engine. The headline holds the middle of the screen on its own,
+   then the four cards fly in past it from depth. They are goals, not user
+   types, and each carries its promise so the reader can see where it leads
+   before choosing. */
+.seq-intro-sec{position:relative;height:260vh}
+.seq-intro{
+  position:sticky;top:0;height:100vh;height:100svh;
+  display:grid;place-items:center;align-content:center;
+  padding:0;text-align:center;overflow:hidden;
 }
+.who-lead{
+  color:#fff;font-size:clamp(38px,7.4vw,104px);line-height:.96;letter-spacing:-.03em;
+  margin:0 auto;max-width:15ch;position:relative;z-index:3;
+}
+.who{margin:0;position:absolute;inset:0;display:grid;place-items:center;z-index:2}
 .who-row{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));
-  gap:clamp(10px,1.4vw,16px);max-width:1080px;margin:0 auto;text-align:left;
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(12px,1.6vw,20px);width:min(1240px,92vw);margin:0 auto;text-align:left;
 }
 .who-btn{
-  display:flex;flex-direction:column;gap:7px;
-  padding:clamp(16px,1.8vw,22px);border-radius:18px;cursor:pointer;
-  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.16);
-  color:rgba(255,255,255,.72);font-family:inherit;text-align:left;
+  display:flex;flex-direction:column;gap:8px;
+  padding:clamp(18px,2vw,26px);border-radius:20px;cursor:pointer;
+  min-height:clamp(150px,15vw,190px);
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.74);font-family:inherit;text-align:left;
+  backdrop-filter:blur(6px);will-change:transform,opacity;
   transition:background .25s ease,border-color .25s ease,color .25s ease;
 }
-.who-btn b{font-family:'Questrial',sans-serif;font-weight:400;font-size:clamp(17px,1.7vw,21px);line-height:1.15;color:#fff}
+.who-btn b{font-family:'Questrial',sans-serif;font-weight:400;font-size:clamp(18px,1.8vw,23px);line-height:1.12;color:#fff}
 .who-btn span{font-size:13.5px;line-height:1.45}
-.who-btn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.42)}
+.who-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.48)}
 .who-btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
 .who-btn[aria-pressed="true"]{background:#fff;border-color:#fff;color:var(--muted)}
 .who-btn[aria-pressed="true"] b{color:var(--ink)}
-.who-note{min-height:1.2em;margin:16px 0 0;font-size:14px;color:rgba(255,255,255,.6)}
-/* The way back to the whole catalogue, deliberately quieter than the four. */
+.who-note{position:absolute;left:0;right:0;bottom:16%;margin:0;font-size:14px;color:rgba(255,255,255,.6);text-align:center}
 .who-all{
-  margin-top:12px;background:none;border:0;cursor:pointer;font-family:inherit;
+  position:absolute;left:50%;bottom:9%;transform:translateX(-50%);
+  background:none;border:0;cursor:pointer;font-family:inherit;
   font-size:13px;letter-spacing:.06em;color:rgba(255,255,255,.5);
-  text-decoration:underline;text-underline-offset:4px;padding:6px 8px;
+  text-decoration:underline;text-underline-offset:4px;padding:6px 8px;white-space:nowrap;
 }
 .who-all:hover{color:#fff}
 .who-all:focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
-.who-all[aria-pressed="true"]{color:rgba(255,255,255,.85)}
 
 /* Stages outside the chosen path keep their place in the document and move to
    the end of the run, dimmed rather than hidden, so nothing becomes
@@ -544,7 +547,14 @@ html.motion .pro-line[data-line="1"]{opacity:1}
 @media (prefers-reduced-motion:reduce){.seq .tool.is-aside{opacity:1}}
 
 @media (max-width:600px){
-  .who-row{gap:9px;grid-template-columns:1fr}
+  /* No pin on a phone, and one card per row. */
+  .seq-intro-sec{height:auto}
+  .seq-intro{position:static;height:auto;display:block;padding:clamp(64px,13vw,100px) 0;overflow:visible}
+  .who{position:static;display:block;margin-top:clamp(26px,7vw,44px)}
+  .who-row{gap:10px;grid-template-columns:1fr;width:var(--shell)}
+  .who-btn{min-height:0}
+  .who-note{position:static;margin-top:14px}
+  .who-all{position:static;transform:none;display:block;margin:14px auto 0}
 }
 
 
@@ -680,8 +690,8 @@ html.motion .pro-line[data-line="1"]{opacity:1}
   border:1px solid rgba(255,255,255,.09);
 }
 .laptop-screen{
-  border-radius:5px;overflow:hidden;background:#000;
-  aspect-ratio:16/10;
+  position:relative;border-radius:5px;overflow:hidden;background:#000;
+  aspect-ratio:1600/1125;
 }
 .laptop-screen img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
 
