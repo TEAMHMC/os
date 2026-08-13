@@ -106,6 +106,20 @@
       opacity: 0, ease: 'none',
       scrollTrigger: { trigger: '.hero', start: 'top top', end: '30% top', scrub: true }
     });
+
+    // Depth on the way out. The copy lifts, and behind it the grid and the glow
+    // fall at two slower rates, which is the whole of what parallax is: things
+    // further away moving less. The glow carries its own translate(-50%,-50%)
+    // for centring and GSAP keeps that as xPercent and yPercent, so the y here
+    // is added to it rather than replacing it.
+    gsap.to('.hero-grid', {
+      y: 90, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
+    gsap.to('.hero-glow', {
+      y: 150, opacity: 0.4, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+    });
   })();
 
   /* ---------- 2. the four opening lines ----------
@@ -164,6 +178,36 @@
       })
         .to([media, copy], { y: -55, opacity: 0, ease: 'power1.in' }, 0);
 
+      // Depth. A stage holds the screen for eighty viewport pixels of scroll in
+      // which the arrival has finished and the exit has not started, and until
+      // now nothing moved in it. The device drifts against the copy across the
+      // whole stage, so the two columns read as two planes rather than one flat
+      // card. It runs on the frame inside .stage-media, never on .stage-media
+      // itself, because the arrival and the hand off already own that element's
+      // y and a second tween on the same property would fight them.
+      var device = tool.querySelector('.frame, .phone');
+      if (device) {
+        gsap.fromTo(device, { y: 30 }, {
+          y: -30, ease: 'none',
+          scrollTrigger: { trigger: tool, start: 'top bottom', end: 'bottom top', scrub: 0.5 }
+        });
+      }
+
+      // The same idea one layer deeper: the screenshot slides behind the browser
+      // chrome the way a view moves behind a window frame. .frame already clips,
+      // so the only thing to get right is that the image still covers the
+      // opening at both ends of the travel. The shot is 50vh tall within a
+      // clamp that floors at 250px, and a scale of 1.1 buys 12.5px of overhang
+      // at that floor, which is the 10px of travel with room to spare. Widen
+      // the travel and the frame shows a white sliver at the turn.
+      var shot = tool.querySelector('.frame-shot');
+      if (shot) {
+        gsap.fromTo(shot, { y: -10, scale: 1.1 }, {
+          y: 10, scale: 1.1, ease: 'none',
+          scrollTrigger: { trigger: tool, start: 'top bottom', end: 'bottom top', scrub: 0.5 }
+        });
+      }
+
       ScrollTrigger.create({
         trigger: tool, start: 'top 60%', end: 'bottom 40%',
         onToggle: function (self) {
@@ -207,6 +251,15 @@
           if (distance < 0) distance = 0;
           gsap.set(track, { x: -distance * self.progress });
         }
+      });
+
+      // The heading rises a little while the steps travel sideways. Two
+      // directions at once is what stops the pinned panel from reading as a
+      // still image with a slider bolted onto it. Small on purpose: the heading
+      // has to stay readable for the length of the whole track.
+      gsap.to('.loop-head', {
+        y: -42, ease: 'none',
+        scrollTrigger: { trigger: '.loop', start: 'top top', end: 'bottom bottom', scrub: true }
       });
     }
   }

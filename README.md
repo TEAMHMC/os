@@ -60,3 +60,15 @@ CNAME                 os.healthmatters.clinic
   in the shared file, which other HMC surfaces load.
 - Three doors close the page, in the order the premise sets up: the person
   asking for help, the partner, the funder. The person goes first.
+- `assets/js/hmc-parallax.js` and `assets/js/hmc-immersive.js` are the shared
+  HMC motion layer and this page does not load either of them. It loads
+  `hmc-parallax.css` only, for `.hmc-mask` on the hero mark. Do not add the
+  scripts. They run their own scroll loop against `data-layer`, `data-kinetic`
+  and `.hmc-pin-wrap` hooks that this page has none of, and a second scroll
+  engine alongside ScrollTrigger is what cost a month of debugging on the
+  Unstoppable site. The parallax here is section 4 of `os.js`.
+- Parallax on this page is three planes in the hero, a device drifting against
+  its copy on each of the nine stages with the screenshot drifting again inside
+  its frame, and the loop heading rising while the steps travel sideways. Each
+  one runs on an element no other tween owns. Two tweens on the same `y` fight,
+  and the one that renders last wins, which is not always the one you wrote.
