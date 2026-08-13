@@ -75,20 +75,21 @@
      to the end, so every tool stays reachable and the page stays crawlable. */
   var PERSONA_PATHS = {
     all:       [1, 2, 3, 4, 5, 6, 7, 8, 9],
-    member:    [1, 2, 3, 4, 9],
-    volunteer: [6, 7, 1, 9],
-    partner:   [8, 1, 3, 6],
+    member:    [3, 2, 1, 4, 9],
+    wellbeing: [4, 2, 1, 9],
+    volunteer: [1, 6, 7, 9],
+    partner:   [8, 3, 1, 6],
     funder:    [1, 2, 3, 4, 5, 6, 7, 8, 9]
   };
   var PERSONA_NOTES = {
     all:       '',
-    member:    'Showing the tools you can use yourself. The rest follow underneath.',
-    volunteer: 'Showing what you will use as a volunteer. The rest follow underneath.',
-    partner:   'Showing what your organization works with. The rest follow underneath.',
+    member:    'Starting with what you need. Everything else follows underneath.',
+    wellbeing: 'Starting with this moment. Everything else follows underneath.',
+    volunteer: 'Starting with ways to take action. Everything else follows underneath.',
+    partner:   'Starting with what your organization works with. Everything else follows underneath.',
     funder:    'Showing the full system. Every tool below is running today.'
   };
-
-  var whoBtns = [].slice.call(document.querySelectorAll('.who-btn'));
+  var whoBtns = [].slice.call(document.querySelectorAll('.who-btn, .who-all'));
   var whoNote = document.getElementById('whoNote');
   var seq = document.getElementById('tour');
   var stages = [].slice.call(document.querySelectorAll('article.tool'));
@@ -336,9 +337,9 @@
       var links = gsap.utils.toArray('.pro-lines line');
       var terrs = gsap.utils.toArray('.terr');
 
-      // Starting state. The moment is lit; nothing else exists yet.
+      // Starting state. One point, and nothing said. The reader is meant to
+      // arrive at the thought themselves, so no copy is on screen yet.
       gsap.set(proLines, { opacity: 0, y: 24 });
-      gsap.set(proLines[0], { opacity: 1, y: 0 });
       gsap.set(dots, { opacity: 0, scale: 0.2 });
       gsap.set(dots[0], { opacity: 1, scale: 1 });
       gsap.set(terrs, { opacity: 0, y: 14 });
@@ -359,55 +360,43 @@
         scrollTrigger: { trigger: '.canvas', start: 'top top', end: 'bottom bottom', scrub: 0.6 }
       });
 
-      // 0 to 1. The moment, alone, with the camera close on it.
-      cam.to({}, { duration: 0.7 });
-
-      // 1 to 2.6. Points arrive one at a time, out of the dark, and the first
-      // pathways reach between them. The camera has not moved yet: the reader
-      // is still inside the moment, just noticing there is something around it.
+      // 0 to 2.4. Points arrive out of the dark, one at a time, and the first
+      // pathways reach between them. Silent on purpose.
+      cam.to({}, { duration: 0.5 });
       dots.forEach(function (d, i) {
         if (i === 0) return;
-        cam.to(d, {
-          opacity: gsap.getProperty(d, 'opacity') || 1, scale: 1,
-          duration: 0.28, ease: 'power2.out'
-        }, 0.75 + i * 0.16);
+        cam.to(d, { opacity: 1, scale: 1, duration: 0.28, ease: 'power2.out' }, 0.55 + i * 0.16);
       });
       links.slice(0, 3).forEach(function (ln, i) {
-        cam.to(ln, { attr: { 'stroke-dashoffset': 0 }, duration: 0.5, ease: 'none' }, 1.15 + i * 0.2);
+        cam.to(ln, { attr: { 'stroke-dashoffset': 0 }, duration: 0.5, ease: 'none' }, 1.0 + i * 0.2);
       });
 
-      // 2.6. The line changes and the camera starts moving at the same moment.
-      cam.to(proLines[0], { opacity: 0, y: -24, duration: 0.3 }, 2.5)
-         .fromTo(proLines[1], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 2.7);
-
-      // 2.7 to 4.2. The pull back. The field falls away from the reader and the
-      // remaining pathways complete, so the moment they were looking at becomes
-      // one point inside something much larger.
-      cam.to(field, { scale: 0.82, duration: 1.5, ease: 'power1.inOut' }, 2.7);
+      // 2.4. The first line lands as the camera starts pulling back, so the
+      // sentence and the widening view are the same event.
+      cam.fromTo(proLines[0], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 2.4);
+      cam.to(field, { scale: 0.82, duration: 1.5, ease: 'power1.inOut' }, 2.4);
       dots.forEach(function (d) {
-        cam.to(d, { y: (depth(d) - 2) * 46, duration: 1.5, ease: 'power1.inOut' }, 2.7);
+        cam.to(d, { y: (depth(d) - 2) * 46, duration: 1.5, ease: 'power1.inOut' }, 2.4);
       });
       links.slice(3).forEach(function (ln, i) {
-        cam.to(ln, { attr: { 'stroke-dashoffset': 0 }, duration: 0.55, ease: 'none' }, 2.9 + i * 0.14);
+        cam.to(ln, { attr: { 'stroke-dashoffset': 0 }, duration: 0.55, ease: 'none' }, 2.6 + i * 0.14);
       });
 
-      // 4.2. The environment names itself. Territories, not cards, and they
-      // arrive at their own depths rather than all at once.
-      cam.to(proLines[1], { opacity: 0, y: -24, duration: 0.3 }, 4.2)
-         .fromTo(proLines[2], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 4.4);
+      // 4.0. The system names what it lets you do. These are the five things a
+      // person can actually come here for, placed in the field at their own
+      // depths and arriving in depth order rather than all at once.
       terrs.forEach(function (t) {
-        cam.to(t, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 4.3 + (3 - depth(t)) * 0.18);
+        cam.to(t, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 4.0 + (3 - depth(t)) * 0.18);
       });
 
-      // 5.4. The answer to the line before it, and the pathways brighten as it
-      // lands, which is the visual form of the sentence.
-      cam.to(proLines[2], { opacity: 0, y: -24, duration: 0.3 }, 5.4)
-         .fromTo(proLines[3], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 5.6)
-         .to(links, { attr: { stroke: 'rgba(160,178,255,.92)' }, duration: 0.6 }, 5.6);
+      // 5.2. The handover line, with the pathways brightening under it.
+      cam.to(proLines[0], { opacity: 0, y: -24, duration: 0.3 }, 5.2)
+         .fromTo(proLines[1], { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4 }, 5.4)
+         .to(links, { attr: { stroke: 'rgba(160,178,255,.92)' }, duration: 0.6 }, 5.4);
 
-      // Hold, then hand the screen to the deck.
+      // Hold, then hand the screen on.
       cam.to({}, { duration: 0.7 });
-      cam.to([field, proLines[3]], { opacity: 0, duration: 0.5 }, 6.9);
+      cam.to([field, proLines[1]], { opacity: 0, duration: 0.5 }, 6.6);
     }
   } else {
     // Phones get the field as a still diagram above the lines, so the idea still
