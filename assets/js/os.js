@@ -78,12 +78,12 @@
      dives that are not on somebody's path follow underneath, so every product
      stays reachable and the page stays crawlable. */
   var PERSONA_PATHS = {
-    all:       [1, 2, 3, 4, 5],
-    member:    [1, 2, 3, 4],
-    wellbeing: [4, 2, 3, 1],
-    volunteer: [3, 1, 4, 2],
-    partner:   [5, 1, 3, 2],
-    funder:    [1, 2, 3, 4, 5]
+    all:       [1, 2, 3, 4, 6, 5],
+    member:    [1, 2, 3, 6],
+    wellbeing: [4, 2, 6, 3],
+    volunteer: [3, 6, 1, 2],
+    partner:   [5, 6, 1, 3],
+    funder:    [1, 2, 3, 4, 6, 5]
   };
   var PERSONA_NOTES = {
     all:       '',

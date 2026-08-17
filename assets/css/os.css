@@ -227,6 +227,11 @@ p{margin:0 0 18px}
 .dive[data-mood="discover"] .dive-sticky{background:#050505}
 .dive[data-mood="calm"] .dive-sticky{background:linear-gradient(160deg,#0b1030,#1b1350 55%,#0b1030)}
 .dive[data-mood="build"] .dive-sticky{background:var(--paper)}
+/* The Hub is the door, so it is the one lit warm. Every other ground on this
+   page is blue, paper or near black, which leaves the accent free here. */
+.dive[data-mood="hub"] .dive-sticky{background:radial-gradient(circle at 50% 38%,#241d06,#0c0a05 62%,#070707)}
+.dive[data-mood="hub"] .w-word{color:rgba(255,255,255,.5)}
+.dive[data-mood="hub"] .w-word[data-depth="3"]{color:#fff}
 
 /* Everything in a dive stacks in the same cell, because the beats replace each
    other in place rather than scrolling past one another. */
