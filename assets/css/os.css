@@ -371,6 +371,10 @@ p{margin:0 0 18px}
 }
 .reveal-mark::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent)}
 .reveal-mark sup{font-size:.7em;vertical-align:super;letter-spacing:0}
+/* The mark is a flex row (dot, then wordmark), so the trademark has to sit
+   inside the wordmark's own item. On its own it became a second flex item
+   and the 10px gap pushed it away from the name it belongs to. */
+.reveal-mark>span{display:inline-block}
 .reveal-say{color:var(--on-dark);font-size:clamp(15.5px,1.6vw,19px);max-width:58ch;margin:0 auto 34px}
 .reveal-cta{justify-content:center}
 
@@ -414,7 +418,7 @@ html.motion .pro-line[data-line="1"]{opacity:1}
    tween's destination was whatever the transition had already reached, which
    left both hero buttons at opacity 0 permanently. Hand the colour transition
    the hover needs back to CSS and keep the rest for GSAP. */
-.hmc-btn{transition-property:background-color,border-color,color,box-shadow}
+.hmc-btn{transition-property:background-color,border-color,color,box-shadow,filter}
 
 /* Buttons on dark stages: the shared secondary pill is white on #1a1a1a text,
    which is the highest contrast option against #070707. Nothing is restyled
