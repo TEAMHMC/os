@@ -425,9 +425,15 @@ p{margin:0 0 18px}
 .foot-tag{margin:14px 0 0;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
 .foot-cta{margin-top:20px}
 /* .foot a wins over the shared pill's own colour, so the label has to be put
-   back or the button renders as an empty white capsule. */
-.foot .hmc-btn-secondary{color:#1a1a1a}
-.foot .hmc-btn-primary{color:#fff}
+   back here. The hover state needs the same treatment and for the same reason:
+   `.foot a:hover{color:#fff}` outranks the shared `.hmc-btn-secondary:hover`,
+   which repainted the label white on a white pill. The 6px dot is drawn with
+   currentColor, so it went with it and the button read as an empty capsule.
+   These selectors carry one more class than `.foot a:hover` so they win, and the
+   underline that rule adds has no business on a pill either. */
+.foot .hmc-btn-secondary,.foot .hmc-btn-secondary:hover{color:#1a1a1a}
+.foot .hmc-btn-primary,.foot .hmc-btn-primary:hover{color:#fff}
+.foot .hmc-btn:hover{text-decoration:none}
 .foot-cta .hmc-btn{font-size:14px;padding:10px 20px}
 /* Sits under the list of things anyone can open, because that column is where a
    person looking for help is already reading. */
