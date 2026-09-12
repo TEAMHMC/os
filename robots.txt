@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /searchlight/
 
 Sitemap: https://os.healthmatters.clinic/sitemap.xml
