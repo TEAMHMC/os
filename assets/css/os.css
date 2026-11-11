@@ -801,3 +801,36 @@ html.motion .pro-line[data-line="1"]{opacity:1}
 @media (prefers-reduced-motion:reduce){
   .lb{transition:none}
 }
+
+/* ---------- phone motion ----------
+   Under html.motion only: that class is added when GSAP is present and the reader
+   has not asked for reduced motion, so with motion off the page is exactly the plain
+   stack it was. The worlds the desktop camera flies through are laid out in flow
+   here, between the name and the interface, and the motion layer eases them in as
+   the reader scrolls. Nothing pins. */
+@media (max-width:900px){
+  html.motion .dive-sticky{display:flex;flex-direction:column}
+  html.motion .dive-copy{order:1}
+  html.motion .dive-world{order:2;display:block;height:auto;margin:22px auto 6px;overflow:visible}
+  html.motion .dive-ui{order:3}
+  html.motion .dive-close{order:4}
+  html.motion .dive-cta{order:5}
+  html.motion .dive-world .w-word{
+    position:static;display:inline-flex;align-items:center;margin:0 8px 8px 0;padding:8px 15px;
+    width:auto;height:auto;border-radius:100px;border:1px solid rgba(255,255,255,.22);
+    background:rgba(255,255,255,.05);color:#fff;font-family:'Inter',sans-serif;font-size:13.5px;letter-spacing:.01em;
+  }
+  html.motion .dive-world .w-word[data-depth="1"]{font-size:13px;color:rgba(255,255,255,.72)}
+  html.motion .dive-world .w-word.is-dominant{color:var(--accent);border-color:rgba(249,199,79,.6)}
+  html.motion .dive[data-mood="discover"] .w-word{border-radius:100px;padding:8px 15px;width:auto;height:auto}
+  html.motion .dive-world .w-quiet{position:static;transform:none;width:100%;background:#fff;border:1px solid rgba(10,10,10,.12);border-radius:20px;padding:22px 20px;box-shadow:0 10px 26px rgba(0,0,0,.06)}
+  html.motion .dive-world .w-q{font-size:18px;margin-bottom:16px}
+  html.motion .dive-world .w-opts{margin-bottom:16px}
+  html.motion .dive-world .w-breath{position:static;transform:none;height:190px}
+  html.motion .dive-world .w-ring{width:150px}
+  html.motion .dive-world .w-modes{position:static;transform:none;justify-content:center;margin-top:6px;gap:18px;flex-wrap:wrap}
+  html.motion .dive-world .w-chain{position:static;transform:none;justify-items:stretch}
+  html.motion .dive-world .w-chain li{width:100%}
+  html.motion .dive-ui{perspective:900px}
+  html.motion .dive-ui .laptop-screen{overflow:hidden}
+}
