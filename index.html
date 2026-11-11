@@ -37,6 +37,11 @@
 <link rel="stylesheet" href="./assets/css/hmc-parallax.css">
 <link rel="stylesheet" href="./assets/site/hmc-buttons-1.0.5.css">
 <link rel="stylesheet" href="./assets/css/os.css">
+<!-- Analytics. Same GA4 property as healthmatters.clinic, so a visit that starts on OS and ends on the donate page is one visit.
+     Consent comes from the shared hmc_consent cookie, so nothing is stored until a visitor accepts. -->
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}(function(){var c=null;try{var m=document.cookie.match(/(?:^|;\s*)hmc_consent=([^;]*)/);if(m)c=decodeURIComponent(m[1])}catch(e){}if(!c){try{c=localStorage.getItem('hmc-cookie-consent')}catch(e){}}gtag('consent','default',{analytics_storage:c==='all'?'granted':'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'})})();gtag('js',new Date());gtag('config','G-8W3TXXHT9M',{allow_google_signals:false});</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8W3TXXHT9M"></script>
+<script src="https://unstoppable.healthmatters.clinic/assets/site/hmc-cookies-1.0.2.js" integrity="sha384-x0WkKJ4/FZW8xFV1cD8Ln3N7QgR/89yZIb5tQS7KxwOOxgx+Kvci0sUmawHo3r7N" crossorigin="anonymous" defer></script>
 </head>
 <body>
 
@@ -508,6 +513,7 @@
 <script src="./assets/js/vendor/lenis.min.js"></script>
 <script src="./assets/site/hmc-buttons-1.0.5.js"></script>
 <script src="./assets/js/os.js"></script>
+<script src="./assets/js/os-analytics.js" defer></script>
 
 </body>
 </html>
