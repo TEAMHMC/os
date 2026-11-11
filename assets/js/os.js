@@ -244,6 +244,8 @@
   var gsap = window.gsap;
   var ScrollTrigger = window.ScrollTrigger;
   gsap.registerPlugin(ScrollTrigger);
+  // A phone toolbar sliding away resizes the viewport mid-scroll; do not re-measure on it.
+  ScrollTrigger.config({ ignoreMobileResize: true });
 
   /* ---------- smooth scroll ----------
      Lenis smooths the wheel input on desktop. It changes how scrolling feels,
@@ -381,12 +383,7 @@
       cam.to([field, proLines[1]], { opacity: 0, duration: 0.5 }, 6.6);
     }
   } else {
-    // Phones get the field as a still diagram above the lines, so the idea still
-    // arrives without a five viewport scroll trap. See the matching CSS.
-    gsap.set('.pro-line', { clearProps: 'all' });
-    gsap.utils.toArray('.pro-lines line').forEach(function (ln) {
-      gsap.set(ln, { attr: { 'stroke-dasharray': 'none', 'stroke-dashoffset': 0 } });
-    });
+    phoneProloguePersona();
   }
 
   /* ---------- the persona map ----------
@@ -436,6 +433,138 @@
     }
   }
 
+  /* ---------- phones ----------
+     The desktop page is a camera move: sections pin and a scrub carries the reader
+     through five beats. A phone has neither the width nor a scroll worth spending on
+     that, so nothing here pins. Every move is tied to where the element sits in the
+     viewport, which means a thumb flick plays the animation forward and a flick back
+     plays it in reverse, and the layout underneath is the ordinary stacked page.
+     Each element has one tween that owns its properties, so nothing fights. */
+  function follow(el, from, to, startAt, endAt, extra) {
+    if (!el) return;
+    var vars = { ease: 'none', immediateRender: true,
+      scrollTrigger: { trigger: el, start: startAt || 'top 94%', end: endAt || 'top 58%', scrub: 0.5 } };
+    for (var k in to) vars[k] = to[k];
+    if (extra) for (var j in extra) vars[j] = extra[j];
+    gsap.fromTo(el, from, vars);
+  }
+
+  function phoneHero() {
+    var inner = document.querySelector('.hero-inner');
+    var glow = document.querySelector('.hero-glow');
+    var grid = document.querySelector('.hero-grid');
+    if (!inner) return;
+    var st = { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.5 };
+    gsap.to(inner, { y: -46, opacity: 0.25, ease: 'none', scrollTrigger: st });
+    if (glow) gsap.to(glow, { y: 150, opacity: 0.35, ease: 'none', scrollTrigger: st });
+    if (grid) gsap.to(grid, { y: 90, ease: 'none', scrollTrigger: st });
+  }
+
+  function phoneProloguePersona() {
+    /* the field: points arrive, then the pathways draw between them */
+    var field = document.getElementById('proField');
+    if (field) {
+      var dots = gsap.utils.toArray('.pro-dot');
+      var links = gsap.utils.toArray('.pro-lines line');
+      var terrs = gsap.utils.toArray('.terr');
+      gsap.set(dots, { opacity: 0, scale: 0.2 });
+      gsap.set(dots[0], { opacity: 1, scale: 1 });
+      gsap.set(terrs, { opacity: 0, y: 10 });
+      links.forEach(function (ln) {
+        var len = ln.getTotalLength ? ln.getTotalLength() : 400;
+        gsap.set(ln, { attr: { 'stroke-dasharray': len, 'stroke-dashoffset': len } });
+      });
+      var ptl = gsap.timeline({ scrollTrigger: { trigger: field, start: 'top 90%', end: 'bottom 45%', scrub: 0.6 } });
+      dots.forEach(function (d, i) {
+        if (i) ptl.to(d, { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out' }, 0.1 + i * 0.12);
+      });
+      links.forEach(function (ln, i) {
+        ptl.to(ln, { attr: { 'stroke-dashoffset': 0 }, duration: 0.5, ease: 'none' }, 0.3 + i * 0.14);
+      });
+      terrs.forEach(function (t, i) {
+        ptl.to(t, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 1.3 + i * 0.16);
+      });
+      ptl.to({}, { duration: 0.5 });
+    }
+    gsap.utils.toArray('.pro-line').forEach(function (ln, i) {
+      follow(ln, { y: 34 }, { y: 0 }, 'top 96%', 'top 70%');
+    });
+
+    /* the persona question: the headline splits in, the four answers land */
+    var a = document.querySelector('.lead-a'), b = document.querySelector('.lead-b');
+    follow(a, { x: -46, opacity: 0 }, { x: 0, opacity: 1 }, 'top 96%', 'top 66%');
+    follow(b, { x: 46, opacity: 0 }, { x: 0, opacity: 1 }, 'top 96%', 'top 66%');
+    var btns = gsap.utils.toArray('.who-btn');
+    if (btns.length) {
+      gsap.set(btns, { opacity: 0, y: 30, scale: 0.96 });
+      ScrollTrigger.batch(btns, {
+        start: 'top 92%', once: true,
+        onEnter: function (batch) {
+          gsap.to(batch, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power3.out', stagger: 0.1, overwrite: true });
+        }
+      });
+    }
+  }
+
+  function phoneDive(dv, copy, world, ui, close, cta) {
+    var mood = dv.getAttribute('data-mood');
+    var kids = copy ? [].slice.call(copy.children) : [];
+    follow(copy, { y: 40, opacity: 0, scale: 0.97 }, { y: 0, opacity: 1, scale: 1 }, 'top 96%', 'top 62%');
+
+    if (world) {
+      var words = gsap.utils.toArray(world.querySelectorAll('.w-word'));
+      var quiet = world.querySelector('.w-quiet');
+      var breath = world.querySelector('.w-breath');
+      var ring = world.querySelector('.w-ring');
+      var modes = gsap.utils.toArray(world.querySelectorAll('.w-modes li'));
+      var chain = gsap.utils.toArray(world.querySelectorAll('.w-chain li'));
+      var wtl = gsap.timeline({ scrollTrigger: { trigger: world, start: 'top 94%', end: 'bottom 52%', scrub: 0.6 } });
+      words.forEach(function (w, i) {
+        var d = parseFloat(w.getAttribute('data-depth')) || 2;
+        gsap.set(w, { opacity: 0, y: 22, x: (i % 2 ? 1 : -1) * 10 * d });
+        wtl.to(w, { opacity: d === 1 ? 0.62 : 1, y: 0, x: 0, duration: 0.4, ease: 'power2.out' }, i * 0.14);
+      });
+      var dom = world.querySelector('.w-word.is-dominant');
+      if (dom) wtl.to(dom, { scale: 1.12, duration: 0.5, ease: 'power2.out' }, words.length * 0.14 + 0.2);
+      if (quiet) {
+        gsap.set(quiet, { opacity: 0, y: 28, scale: 0.95 });
+        wtl.to(quiet, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power2.out' }, 0);
+        var bar = quiet.querySelector('.w-prog i');
+        if (bar) wtl.fromTo(bar, { width: '11%' }, { width: '78%', duration: 1.2, ease: 'none' }, 0.4);
+      }
+      if (breath && ring) {
+        gsap.set(breath, { opacity: 0, scale: 0.8 });
+        wtl.to(breath, { opacity: 1, scale: 1, duration: 0.5 }, 0)
+           .to(ring, { scale: 1.3, duration: 0.8, ease: 'sine.inOut' }, 0.4)
+           .to(ring, { scale: 1, duration: 0.8, ease: 'sine.inOut' }, 1.2)
+           .to(ring, { scale: 1.3, duration: 0.8, ease: 'sine.inOut' }, 2.0);
+        modes.forEach(function (m, i) {
+          gsap.set(m, { opacity: 0, y: 10 });
+          wtl.to(m, { opacity: 1, y: 0, duration: 0.35 }, 0.9 + i * 0.35);
+        });
+      }
+      chain.forEach(function (c, i) {
+        gsap.set(c, { opacity: 0, y: 26 });
+        wtl.to(c, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, i * 0.5);
+      });
+      wtl.to({}, { duration: 0.4 });
+    }
+
+    /* the interface rises from a tilt and settles flat; the screenshot inside
+       drifts a little slower than the frame, which is the depth */
+    follow(ui, { y: 70, scale: 0.9, rotateX: 16, transformPerspective: 900, transformOrigin: '50% 100%', opacity: 0.15 },
+      { y: 0, scale: 1, rotateX: 0, opacity: 1 }, 'top 98%', 'top 52%');
+    var shot = ui && ui.querySelector('.frame-shot');
+    if (shot) {
+      gsap.fromTo(shot, { scale: 1.12, yPercent: -3 }, { scale: 1.02, yPercent: 2, ease: 'none',
+        scrollTrigger: { trigger: ui, start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+    }
+    follow(close, { y: 32, opacity: 0 }, { y: 0, opacity: 1 }, 'top 96%', 'top 68%');
+    follow(cta, { y: 22, opacity: 0 }, { y: 0, opacity: 1 }, 'top 98%', 'top 78%');
+  }
+
+  if (!desktop) phoneHero();
+
   /* ---------- 3. the dives ----------
      Each product is entered, not listed. Five beats, same order every time:
 
@@ -459,14 +588,7 @@
     var cta   = dv.querySelector('.dive-cta');
     var mood  = dv.getAttribute('data-mood');
 
-    if (!desktop) {
-      // Phones get the same content as an ordinary stacked block. The camera
-      // needs width and a long scroll, and neither is available here.
-      gsap.fromTo([copy, ui, close, cta], { y: 26, opacity: 0 },
-        { y: 0, opacity: 1, duration: .7, ease: 'power2.out', stagger: .08,
-          scrollTrigger: { trigger: dv, start: 'top 80%', once: true } });
-      return;
-    }
+    if (!desktop) { phoneDive(dv, copy, world, ui, close, cta); return; }
 
     var words  = gsap.utils.toArray(dv.querySelectorAll('.w-word'));
     var quiet  = dv.querySelector('.w-quiet');
